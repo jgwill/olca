@@ -162,3 +162,7 @@ cython_debug/
 #.idea/
 samples/env.txt
 .hch/
+_/
+samples/
+x/
+xapi/

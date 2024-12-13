@@ -6,16 +6,6 @@ from langchain import hub
 import argparse
 import yaml
 
-import langsmith 
-# Initialize LangSmith client
-LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
-LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY")
-if not LANGSMITH_API_KEY and not LANGCHAIN_API_KEY:
-    print("Error: LANGSMITH_API_KEY or LANGCHAIN_API_KEY environment variable is not set.")
-    exit(1)
-client = langsmith.Client(api_key=LANGSMITH_API_KEY or LANGCHAIN_API_KEY)
-
-
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
 #https://smith.langchain.com/hub/jgwill/olca1
@@ -181,13 +171,21 @@ def main():
     config = load_config(olca_config_file)
     
     # Check for tracing flag in config and CLI
-    tracing_enabled = config.get('tracing', False) or args.tracing
+    tracing_enabled = config.get('tracing', False) or args.tracing or os.getenv("LANGCHAIN_TRACING_V2") == "true"
     if tracing_enabled:
         os.environ["LANGCHAIN_TRACING_V2"] = "true"
         if not os.getenv("LANGCHAIN_API_KEY"):
             print("Error: LANGCHAIN_API_KEY environment variable is required for tracing. Please set it up at : https://smith.langchain.com/settings")
             exit(1)
-    
+        # Initialize LangSmith client
+        import langsmith
+        LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
+        LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY")
+        if not LANGSMITH_API_KEY and not LANGCHAIN_API_KEY:
+            print("Error: LANGSMITH_API_KEY or LANGCHAIN_API_KEY environment variable is not set.")
+            exit(1)
+        client = langsmith.Client(api_key=LANGSMITH_API_KEY or LANGCHAIN_API_KEY)
+
     try:
             
         api_key_variable = "OPENAI_API_KEY"

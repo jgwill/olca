@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# [tool.setuptools]
+# package-dir = { "" = "src" }
+
+[project]
+name = "olca"
+version = "0.2.5"
+description = "A Python package for experimental usage of Langchain and Human-in-the-Loop"
+readme = "README.md"
+requires-python = ">=3.6"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Jean GUillaume ISabelle", email = "jgi@jgwill.com" }
+]
+dependencies = [
+    "boto3",
+    "mutagen",
+    "certifi",
+    "charset-normalizer",
+    "idna",
+    "redis",
+    "requests",
+    "markdown",
+    "langchain",
+    "langchain-openai",
+    "langchain-experimental",
+    "click",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.scripts]
+olca2 = "olca.olcacli:main"

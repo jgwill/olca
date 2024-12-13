@@ -1,0 +1,16 @@
+boto3
+certifi
+charset-normalizer
+idna
+redis
+markdown
+chardet
+charset-normalizer
+langchain
+langchain-community
+langsmith
+langchain-openai
+langchain-ollama
+llm
+click
+langgraph

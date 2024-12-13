@@ -162,24 +162,19 @@ def _parse_args():
 
 def main():
     args = _parse_args()
-    olca_config_file = 'olca_config.yaml'
-    olca_new_config_file = 'olca.yml'
+    olca_config_file = 'olca.yml'
     
     if args.init:
-        if os.path.exists(olca_new_config_file) or os.path.exists(olca_config_file):
+        if os.path.exists(olca_config_file):
             print("Error: Configuration file already exists. Cannot run 'olca init'.")
             return
         if args.yes:
-            olca_config_file = olca_new_config_file
+            pass
         else:
             generate_config_example()
             return
     
-    if os.path.exists(olca_new_config_file):
-        olca_config_file = olca_new_config_file
-    elif os.path.exists(olca_config_file):
-        print("Warning: 'olca_config.yaml' is deprecated. Please use 'olca.yml' instead.")
-    else:
+    if not os.path.exists(olca_config_file):
         generate_config_example()
         return
 

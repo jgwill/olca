@@ -7,7 +7,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "olca"
-version = "0.2.5"
+version = "0.2.6"
+
 description = "A Python package for experimental usage of Langchain and Human-in-the-Loop"
 readme = "README.md"
 requires-python = ">=3.6"

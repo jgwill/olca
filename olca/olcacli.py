@@ -214,7 +214,8 @@ def main():
     
     system_instructions = config.get('system_instructions', '')
     user_input = config.get('user_input', '')
-    model_name=config.get('model_name', "gpt-4o-mini")
+    default_model_id = "gpt-4o-mini"
+    model_name=config.get('model_name', default_model_id)
     recursion_limit=config.get('recursion_limit', 15)
     disable_system_append = _parse_args().disable_system_append
     

@@ -30,7 +30,8 @@ setup(
         'langsmith',
         'langchain-ollama',
         'langgraph',
-        'llm'
+        'llm',
+        'langgraph'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

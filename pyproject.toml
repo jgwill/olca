@@ -29,6 +29,7 @@ dependencies = [
     "langchain-openai",
     "langchain-experimental",
     "click",
+    "langgraph",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

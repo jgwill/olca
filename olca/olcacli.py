@@ -279,8 +279,8 @@ def generate_config_example():
         "temperature": float(input("temperature [0]: ") or 0),
         "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or True,
         "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or True,
-        "system_instructions": input("system_instructions [Hello, I am a chatbot. How can I help you today?]: ") or "Hello, I am a chatbot. How can I help you today?",
-        "user_input": input("user_input [What is the weather in NYC?]: ") or "What is the weather in NYC?"
+        "system_instructions": input("system_instructions [Hello, I am a chatbot. How can I help you today?]: ") or "You are interacting using the human tool addressing carefully what the user is asking.  You carefully go step by step in your interaction with the user.  You are clear and concise in your communication wrapping up the conversation in a coherent manner for the interaction. You make sure to always present what you think is the end-result of the work before quitting the loop and exit the workflow.",
+        "user_input": input("user_input [Interact with me to write a story using the 3 act structure that we will save in ./story/]: ") or "Interact with me to write a story using the 3 act structure that we will save in ./story/"
     }
     with open('olca.yml', 'w') as file:
         yaml.dump(config, file)

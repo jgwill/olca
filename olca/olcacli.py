@@ -275,7 +275,7 @@ def main():
 def generate_config_example():
     try:
         config = {
-            "api_keyname": input("api_keyname [OPENAI_API_KEY_olca]: ") or "OPENAI_API_KEY_olca",
+            "api_keyname": input("api_keyname [OPENAI_API_KEY]: ") or "OPENAI_API_KEY",
             "model_name": input("model_name [gpt-4o-mini]: ") or "gpt-4o-mini",
             "recursion_limit": int(input("recursion_limit [12]: ") or 12),
             "temperature": float(input("temperature [0]: ") or 0),

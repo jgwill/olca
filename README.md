@@ -27,6 +27,16 @@ olca2 --help
 ```
 
 
+
+## fusewill
+
+The `fusewill` command is a CLI tool that provides functionalities for interacting with Langfuse, including tracing, dataset management, and prompt operations.
+
+### Help
+
+To see the available commands and options for `fusewill`, use the `--help` flag:
+
+
 ----
 IMPORTED README from olca1
 ----
@@ -76,7 +86,3 @@ The `olca` script provides a user-friendly CLI that allows you to interact with 
 #### GitHub Integration
 
 `olca` is designed to integrate seamlessly with GitHub workflows and issue management. You can provide an issue ID to the agent, and it will commit and push changes directly to the specified issue. This feature streamlines the development process and reduces the need for manual intervention. Additionally, `olca` maintains detailed logs of its actions and updates, ensuring transparency and traceability in its operations.
-
-#### Conclusion
-
-The enhancements to `olca` make it a powerful and versatile tool for developers working on musical and storytelling projects. With improved configurability, debugging capabilities, and integration with GitHub workflows, `olca` offers a comprehensive solution for creating and managing interactive storytelling experiences. Try out `olca` today and see how it can enhance your development process!

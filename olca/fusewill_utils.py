@@ -1,4 +1,3 @@
-
 from langfuse import Langfuse
 import os
 import sys
@@ -8,7 +7,11 @@ import json
 import dotenv
 dotenv.load_dotenv()
 
-langfuse = Langfuse()
+langfuse = Langfuse(
+    public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
+    secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
+    base_url=os.getenv("LANGFUSE_BASE_URL")
+)
 
 def list_traces(limit=100, output_dir="../output/traces"):
     traces = langfuse.get_traces(limit=limit)

@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "olca"
-version = "0.2.6"
+version = "0.2.10"
 
 description = "A Python package for experimental usage of Langchain and Human-in-the-Loop"
 readme = "README.md"
@@ -30,6 +30,7 @@ dependencies = [
     "langchain-experimental",
     "click",
     "langgraph",
+    "langfuse"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -39,3 +40,4 @@ classifiers = [
 
 [project.scripts]
 olca2 = "olca.olcacli:main"
+fusewill="olca.fusewill:main"

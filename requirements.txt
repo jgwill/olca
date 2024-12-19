@@ -14,3 +14,4 @@ langchain-ollama
 llm
 click
 langgraph
+langfuse

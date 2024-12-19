@@ -6,11 +6,11 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import json
 
 import dotenv
-dotenv.load_dotenv()
+dotenv.load_dotenv(dotenv_path=".")
 #if no LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY in .env, then it will try to read them from current directory
 if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
   dotenv.load_dotenv()
-
+  #load home dotenv
 
 if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
   dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))

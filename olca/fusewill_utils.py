@@ -5,13 +5,19 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import json
 
 import dotenv
-dotenv.load_dotenv()
 
-if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
-    # Try loading from the home directory
-    dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
+# Check if the variables are already set in the environment
+if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
+    # Load from .env in current directory
+    dotenv.load_dotenv()
 
-if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
+    # Check again
+    if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
+        # Load from .env in home directory
+        dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
+
+# Final check
+if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
     print("Error: LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY not found.")
     sys.exit(1)
 

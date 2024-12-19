@@ -2,6 +2,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import argparse
+import fusewill_utils as fu
 from fusewill_utils import (
     list_traces,
     create_dataset,
@@ -12,7 +13,7 @@ from fusewill_utils import (
 )
 import dotenv
 import json
-dotenv.load_dotenv()
+#dotenv.load_dotenv()
 
 def main():
     parser = argparse.ArgumentParser(description="Langfuse CLI Wrapper")

@@ -1,4 +1,3 @@
-
 from langfuse import Langfuse
 import os
 import sys
@@ -7,16 +6,14 @@ import json
 
 import dotenv
 dotenv.load_dotenv()
-#if no LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY in .env, then it will try to read them from current directory
-if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
-  dotenv.load_dotenv(dotenv_path=".")
-  #load home dotenv
 
 if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
-  dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
-if not os.getenv("LANGFUSE_PUBLIC_KEY") and not os.getenv("LANGFUSE_SECRET_KEY"):
-  print("Error: LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY not found in .env")
-  sys.exit(1)
+    # Try loading from the home directory
+    dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
+
+if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
+    print("Error: LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY not found.")
+    sys.exit(1)
 
 langfuse = Langfuse()
 

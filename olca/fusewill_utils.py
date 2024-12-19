@@ -14,7 +14,7 @@ if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
 
 if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
   dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
-if not os.getenv("LANGFUSE_PUBLIC_KEY") or not os.getenv("LANGFUSE_SECRET_KEY"):
+if not os.getenv("LANGFUSE_PUBLIC_KEY") and not os.getenv("LANGFUSE_SECRET_KEY"):
   print("Error: LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY not found in .env")
   sys.exit(1)
 

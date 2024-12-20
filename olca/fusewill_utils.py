@@ -41,6 +41,17 @@ def list_traces(limit=100, output_dir="../output/traces"):
         print("---")
     return traces
 
+def list_traces_by_score(score_name, min_value=None, max_value=None, limit=100):
+    traces = langfuse.get_traces(limit=limit)
+    filtered_traces = []
+    for trace in traces.data:
+        for score in trace.scores:
+            if score.name == score_name:
+                if (min_value is None or score.value >= min_value) and (max_value is None or score.value <= max_value):
+                    filtered_traces.append(trace)
+                    break
+    return filtered_traces
+
 def add_score_to_a_trace(trace_id, generation_id, name, value, data_type="NUMERIC", comment=""):
     langfuse.score(
         trace_id=trace_id,
@@ -50,6 +61,20 @@ def add_score_to_a_trace(trace_id, generation_id, name, value, data_type="NUMERI
         data_type=data_type,
         comment=comment
     )
+
+def create_score(name, data_type, description=""):
+    langfuse.create_score(
+        name=name,
+        data_type=data_type,
+        description=description
+    )
+
+def score_exists(name):
+    scores = langfuse.get_scores()
+    for score in scores.data:
+        if score.name == name:
+            return True
+    return False
 
 def create_dataset(name, description="", metadata=None):
     langfuse.create_dataset(

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='olca',
-    version = "0.2.10",
+    version = "0.2.21",
     author='Jean GUillaume ISabelle',
     author_email='jgi@jgwill.com',
     description='A Python package for experimenting with Langchain agent and interactivity in Terminal modalities.',
@@ -33,6 +33,12 @@ setup(
         'llm',
         'langgraph'
     ],
+    entry_points={
+        'console_scripts': [
+            'olca2=olca.olcacli:main',
+            'fusewill=olca.fusewill_cli:main',
+        ],
+    },
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',

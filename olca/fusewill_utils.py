@@ -1,3 +1,26 @@
+import os
+import sys
+import json
+import dotenv
+
+# Load .env from the current working directory
+dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
+
+# Try loading from home directory if variables are still not set
+if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
+    dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
+
+# Final check before exiting
+missing_vars = []
+if not os.environ.get("LANGFUSE_PUBLIC_KEY"):
+    missing_vars.append("LANGFUSE_PUBLIC_KEY")
+if not os.environ.get("LANGFUSE_SECRET_KEY"):
+    missing_vars.append("LANGFUSE_SECRET_KEY")
+
+if missing_vars:
+    print(f"Error: {', '.join(missing_vars)} not found.")
+    sys.exit(1)
+
 from langfuse import Langfuse
 import os
 import sys
@@ -5,21 +28,6 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import json
 
 import dotenv
-
-# Check if the variables are already set in the environment
-if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
-    # Load from .env in current directory
-    dotenv.load_dotenv()
-
-    # Check again
-    if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
-        # Load from .env in home directory
-        dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
-
-# Final check
-if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
-    print("Error: LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY not found.")
-    sys.exit(1)
 
 langfuse = Langfuse()
 

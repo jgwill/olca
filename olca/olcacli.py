@@ -299,7 +299,7 @@ def setup_required_directories(system_instructions, user_input):
 
 def generate_config_example():
     try:
-        default_system_instructions = "You are interacting using the human tool addressing carefully what the user is asking.  You carefully go step by step in your interaction with the user.  You are clear and concise in your communication wrapping up the conversation in a coherent manner for the interaction. You make sure to always present what you think is the end-result of the work before quitting the loop and exit the workflow."
+        default_system_instructions = "You are interacting using the human tool addressing carefully what the user is asking. "
         
         default_user_input = "Interact with me to write a story using the 3 act structure that we will save in ./story/ - Make sure you interact with me and wont quit."
         

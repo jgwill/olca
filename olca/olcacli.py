@@ -299,6 +299,10 @@ def setup_required_directories(system_instructions, user_input):
 
 def generate_config_example():
     try:
+        default_system_instructions = "You are interacting using the human tool addressing carefully what the user is asking.  You carefully go step by step in your interaction with the user.  You are clear and concise in your communication wrapping up the conversation in a coherent manner for the interaction. You make sure to always present what you think is the end-result of the work before quitting the loop and exit the workflow."
+        
+        default_user_input = "Interact with me to write a story using the 3 act structure that we will save in ./story/ - Make sure you interact with me and wont quit."
+        
         config = {
             "api_keyname": input("api_keyname [OPENAI_API_KEY]: ") or "OPENAI_API_KEY",
             "model_name": input("model_name [gpt-4o-mini]: ") or "gpt-4o-mini",
@@ -306,8 +310,8 @@ def generate_config_example():
             "temperature": float(input("temperature [0]: ") or 0),
             "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or True,
             "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or True,
-            "system_instructions": input("system_instructions [You are interacting using the human tool addressing carefully what the user is asking.  You carefully go step by step in your interaction with the user.  You are clear and concise in your communication wrapping up the conversation in a coherent manner for the interaction. You make sure to always present what you think is the end-result of the work before quitting the loop and exit the workflow.]: ") or "You are interacting using the human tool addressing carefully what the user is asking.  You carefully go step by step in your interaction with the user.  You are clear and concise in your communication wrapping up the conversation in a coherent manner for the interaction. You make sure to always present what you think is the end-result of the work before quitting the loop and exit the workflow.",
-            "user_input": input("user_input [Interact with me to write a story using the 3 act structure that we will save in ./story/]: ") or "Interact with me to write a story using the 3 act structure that we will save in ./story/"
+            "system_instructions": input(f"system_instructions [{default_system_instructions}]: ") or default_system_instructions,
+            "user_input": input(f"user_input [{default_user_input}]: ") or default_user_input
         }
         with open('olca.yml', 'w') as file:
             yaml.dump(config, file)

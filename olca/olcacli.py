@@ -316,13 +316,11 @@ def generate_config_example():
             "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_human_input,
             "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing,
             "system_instructions": (
-                input(f"system_instructions [{default_system_instructions}]: ").replace("\n", " ")
-                or default_system_instructions
-            ).replace("\n", " "),
+                input(f"system_instructions [{default_system_instructions}]: ") or default_system_instructions
+            ).replace("\n", " ").replace("system_instructions:","system_instructions: |\n\t"),
             "user_input": (
-                input(f"user_input [{default_user_input}]: ").replace("\n", " ")
-                or default_user_input
-            ).replace("\n", " ")
+                input(f"user_input [{default_user_input}]: ") or default_user_input
+            ).replace("\n", " ").replace("user_input:","user_input: |\n\t")
         }
         with open('olca.yml', 'w') as file:
             yaml.dump(config, file)

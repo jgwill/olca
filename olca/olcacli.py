@@ -315,8 +315,14 @@ def generate_config_example():
             "temperature": float(input("temperature [0]: ") or default_temperature),
             "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_human_input,
             "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing,
-            "system_instructions": (input(f"system_instructions [{default_system_instructions}]: ") or default_system_instructions).replace("\n", " "),
-            "user_input": (input(f"user_input [{default_user_input}]: ") or default_user_input).replace("\n", " ")
+            "system_instructions": (
+                input(f"system_instructions [{default_system_instructions}]: ").replace("\n", " ")
+                or default_system_instructions
+            ).replace("\n", " "),
+            "user_input": (
+                input(f"user_input [{default_user_input}]: ").replace("\n", " ")
+                or default_user_input
+            ).replace("\n", " ")
         }
         with open('olca.yml', 'w') as file:
             yaml.dump(config, file)

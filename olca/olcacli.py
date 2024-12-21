@@ -177,11 +177,11 @@ def main():
         if args.yes:
             pass
         else:
-            generate_config_example()
+            initialize_config_file()
             return
     
     if not os.path.exists(olca_config_file):
-        generate_config_example()
+        initialize_config_file()
         return
 
     config = load_config(olca_config_file)
@@ -297,7 +297,7 @@ def setup_required_directories(system_instructions, user_input):
         #We dont want to stop the program if it could not create the extra directories but we want to ensure common olca directories exist
         ensure_directories_exist()
 
-def generate_config_example():
+def initialize_config_file():
     try:
         default_system_instructions = "You are interacting using the human tool addressing carefully what the user is asking."
         default_user_input = "Interact with me to write a story using the 3 act structure that we will save in ./story/ - Make sure you interact with me and wont quit."

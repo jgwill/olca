@@ -269,6 +269,9 @@ def main():
         else:
             tools = load_tools(    selected_tools,    allow_dangerous_tools=True)
     
+    if human_switch:
+        user_input = user_input + " Dont forget to USE THE HUMAN-IN-THE-LOOP TOOL"
+        system_instructions= system_instructions + ". Use the human-in-the-loop tool"
     
     # Define the graph
     graph = create_react_agent(model, tools=tools)

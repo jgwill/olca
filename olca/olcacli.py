@@ -279,12 +279,7 @@ def main():
     
     inputs,system_instructions,user_input = prepare_input(user_input, system_instructions, not disable_system_append, human_switch)
     
-    try:    
-        extra_directories=extract_extra_directories_from_olca_config_system_and_user_input(system_instructions, user_input)
-        ensure_directories_exist(extra_directories)
-    except:
-        #We dont want to stop the program if it could not create the extra directories but we want to ensure common olca directories exist
-        ensure_directories_exist()
+    setup_required_directories(system_instructions, user_input)
     
 
     try:
@@ -293,6 +288,14 @@ def main():
         #print(f"Error: {e}")
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")
         print("For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT")
+
+def setup_required_directories(system_instructions, user_input):
+    try:    
+        extra_directories=extract_extra_directories_from_olca_config_system_and_user_input(system_instructions, user_input)
+        ensure_directories_exist(extra_directories)
+    except:
+        #We dont want to stop the program if it could not create the extra directories but we want to ensure common olca directories exist
+        ensure_directories_exist()
 
 def generate_config_example():
     try:
@@ -309,6 +312,8 @@ def generate_config_example():
         with open('olca.yml', 'w') as file:
             yaml.dump(config, file)
         print("Configuration file 'olca.yml' created successfully.")
+        inputs,system_instructions,user_input = prepare_input(config["user_input"], config["system_instructions"], True, config["human"])
+        setup_required_directories(system_instructions, user_input)
     except KeyboardInterrupt:
         print("\nConfiguration canceled by user.")
         exit(0)

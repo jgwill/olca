@@ -307,21 +307,28 @@ def generate_config_example():
         default_temperature = 0
         use_default_human_input = True
         use_default_tracing = True
-        
+
         config = {
             "api_keyname": input("api_keyname [OPENAI_API_KEY]: ") or "OPENAI_API_KEY",
             "model_name": input("model_name [gpt-4o-mini]: ") or default_model_name,
             "recursion_limit": int(input("recursion_limit [12]: ") or default_recursion_limit),
             "temperature": float(input("temperature [0]: ") or default_temperature),
             "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_human_input,
-            "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing,
-            "system_instructions": (
-                input(f"system_instructions [{default_system_instructions}]: ") or default_system_instructions
-            ).replace("\n", " ").replace("\r", " ").replace("system_instructions:","system_instructions: |\n\t"),
-            "user_input": (
-                input(f"user_input [{default_user_input}]: ") or default_user_input
-            ).replace("\n", " ").replace("\r", " ").replace("user_input:","user_input: |\n\t")
+            "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing
         }
+        
+        user_system_instructions = input(f"system_instructions [{default_system_instructions}]: ")
+        user_system_instructions = user_system_instructions or default_system_instructions
+        user_system_instructions = user_system_instructions.replace("\n", " ").replace("\r", " ").replace("\t", " ")
+
+        user_core_input = input(f"user_input [{default_user_input}]: ")
+        user_core_input = user_core_input or default_user_input
+        user_core_input = user_core_input.replace("\n", " ").replace("\r", " ").replace("\t", " ")
+        
+        
+        config["system_instructions"] = user_system_instructions
+        config["user_input"] = user_core_input
+
         with open('olca.yml', 'w') as file:
             yaml.dump(config, file)
         print("Configuration file 'olca.yml' created successfully.")

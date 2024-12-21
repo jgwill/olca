@@ -299,9 +299,8 @@ def setup_required_directories(system_instructions, user_input):
 
 def generate_config_example():
     try:
-        default_system_instructions = """You are interacting using the human tool addressing carefully what the user is asking. """
-        
-        default_user_input = """Interact with me to write a story using the 3 act structure that we will save in ./story/ - Make sure you interact with me and wont quit."""
+        default_system_instructions = "You are interacting using the human tool addressing carefully what the user is asking."
+        default_user_input = "Interact with me to write a story using the 3 act structure that we will save in ./story/ - Make sure you interact with me and wont quit."
         
         default_model_name = "gpt-4o-mini"
         default_recursion_limit = 12
@@ -316,8 +315,8 @@ def generate_config_example():
             "temperature": float(input("temperature [0]: ") or default_temperature),
             "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_human_input,
             "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing,
-            "system_instructions": input(f"system_instructions [{default_system_instructions}]: ") or default_system_instructions,
-            "user_input": input(f"user_input [{default_user_input}]: ") or default_user_input
+            "system_instructions": (input(f"system_instructions [{default_system_instructions}]: ") or default_system_instructions).replace("\n", " "),
+            "user_input": (input(f"user_input [{default_user_input}]: ") or default_user_input).replace("\n", " ")
         }
         with open('olca.yml', 'w') as file:
             yaml.dump(config, file)

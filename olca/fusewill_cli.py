@@ -9,20 +9,36 @@ from fusewill_utils import (
     create_prompt,
     update_prompt,
     delete_dataset,
-    get_trace_by_id
+    get_trace_by_id,
+    open_trace_in_browser,
+    print_traces,
+    print_trace
 )
 import dotenv
 import json
+import sys, termios, tty
 #dotenv.load_dotenv()
+
+def get_single_char_input():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
 
 def main():
     parser = argparse.ArgumentParser(description="Langfuse CLI Wrapper")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # list_traces command
-    parser_list = subparsers.add_parser('list_traces', help='List traces')
+    parser_list = subparsers.add_parser('list_traces', help='List traces',aliases=['lt'])
     parser_list.add_argument('--limit', type=int, default=100, help='Number of traces to fetch')
     parser_list.add_argument('--output_dir', type=str, default='../output/traces', help='Directory to save traces')
+    parser_list.add_argument('-C','--comments',  action='store_true', help='Show comments from the traces', default=False)
+    parser_list.add_argument('-W','--browse-interact', action='store_true', help='Ask user to open each trace in browser')
 
     # create_dataset command
     parser_create_dataset = subparsers.add_parser('create_dataset', help='Create a new dataset')
@@ -76,8 +92,29 @@ def main():
 
     args = parser.parse_args()
 
-    if args.command == 'list_traces':
-        list_traces(limit=args.limit, output_dir=args.output_dir)
+    if args.command == 'list_traces' or args.command == 'lt':
+        show_comments_flag = args.comments if args.comments else False
+        traces = list_traces(
+            limit=args.limit, 
+            output_dir=args.output_dir
+        )
+        if not args.browse_interact:
+            print_traces(traces, show_comments=show_comments_flag)
+        else:
+            for trace in traces.data:
+                print_trace(trace, show_comments=show_comments_flag)
+                print("Open this trace in browser (Y/N/Q)? ", end='', flush=True)
+                try:
+                    resp = get_single_char_input().lower()
+                except KeyboardInterrupt:
+                    print("\nExiting.")
+                    sys.exit(0)
+                print(resp)  # Echo the character
+                if resp == 'y':
+                    open_trace_in_browser(trace.id)
+                elif resp == 'q':
+                    print("Quitting.")
+                    break
     elif args.command == 'create_dataset':
         metadata = json.loads(args.metadata)
         create_dataset(name=args.name, description=args.description, metadata=metadata)
@@ -121,6 +158,7 @@ def main():
             print(f"Trace ID: {trace.id}, Name: {trace.name}")
     else:
         parser.print_help()
+        exit(1)
 
 if __name__ == '__main__':
     main()

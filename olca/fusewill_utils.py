@@ -57,7 +57,8 @@ def print_trace(trace, show_comments=False):
     print(f"<Trace \n\tat=\"{trace.createdAt}\" \n\tid=\"{trace.id}\" \n\tname=\"{trace.name}\" \n\tsession_id=\"{trace.session_id}\" \n\tprojectId=\"{trace.projectId}\" >")
     print(f"<Input><CDATA[[\n{trace.input}\n]]></Input>")
     print(f"<Output><CDATA[[\n{trace.output}\n]]></Output>")
-    print(f"<Metadata>{trace.metadata}</Metadata>")
+    if trace.metadata:
+        print(f"<Metadata>{trace.metadata}</Metadata>")
     if trace.scores:
         print("<Scores>")
         for score in trace.scores:

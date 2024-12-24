@@ -2,12 +2,13 @@ import os
 import sys
 import json
 import dotenv
+import webbrowser
 
 # Load .env from the current working directory
 dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
 
 # Try loading from home directory if variables are still not set
-if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY"):
+if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY") or not os.environ.get("LANGFUSE_HOST"):
     dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
 
 # Final check before exiting
@@ -16,6 +17,8 @@ if not os.environ.get("LANGFUSE_PUBLIC_KEY"):
     missing_vars.append("LANGFUSE_PUBLIC_KEY")
 if not os.environ.get("LANGFUSE_SECRET_KEY"):
     missing_vars.append("LANGFUSE_SECRET_KEY")
+if not os.environ.get("LANGFUSE_HOST"):
+    missing_vars.append("LANGFUSE_HOST")
 
 if missing_vars:
     print(f"Error: {', '.join(missing_vars)} not found.")
@@ -28,17 +31,49 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import json
 
 import dotenv
+_DEBUG_=False
+if _DEBUG_:
+    print(os.environ.get("LANGFUSE_PUBLIC_KEY"))
+    print(os.environ.get("LANGFUSE_SECRET_KEY"))
+    print(os.environ.get("LANGFUSE_HOST"))
 
-langfuse = Langfuse()
+langfuse = Langfuse(
+    public_key=os.environ.get("LANGFUSE_PUBLIC_KEY"),
+    secret_key=os.environ.get("LANGFUSE_SECRET_KEY"),
+    host=os.environ.get("LANGFUSE_HOST")
+)
 
-def list_traces(limit=100, output_dir="../output/traces"):
+def open_trace_in_browser(trace_id):
+    base_url = os.environ.get("LANGFUSE_HOST")
+    project_id = os.environ.get("LANGFUSE_PROJECT_ID")
+    if not base_url or not project_id:
+        print("Missing LANGFUSE_HOST or LANGFUSE_PROJECT_ID")
+        return
+    full_url = f"{base_url}/project/{project_id}/traces/{trace_id}"
+    print(f"Opening {full_url}")
+    webbrowser.open(full_url)
+
+def print_trace(trace, show_comments=False):
+    print(f"<Trace \n\tat=\"{trace.createdAt}\" \n\tid=\"{trace.id}\" \n\tname=\"{trace.name}\" \n\tsession_id=\"{trace.session_id}\" \n\tprojectId=\"{trace.projectId}\" >")
+    print(f"<Input><CDATA[[\n{trace.input}\n]]></Input>")
+    print(f"<Output><CDATA[[\n{trace.output}\n]]></Output>")
+    print(f"<Metadata>{trace.metadata}</Metadata>")
+    if trace.scores:
+        print("<Scores>")
+        for score in trace.scores:
+            print(f"{score}")
+        print("</Scores>")
+    if show_comments and hasattr(trace, "comments"):
+        print(f"<Comments>\n{trace.comments}\n</Comments>")
+    print("</Trace>")
+
+def print_traces(traces, show_comments=False):
+    for trace in traces.data:
+        print_trace(trace, show_comments)
+
+def list_traces(limit=100, output_dir="../output/traces", show_comments=False):
     traces = langfuse.get_traces(limit=limit)
     os.makedirs(output_dir, exist_ok=True)
-    for trace in traces.data:
-        print(f"-----Trace ID: {trace.id}--Name: {trace.name}----------")
-        print(f"<output>{trace.output}</output>")
-        print(f"<Metadata>{trace.metadata}</Metadata>")
-        print("---")
     return traces
 
 def list_traces_by_score(score_name, min_value=None, max_value=None, limit=100):
@@ -62,11 +97,16 @@ def add_score_to_a_trace(trace_id, generation_id, name, value, data_type="NUMERI
         comment=comment
     )
 
-def create_score(name, data_type, description=""):
-    langfuse.create_score(
+def create_score(name, data_type, description="", possible_values=None, min_value=None, max_value=None):
+    langfuse.score(
         name=name,
+        value="",  # Provide a placeholder value
         data_type=data_type,
-        description=description
+        description=description,
+        # For categorical:
+        **({"possible_values": possible_values} if data_type == "CATEGORICAL" and possible_values else {}),
+        # For numeric:
+        **({"min_value": min_value, "max_value": max_value} if data_type == "NUMERIC" and min_value is not None and max_value is not None else {})
     )
 
 def score_exists(name):

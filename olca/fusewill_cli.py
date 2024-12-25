@@ -1,3 +1,4 @@
+from ast import alias
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
@@ -12,7 +13,8 @@ from fusewill_utils import (
     get_trace_by_id,
     open_trace_in_browser,
     print_traces,
-    print_trace
+    print_trace,
+    list_traces_by_score  # Ensure the updated function is imported
 )
 import dotenv
 import json
@@ -30,24 +32,24 @@ def get_single_char_input():
     return ch
 
 def main():
-    parser = argparse.ArgumentParser(description="Langfuse CLI Wrapper")
+    parser = argparse.ArgumentParser(description="FuseWill Langfuse CLI Wrapper")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # list_traces command
     parser_list = subparsers.add_parser('list_traces', help='List traces',aliases=['lt'])
-    parser_list.add_argument('--limit', type=int, default=100, help='Number of traces to fetch')
+    parser_list.add_argument('-L','--limit', type=int, default=100, help='Number of traces to fetch')
     parser_list.add_argument('--output_dir', type=str, default='../output/traces', help='Directory to save traces')
     parser_list.add_argument('-C','--comments',  action='store_true', help='Show comments from the traces', default=False)
     parser_list.add_argument('-W','--browse-interact', action='store_true', help='Ask user to open each trace in browser')
 
     # create_dataset command
-    parser_create_dataset = subparsers.add_parser('create_dataset', help='Create a new dataset')
+    parser_create_dataset = subparsers.add_parser('create_dataset', help='Create a new dataset',aliases=['cd'])
     parser_create_dataset.add_argument('name', help='Name of the dataset')
-    parser_create_dataset.add_argument('--description', default='', help='Description of the dataset')
-    parser_create_dataset.add_argument('--metadata', type=str, default='{}', help='Metadata in JSON format')
+    parser_create_dataset.add_argument('-D','--description', default='', help='Description of the dataset')
+    parser_create_dataset.add_argument('-M','--metadata', type=str, default='{}', help='Metadata in JSON format')
 
     # create_prompt command
-    parser_create_prompt = subparsers.add_parser('create_prompt', help='Create a new prompt')
+    parser_create_prompt = subparsers.add_parser('create_prompt', help='Create a new prompt',aliases=['cp'])
     parser_create_prompt.add_argument('name', help='Name of the prompt')
     parser_create_prompt.add_argument('prompt_text', help='Prompt text')
     parser_create_prompt.add_argument('--model_name', default='gpt-4o-mini', help='Model name')
@@ -56,7 +58,7 @@ def main():
     parser_create_prompt.add_argument('--supported_languages', nargs='*', default=[], help='Supported languages')
 
     # update_prompt command
-    parser_update_prompt = subparsers.add_parser('update_prompt', help='Update an existing prompt')
+    parser_update_prompt = subparsers.add_parser('update_prompt', help='Update an existing prompt',aliases=['up'])
     parser_update_prompt.add_argument('name', help='Name of the prompt')
     parser_update_prompt.add_argument('new_prompt_text', help='New prompt text')
 
@@ -65,11 +67,11 @@ def main():
     parser_delete_dataset.add_argument('name', help='Name of the dataset')
 
     # get_trace_by_id command
-    parser_get_trace = subparsers.add_parser('get_trace_by_id', help='Get a trace by ID')
+    parser_get_trace = subparsers.add_parser('get_trace_by_id', help='Get a trace by ID',aliases=['gt'])
     parser_get_trace.add_argument('trace_id', help='Trace ID')
 
     # new_score command
-    parser_new_score = subparsers.add_parser('new_score', help='Create a new score')
+    parser_new_score = subparsers.add_parser('new_score', help='Create a new score',aliases=['ns'])
     parser_new_score.add_argument('name', help='Score name')
     parser_new_score.add_argument('data_type', help='Data type of the score')
     parser_new_score.add_argument('--description', default='', help='Description of the score')
@@ -84,11 +86,11 @@ def main():
     parser_add_score.add_argument('--comment', default='', help='Comment for the score')
 
     # list_traces_by_score command
-    parser_list_by_score = subparsers.add_parser('list_traces_by_score', help='List traces by score')
+    parser_list_by_score = subparsers.add_parser('list_traces_by_score', help='List traces by score', aliases=['ltbs','lbys','lts'])
     parser_list_by_score.add_argument('score_name', help='Score name')
     parser_list_by_score.add_argument('--min_value', type=float, help='Minimum score value')
     parser_list_by_score.add_argument('--max_value', type=float, help='Maximum score value')
-    parser_list_by_score.add_argument('--limit', type=int, default=100, help='Number of traces to fetch')
+    parser_list_by_score.add_argument('-L','--limit', type=int, default=100, help='Number of traces to fetch')
 
     args = parser.parse_args()
 
@@ -115,7 +117,7 @@ def main():
                 elif resp == 'q':
                     print("Quitting.")
                     break
-    elif args.command == 'create_dataset':
+    elif args.command == 'create_dataset' or args.command == 'cd':
         metadata = json.loads(args.metadata)
         create_dataset(name=args.name, description=args.description, metadata=metadata)
     elif args.command == 'create_prompt':
@@ -127,16 +129,16 @@ def main():
             labels=args.labels,
             supported_languages=args.supported_languages
         )
-    elif args.command == 'update_prompt':
+    elif args.command == 'update_prompt' or args.command == 'up':
         update_prompt(name=args.name, new_prompt_text=args.new_prompt_text)
     elif args.command == 'delete_dataset':
         delete_dataset(name=args.name)
-    elif args.command == 'get_trace_by_id':
+    elif args.command == 'get_trace_by_id' or args.command == 'gt' :
         trace = get_trace_by_id(trace_id=args.trace_id)
         print(trace)
-    elif args.command == 'new_score':
+    elif args.command == 'new_score' or args.command == 'ns':
         fu.create_score(name=args.name, data_type=args.data_type, description=args.description)
-    elif args.command == 'add_score_to_trace':
+    elif args.command == 'add_score_to_trace' or args.command == 's2t':
         if not fu.score_exists(name=args.name):
             fu.create_score(name=args.name, data_type=args.data_type)
         fu.add_score_to_a_trace(
@@ -147,7 +149,7 @@ def main():
             data_type=args.data_type,
             comment=args.comment
         )
-    elif args.command == 'list_traces_by_score':
+    elif args.command == 'list_traces_by_score' or args.command == 'ltbs' or args.command == 'lbys' or args.command == 'lts':
         traces = fu.list_traces_by_score(
             score_name=args.score_name,
             min_value=args.min_value,
@@ -155,7 +157,8 @@ def main():
             limit=args.limit
         )
         for trace in traces:
-            print(f"Trace ID: {trace.id}, Name: {trace.name}")
+            print_trace(trace)
+            #print(f"Trace ID: {trace.id}, Name: {trace.name}")
     else:
         parser.print_help()
         exit(1)

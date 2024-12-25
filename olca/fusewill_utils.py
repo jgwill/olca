@@ -3,6 +3,7 @@ import sys
 import json
 import dotenv
 import webbrowser
+import requests  # Add this import
 
 # Load .env from the current working directory
 dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
@@ -53,6 +54,20 @@ def open_trace_in_browser(trace_id):
     print(f"Opening {full_url}")
     webbrowser.open(full_url)
 
+def get_score_by_id(score_id):
+    """Retrieve score details by score ID."""
+    base_url = os.environ.get("LANGFUSE_HOST")
+    public_key = os.environ.get("LANGFUSE_PUBLIC_KEY")
+    secret_key = os.environ.get("LANGFUSE_SECRET_KEY")
+    url = f"{base_url}/api/public/scores/{score_id}"
+    try:
+        response = requests.get(url, auth=(public_key, secret_key))
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error retrieving score {score_id}: {e}")
+        return None
+
 def print_trace(trace, show_comments=False):
     print(f"<Trace \n\tat=\"{trace.createdAt}\" \n\tid=\"{trace.id}\" \n\tname=\"{trace.name}\" \n\tsession_id=\"{trace.session_id}\" \n\tprojectId=\"{trace.projectId}\" >")
     print(f"<Input><CDATA[[\n{trace.input}\n]]></Input>")
@@ -61,8 +76,10 @@ def print_trace(trace, show_comments=False):
         print(f"<Metadata>{trace.metadata}</Metadata>")
     if trace.scores:
         print("<Scores>")
-        for score in trace.scores:
-            print(f"<Score>{score}</Score>")
+        for score_id in trace.scores:
+            score = get_score_by_id(score_id)
+            if score:
+                print(f"<Score name=\"{score['name']}\" value=\"{score['value']}\" data_type=\"{score['dataType']}\" />")
         print("</Scores>")
     if show_comments and hasattr(trace, "comments"):
         print(f"<Comments>\n{trace.comments}\n</Comments>")
@@ -81,9 +98,10 @@ def list_traces_by_score(score_name, min_value=None, max_value=None, limit=100):
     traces = langfuse.get_traces(limit=limit)
     filtered_traces = []
     for trace in traces.data:
-        for score in trace.scores:
-            if score.name == score_name:
-                if (min_value is None or score.value >= min_value) and (max_value is None or score.value <= max_value):
+        for score_id in trace.scores:
+            score = get_score_by_id(score_id)
+            if score and score.get('name') == score_name:
+                if (min_value is None or score.get('value') >= min_value) and (max_value is None or score.get('value') <= max_value):
                     filtered_traces.append(trace)
                     break
     return filtered_traces

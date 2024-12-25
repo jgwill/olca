@@ -192,21 +192,10 @@ def main():
     tracing_manager = TracingManager(config)
     callbacks = tracing_manager.get_callbacks()
     
-    # Check for tracing flag in config and CLI
-    tracing_enabled = config.get('tracing', False) or args.tracing or os.getenv("LANGCHAIN_TRACING_V2") == "true"
-    if tracing_enabled:
-        os.environ["LANGCHAIN_TRACING_V2"] = "true"
-        if not os.getenv("LANGCHAIN_API_KEY"):
-            print("Error: LANGCHAIN_API_KEY environment variable is required for tracing. Please set it up at : https://smith.langchain.com/settings")
-            exit(1)
-        # Initialize LangSmith client
-        import langsmith
-        LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
-        LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY")
-        if not LANGSMITH_API_KEY and not LANGCHAIN_API_KEY:
-            print("Error: LANGSMITH_API_KEY or LANGCHAIN_API_KEY environment variable is not set.")
-            exit(1)
-        client = langsmith.Client(api_key=LANGSMITH_API_KEY or LANGCHAIN_API_KEY)
+    # Remove old tracing setup
+    tracing_enabled = config.get('tracing', False) or args.tracing
+    if tracing_enabled and not callbacks:
+        print("Warning: Tracing enabled but no handlers configured")
 
     try:
             
@@ -292,7 +281,10 @@ def main():
     
 
     try:
-        print_stream(graph.stream(inputs, config={"callbacks": callbacks} if callbacks else None))
+        graph_config = {"callbacks": callbacks} if callbacks else {}
+        if recursion_limit:
+            graph_config["recursion_limit"] = recursion_limit
+        print_stream(graph.stream(inputs, config=graph_config))
     except GraphRecursionError as e:
         #print(f"Error: {e}")
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")

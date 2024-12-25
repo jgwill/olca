@@ -166,6 +166,8 @@ def _parse_args():
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
     return parser.parse_args()
 
+from olca.tracing import TracingManager
+
 def main():
     args = _parse_args()
     olca_config_file = 'olca.yml'
@@ -185,6 +187,10 @@ def main():
         return
 
     config = load_config(olca_config_file)
+    
+    # Initialize tracing
+    tracing_manager = TracingManager(config)
+    callbacks = tracing_manager.get_callbacks()
     
     # Check for tracing flag in config and CLI
     tracing_enabled = config.get('tracing', False) or args.tracing or os.getenv("LANGCHAIN_TRACING_V2") == "true"
@@ -286,7 +292,7 @@ def main():
     
 
     try:
-        print_stream(graph.stream(inputs, stream_mode="values"))
+        print_stream(graph.stream(inputs, config={"callbacks": callbacks} if callbacks else None))
     except GraphRecursionError as e:
         #print(f"Error: {e}")
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")
@@ -317,7 +323,8 @@ def initialize_config_file():
             "recursion_limit": int(input("recursion_limit [12]: ") or default_recursion_limit),
             "temperature": float(input("temperature [0]: ") or default_temperature),
             "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_human_input,
-            "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing
+            "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing,
+            "tracing_providers": ["langsmith", "langfuse"]
         }
         
         user_system_instructions = input(f"system_instructions [{default_system_instructions}]: ")

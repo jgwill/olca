@@ -62,7 +62,7 @@ def print_trace(trace, show_comments=False):
     if trace.scores:
         print("<Scores>")
         for score in trace.scores:
-            print(f"{score}")
+            print(f"<Score>{score}</Score>")
         print("</Scores>")
     if show_comments and hasattr(trace, "comments"):
         print(f"<Comments>\n{trace.comments}\n</Comments>")

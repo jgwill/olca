@@ -234,7 +234,7 @@ def main():
         api_key = os.getenv(api_keyname)
         if api_key:
             os.environ[api_key_variable] = api_key
-    except :
+    except:
         #load .env file in current dir or HOME and find OPENAI_API_KEY
         try:
             dotenv.load_dotenv()
@@ -246,17 +246,11 @@ def main():
                 print("Error: Could not load .env file")
                 exit(1)
 
-
-       
-
-        
-        
-    
     system_instructions = config.get('system_instructions', '')
     user_input = config.get('user_input', '')
     default_model_id = "gpt-4o-mini"
-    model_name=config.get('model_name', default_model_id)
-    recursion_limit=config.get('recursion_limit', 15)
+    model_name = config.get('model_name', default_model_id)
+    recursion_limit = config.get('recursion_limit', 15)
     disable_system_append = _parse_args().disable_system_append
     
     # Use the system_instructions and user_input in your CLI logic
@@ -266,11 +260,8 @@ def main():
     print("Recursion Limit:", recursion_limit)
     print("Trace:", tracing_enabled)
     
-    
-    
-    
     model = ChatOpenAI(model=model_name, temperature=0)
-    selected_tools = [ "terminal"]
+    selected_tools = ["terminal"]
     
     human_switch = args.human
     #look in olca_config.yaml for human: true
@@ -281,43 +272,44 @@ def main():
         selected_tools.append("human")
     
     if args.math:
-        math_llm=OpenAI()
+        math_llm = OpenAI()
         selected_tools.append("llm-math")
         if human_switch:
-            tools = load_tools(    selected_tools, llm=math_llm,   allow_dangerous_tools=True, input_func=get_input)
+            tools = load_tools(selected_tools, llm=math_llm, allow_dangerous_tools=True, input_func=get_input)
         else:
-            tools = load_tools(    selected_tools, llm=math_llm,   allow_dangerous_tools=True)
+            tools = load_tools(selected_tools, llm=math_llm, allow_dangerous_tools=True)
     else:
         if human_switch:
-            tools = load_tools(    selected_tools,    allow_dangerous_tools=True, input_func=get_input)
+            tools = load_tools(selected_tools, allow_dangerous_tools=True, input_func=get_input)
         else:
-            tools = load_tools(    selected_tools,    allow_dangerous_tools=True)
+            tools = load_tools(selected_tools, allow_dangerous_tools=True)
     
     if human_switch:
         user_input = user_input + " Dont forget to USE THE HUMAN-IN-THE-LOOP TOOL"
-        system_instructions= system_instructions + ". Use the human-in-the-loop tool"
+        system_instructions = system_instructions + ". Use the human-in-the-loop tool"
     
     # Define the graph
     graph = create_react_agent(model, tools=tools)
     
     if graph.config is None:
-      graph.config = {}
+        graph.config = {}
     graph.config["recursion_limit"] = recursion_limit
     
-    inputs,system_instructions,user_input = prepare_input(user_input, system_instructions, not disable_system_append, human_switch)
+    inputs, system_instructions, user_input = prepare_input(user_input, system_instructions, not disable_system_append, human_switch)
     
     setup_required_directories(system_instructions, user_input)
     
-
     try:
         graph_config = {"callbacks": callbacks} if callbacks else {}
         if recursion_limit:
             graph_config["recursion_limit"] = recursion_limit
         print_stream(graph.stream(inputs, config=graph_config))
     except GraphRecursionError as e:
-        #print(f"Error: {e}")
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")
         print("For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT")
+    except KeyboardInterrupt:
+        print("\nExiting gracefully.")
+        exit(0)
 
 def setup_required_directories(system_instructions, user_input):
     try:    

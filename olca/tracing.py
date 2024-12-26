@@ -11,6 +11,7 @@ class TracingManager:
     def __init__(self, config):
         self.config = config
         self.handlers = []
+        self.langfuse = None
         self.initialize_tracing()
 
     def initialize_tracing(self):
@@ -34,8 +35,8 @@ class TracingManager:
             os.environ["LANGCHAIN_TRACING_V2"] = "true"
 
     def _setup_langfuse(self):
-        langfuse = initialize_langfuse()
-        if not langfuse:
+        self.langfuse = initialize_langfuse()
+        if not self.langfuse:
             print("Warning: Missing Langfuse environment variables")
             return None
             
@@ -43,3 +44,11 @@ class TracingManager:
 
     def get_callbacks(self):
         return self.handlers if self.handlers else None
+
+    def flush(self):
+        if self.langfuse:
+            self.langfuse.flush()
+
+    def shutdown(self):
+        if self.langfuse:
+            self.langfuse.shutdown()

@@ -5,6 +5,7 @@ import dotenv
 from langchain import hub
 import argparse
 import yaml
+from olca.utils import load_environment, initialize_langfuse
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -135,11 +136,19 @@ def extract_extra_directories_from_olca_config_system_and_user_input(system_inst
 
 def print_stream(stream):
     for s in stream:
-        message = s["messages"][-1]
-        if isinstance(message, tuple):
-            print(message)
-        else:
-            message.pretty_print()
+        try:
+            # Handle different response formats
+            if isinstance(s, dict) and "messages" in s:
+                message = s["messages"][-1]
+            else:
+                message = s
+                
+            if isinstance(message, tuple):
+                print(message)
+            else:
+                print(message.content)
+        except Exception as e:
+            print(s)
 
 def prepare_input(user_input, system_instructions,append_prompt=True, human=False):
     appended_prompt = system_instructions + SYSTEM_PROMPT_APPEND if append_prompt else system_instructions
@@ -172,6 +181,12 @@ def main():
     args = _parse_args()
     olca_config_file = 'olca.yml'
     
+    # Load environment variables first
+    load_environment()
+    
+    # Initialize Langfuse if needed
+    langfuse = initialize_langfuse()
+    
     if args.init:
         if os.path.exists(olca_config_file):
             print("Error: Configuration file already exists. Cannot run 'olca init'.")
@@ -196,6 +211,14 @@ def main():
     tracing_enabled = config.get('tracing', False) or args.tracing
     if tracing_enabled and not callbacks:
         print("Warning: Tracing enabled but no handlers configured")
+
+    if tracing_enabled:
+        # Verify Langfuse configuration
+        if not all([os.getenv(key) for key in ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"]]):
+            print("Warning: Langfuse environment variables missing")
+        # Verify LangSmith configuration
+        if not os.getenv("LANGCHAIN_API_KEY"):
+            print("Warning: LANGCHAIN_API_KEY not set")
 
     try:
             

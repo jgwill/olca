@@ -1,5 +1,7 @@
 import os
 from langfuse.callback import CallbackHandler as LangfuseCallbackHandler
+from langfuse import Langfuse
+from olca.utils import initialize_langfuse
 
 class TracingManager:
     def __init__(self, config):
@@ -28,8 +30,9 @@ class TracingManager:
             os.environ["LANGCHAIN_TRACING_V2"] = "true"
 
     def _setup_langfuse(self):
-        if not (os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY")):
-            print("Warning: LANGFUSE_PUBLIC_KEY/LANGFUSE_SECRET_KEY not set for Langfuse tracing")
+        langfuse = initialize_langfuse()
+        if not langfuse:
+            print("Warning: Missing Langfuse environment variables")
             return None
             
         return LangfuseCallbackHandler()

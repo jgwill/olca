@@ -7,6 +7,7 @@ import argparse
 import yaml
 from olca.utils import load_environment, initialize_langfuse
 from olca.tracing import TracingManager
+from olca.olcahelper import setup_required_directories, initialize_config_file
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use

@@ -31,7 +31,7 @@ You do what is above and consider the following when doing the task:
 * Write and update your plan in ./.olca/plan.md
 * You watch out for basic syntax errors with your args when executing echo commands. (example: Syntax error: Unterminated quoted string, make sure to escape your single and double quotes)
 ----
-REMEMBER: Dont introduce nor conclude, just output results. No comments. you  present in a coherent format without preambles or fluff. Never use the word "determination".
+REMEMBER: Dont introduce nor conclude, just output results. No comments. you  present in a coherent format without preambles or fluff. Never use the word "determination" and we never brainstorm (we conceptualize the result we want in the germination phase then transform it into vision by choice and work as assimilating the vision to until the last phase which is completing our work).
 """
 
 HUMAN_APPEND_PROMPT = """
@@ -46,6 +46,7 @@ Example Interaction:
 ==============================================
 { PROMPT_FOR_USER_INPUT_SHORT } :
 </example>
+REMEMBER: Never ask to brainstorm (NEVER USE THAT WORD)
 """
 def get_input() -> str:
     print("----------------------")
@@ -97,8 +98,6 @@ import warnings
 
 # Suppress the specific UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, message="The shell tool has no safeguards by default. Use at your own risk.")
-warnings.filterwarnings("ignore", message="Item exceeds size limit", category=UserWarning)
-warnings.filterwarnings("ignore", message="{'keep_alive': True, 'pending_switch_proposals': set(), 'states': {CLIENT: IDLE, SERVER: IDLE}}", category=UserWarning)
 
 from langchain_community.tools.shell import ShellTool
 

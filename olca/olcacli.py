@@ -140,7 +140,7 @@ def print_stream(stream):
             # Skip Langfuse internal state messages and size limit warnings
             if isinstance(s, dict) and ('keep_alive' in s or 'states' in s):
                 continue
-            if isinstance(s, str) and 'Item exceeds size limit' in s:
+            if isinstance(s, str) and ('Item exceeds size limit' in s or 'pending_switch_proposals' in s):
                 continue
                 
             # Handle different response formats
@@ -179,6 +179,7 @@ def _parse_args():
     parser.add_argument("-H", "--human", action="store_true", help="Human in the loop mode")
     parser.add_argument("-M", "--math", action="store_true", help="Enable math tool")
     parser.add_argument("-T", "--tracing", action="store_true", help="Enable tracing")
+    parser.add_argument("--debug", action="store_true", help="Enable debug mode")
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
     return parser.parse_args()
@@ -193,7 +194,7 @@ def main():
     load_environment()
     
     # Initialize Langfuse if needed
-    langfuse = initialize_langfuse()
+    langfuse = initialize_langfuse(debug=True if args.debug else False)
     
     if args.init:
         if os.path.exists(olca_config_file):

@@ -12,7 +12,7 @@ def load_environment():
                                           "LANGCHAIN_API_KEY", "OPENAI_API_KEY"]]):
         dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
 
-def initialize_langfuse():
+def initialize_langfuse( debug=False):
     required_vars = ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"]
     if not all(os.getenv(var) for var in required_vars):
         return None
@@ -20,5 +20,6 @@ def initialize_langfuse():
     return Langfuse(
         public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
         secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
-        host=os.getenv("LANGFUSE_HOST")
+        host=os.getenv("LANGFUSE_HOST"),
+        debug=debug
     )

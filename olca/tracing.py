@@ -3,8 +3,10 @@ from langfuse.callback import CallbackHandler as LangfuseCallbackHandler
 from langfuse import Langfuse
 from olca.utils import initialize_langfuse
 import warnings
-#ignore : WARNING:langfuse:Item exceeds size limit ( OF Langfuse)
-warnings.filterwarnings("ignore", category=Warning)
+
+# Ignore specific Langfuse warning
+warnings.filterwarnings("ignore", message="Item exceeds size limit", category=UserWarning)
+
 class TracingManager:
     def __init__(self, config):
         self.config = config

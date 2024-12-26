@@ -97,6 +97,8 @@ import warnings
 
 # Suppress the specific UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, message="The shell tool has no safeguards by default. Use at your own risk.")
+warnings.filterwarnings("ignore", message="Item exceeds size limit", category=UserWarning)
+warnings.filterwarnings("ignore", message="{'keep_alive': True, 'pending_switch_proposals': set(), 'states': {CLIENT: IDLE, SERVER: IDLE}}", category=UserWarning)
 
 from langchain_community.tools.shell import ShellTool
 

@@ -137,6 +137,10 @@ def extract_extra_directories_from_olca_config_system_and_user_input(system_inst
 def print_stream(stream):
     for s in stream:
         try:
+            # Skip Langfuse internal state messages
+            if isinstance(s, dict) and 'keep_alive' in s and 'states' in s:
+                continue
+                
             # Handle different response formats
             if isinstance(s, dict) and "messages" in s:
                 message = s["messages"][-1]
@@ -145,10 +149,16 @@ def print_stream(stream):
                 
             if isinstance(message, tuple):
                 print(message)
-            else:
+            elif hasattr(message, 'content'):
                 print(message.content)
+            else:
+                # Only print if it's not a system message
+                if not (isinstance(s, dict) and any(k in s for k in ['keep_alive', 'states'])):
+                    print(s)
         except Exception as e:
-            print(s)
+            # Only print if it's not a system message
+            if not (isinstance(s, dict) and any(k in s for k in ['keep_alive', 'states'])):
+                print(s)
 
 def prepare_input(user_input, system_instructions,append_prompt=True, human=False):
     appended_prompt = system_instructions + SYSTEM_PROMPT_APPEND if append_prompt else system_instructions

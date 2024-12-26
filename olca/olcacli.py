@@ -6,6 +6,7 @@ from langchain import hub
 import argparse
 import yaml
 from olca.utils import load_environment, initialize_langfuse
+from olca.tracing import TracingManager
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -184,8 +185,6 @@ def _parse_args():
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
     return parser.parse_args()
 
-from olca.tracing import TracingManager
-
 def main():
     args = _parse_args()
     olca_config_file = 'olca.yml'
@@ -230,13 +229,11 @@ def main():
             print("Warning: LANGCHAIN_API_KEY not set")
 
     try:
-            
         api_key_variable = "OPENAI_API_KEY"
-        api_keyname=config.get('api_keyname',"OPENAI_API_KEY_olca")
-
-        api_key_lcpractices2409 = os.getenv(api_keyname)
-        #print(api_key_lcpractices2409)
-        os.environ[api_key_variable] = api_key_lcpractices2409
+        api_keyname = config.get('api_keyname', "OPENAI_API_KEY_olca")
+        api_key = os.getenv(api_keyname)
+        if api_key:
+            os.environ[api_key_variable] = api_key
     except :
         #load .env file in current dir or HOME and find OPENAI_API_KEY
         try:

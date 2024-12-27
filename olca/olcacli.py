@@ -8,9 +8,6 @@ import yaml
 from olca.utils import load_environment, initialize_langfuse
 from olca.tracing import TracingManager
 from olca.olcahelper import setup_required_directories, initialize_config_file
-import time
-import httpx
-from openai.error import APIConnectionError
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -308,19 +305,7 @@ def main():
         graph_config = {"callbacks": callbacks} if callbacks else {}
         if recursion_limit:
             graph_config["recursion_limit"] = recursion_limit
-        
-        retry_attempts = 3
-        for attempt in range(retry_attempts):
-            try:
-                print_stream(graph.stream(inputs, config=graph_config))
-                break
-            except (httpx.ConnectError, APIConnectionError) as e:
-                if attempt < retry_attempts - 1:
-                    print(f"Network error encountered: {e}. Retrying in 5 seconds...")
-                    time.sleep(5)
-                else:
-                    print("Failed to connect after multiple attempts. Exiting.")
-                    raise e
+        print_stream(graph.stream(inputs, config=graph_config))
     except GraphRecursionError as e:
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")
         print("For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT")

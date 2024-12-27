@@ -210,7 +210,7 @@ def main():
             if args.output:
                 try:
                     with open(args.output, 'w') as f:
-                        json.dump([trace.__dict__ for trace in traces], f, indent=2)
+                        json.dump([trace.__dict__ for trace in traces], f, indent=2, default=str)
                     print(f"Traces written to {os.path.realpath(args.output)}")
                 except Exception as e:
                     print(f"Error writing to file {args.output}: {e}")

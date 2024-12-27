@@ -43,7 +43,7 @@ langfuse = Langfuse(
     secret_key=os.environ.get("LANGFUSE_SECRET_KEY"),
     host=os.environ.get("LANGFUSE_HOST")
 )
-
+    
 def open_trace_in_browser(trace_id):
     base_url = os.environ.get("LANGFUSE_HOST")
     project_id = os.environ.get("LANGFUSE_PROJECT_ID")
@@ -66,6 +66,20 @@ def get_score_by_id(score_id):
         return response.json()
     except Exception as e:
         print(f"Error retrieving score {score_id}: {e}")
+        return None
+
+def list_scores():
+    """Retrieve all score configurations."""
+    base_url = os.environ.get("LANGFUSE_HOST")
+    public_key = os.environ.get("LANGFUSE_PUBLIC_KEY")
+    secret_key = os.environ.get("LANGFUSE_SECRET_KEY")
+    url = f"{base_url}/api/public/score-configs"
+    try:
+        response = requests.get(url, auth=(public_key, secret_key))
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error retrieving scores: {e}")
         return None
 
 def print_trace(trace, show_comments=False):
@@ -157,7 +171,7 @@ def create_prompt(name, prompt_text, model_name, temperature, labels=None, suppo
         }
     )
 def get_prompt(name, label="production"):
-    return langfuse.get_prompt(name=name,label="production")
+    return langfuse.get_prompt(name=name,label=label)
   
 def update_prompt(name, new_prompt_text):
     prompt = langfuse.get_prompt(name=name)

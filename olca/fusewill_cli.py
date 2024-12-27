@@ -92,6 +92,10 @@ def main():
     parser_list_by_score.add_argument('--max_value', type=float, help='Maximum score value')
     parser_list_by_score.add_argument('-L','--limit', type=int, default=100, help='Number of traces to fetch')
 
+    # list_scores command
+    parser_list_scores = subparsers.add_parser('list_scores', help='List all scores', aliases=['ls'])
+    parser_list_scores.add_argument('-o', '--output', type=str, help='Output JSON file path')
+
     args = parser.parse_args()
 
     if args.command == 'list_traces' or args.command == 'lt':
@@ -159,6 +163,20 @@ def main():
         for trace in traces:
             print_trace(trace)
             #print(f"Trace ID: {trace.id}, Name: {trace.name}")
+    elif args.command == 'list_scores' or args.command == 'ls':
+        scores = fu.list_scores()
+        if scores:
+            if args.output:
+                try:
+                    with open(args.output, 'w') as f:
+                        json.dump(scores, f, indent=2)
+                    print(f"Scores written to {os.path.realpath(args.output)}")
+                except Exception as e:
+                    print(f"Error writing to file {args.output}: {e}")
+            else:
+                print(json.dumps(scores, indent=2))
+        else:
+            print("No scores found.")
     else:
         parser.print_help()
         exit(1)

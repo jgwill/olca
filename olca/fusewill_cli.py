@@ -96,6 +96,16 @@ def main():
     parser_list_scores = subparsers.add_parser('list_scores', help='List all scores', aliases=['ls'])
     parser_list_scores.add_argument('-o', '--output', type=str, help='Output JSON file path')
 
+    # search_traces command
+    parser_search = subparsers.add_parser('search_traces', help='Search and filter traces with advanced options', aliases=['st'])
+    parser_search.add_argument('--start_date', type=str, help='Start date in ISO format (e.g., 2024-01-01)')
+    parser_search.add_argument('--end_date', type=str, help='End date in ISO format (e.g., 2024-12-31)')
+    parser_search.add_argument('--keywords', nargs='*', help='Keywords to search in input or output')
+    parser_search.add_argument('--tags', nargs='*', help='Tags to filter traces')
+    parser_search.add_argument('--metadata', nargs='*', help='Metadata filters in key=value format')
+    parser_search.add_argument('-L', '--limit', type=int, default=100, help='Number of traces to fetch')
+    parser_search.add_argument('-o', '--output', type=str, help='Output JSON file path')
+
     args = parser.parse_args()
 
     if args.command == 'list_traces' or args.command == 'lt':
@@ -177,6 +187,38 @@ def main():
                 print(json.dumps(scores, indent=2))
         else:
             print("No scores found.")
+    elif args.command == 'search_traces' or args.command == 'st':
+        metadata_filters = {}
+        if args.metadata:
+            for item in args.metadata:
+                if '=' in item:
+                    key, value = item.split('=', 1)
+                    metadata_filters[key] = value
+                else:
+                    print(f"Ignoring invalid metadata filter: {item}")
+
+        traces = fu.search_traces(
+            start_date=args.start_date,
+            end_date=args.end_date,
+            keywords=args.keywords,
+            tags=args.tags,
+            metadata_filters=metadata_filters,
+            limit=args.limit
+        )
+
+        if traces:
+            if args.output:
+                try:
+                    with open(args.output, 'w') as f:
+                        json.dump([trace.__dict__ for trace in traces], f, indent=2)
+                    print(f"Traces written to {os.path.realpath(args.output)}")
+                except Exception as e:
+                    print(f"Error writing to file {args.output}: {e}")
+            else:
+                for trace in traces:
+                    fu.print_trace(trace)
+        else:
+            print("No traces found matching the criteria.")
     else:
         parser.print_help()
         exit(1)

@@ -4,6 +4,8 @@ import json
 import dotenv
 import webbrowser
 import requests  # Add this import
+import datetime  # Add this import
+import pytz      # Add this import
 
 # Load .env from the current working directory
 dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
@@ -43,10 +45,6 @@ langfuse = Langfuse(
     secret_key=os.environ.get("LANGFUSE_SECRET_KEY"),
     host=os.environ.get("LANGFUSE_HOST")
 )
-def dummy():
-    o=langfuse.get_observations()
-    g=langfuse.get_generations()
-    prompts_list=langfuse.get_dataset()
     
 def open_trace_in_browser(trace_id):
     base_url = os.environ.get("LANGFUSE_HOST")
@@ -187,3 +185,60 @@ def delete_dataset(name):
 
 def get_trace_by_id(trace_id):
     return langfuse.get_trace(trace_id)
+
+def search_traces(
+    start_date=None,
+    end_date=None,
+    keywords=None,
+    tags=None,
+    metadata_filters=None,
+    limit=100
+):
+    """
+    Search and filter traces based on date range, keywords, tags, and metadata.
+
+    Parameters:
+        start_date (str): ISO format date string for the start of the date range.
+        end_date (str): ISO format date string for the end of the date range.
+        keywords (list): List of keywords to search in input or output.
+        tags (list): List of tags to filter traces.
+        metadata_filters (dict): Dictionary of metadata key-value pairs for filtering.
+        limit (int): Number of traces to fetch.
+
+    Returns:
+        list: Filtered list of traces.
+    """
+    try:
+        params = {}
+        if start_date:
+            from_timestamp = datetime.datetime.fromisoformat(start_date)
+            from_timestamp = from_timestamp.replace(tzinfo=pytz.UTC)
+            params['from_timestamp'] = from_timestamp
+        if end_date:
+            to_timestamp = datetime.datetime.fromisoformat(end_date)
+            to_timestamp = to_timestamp.replace(tzinfo=pytz.UTC)
+            params['to_timestamp'] = to_timestamp
+        if tags:
+            params['tags'] = tags
+        if metadata_filters:
+            for key, value in metadata_filters.items():
+                params[f'metadata.{key}'] = value
+
+        traces = langfuse.get_traces(limit=limit, **params)
+        if not traces:
+            return []
+
+        filtered_traces = traces.data
+
+        if keywords:
+            keyword_set = set(keyword.lower() for keyword in keywords)
+            filtered_traces = [
+                trace for trace in filtered_traces
+                if any(keyword in trace.input.lower() for keyword in keyword_set) or
+                   any(keyword in trace.output.lower() for keyword in keyword_set)
+            ]
+
+        return filtered_traces
+    except Exception as e:
+        print(f"Error searching traces: {e}")
+        return []

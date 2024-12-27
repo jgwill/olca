@@ -43,6 +43,10 @@ langfuse = Langfuse(
     secret_key=os.environ.get("LANGFUSE_SECRET_KEY"),
     host=os.environ.get("LANGFUSE_HOST")
 )
+def dummy():
+    o=langfuse.get_observations()
+    g=langfuse.get_generations()
+    prompts_list=langfuse.get_dataset()
     
 def open_trace_in_browser(trace_id):
     base_url = os.environ.get("LANGFUSE_HOST")

@@ -1,5 +1,8 @@
 # Create a new file "prompts.py" to store the prompt-related constants.
 
+
+#@STCGoal https://smith.langchain.com/hub/jgwill/olca_system_append
+SYSTEM_PROMPT_APPEND_hub_tag_name="jgwill/olca_system_append"
 SYSTEM_PROMPT_APPEND = """
 You do what is above and consider the following when doing the task:
 ---
@@ -22,6 +25,8 @@ You do what is above and consider the following when doing the task:
 REMEMBER: Dont introduce nor conclude, just output results. No comments. you  present in a coherent format without preambles or fluff. Never use the word "determination" and we never brainstorm (we conceptualize the result we want in the germination phase then transform it into vision by choice and work as assimilating the vision to until the last phase which is completing our work).
 """
 
+#@STCGoal https://smith.langchain.com/hub/jgwill/olca_human_append
+HUMAN_APPEND_PROMPT_hub_tag_name="jgwill/olca_human_append"
 HUMAN_APPEND_PROMPT = """
 * Utilize the 'human' tool for interactions as directed.
 * Communicate clearly and simply, avoiding exaggeration.

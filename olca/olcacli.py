@@ -55,7 +55,6 @@ dotenv.load_dotenv()
 
 # First we initialize the model we want to use.
 from json import load
-from langchain_openai import OpenAI
 from langchain.agents import AgentExecutor, create_react_agent
 
 from langchain_community.agent_toolkits.load_tools import load_tools
@@ -230,6 +229,8 @@ def main():
     print("Trace:", tracing_enabled)
     
     model = load_model_provider(model_name)
+    if isinstance(model, ChatOpenAI):
+        model = model.bind_tools(tools)
     selected_tools = ["terminal"]
     
     human_switch = args.human

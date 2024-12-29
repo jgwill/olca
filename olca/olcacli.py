@@ -1,13 +1,14 @@
 #%%
 import os
-from click import prompt
+import sys
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import dotenv
 from langchain import hub
 import argparse
 import yaml
 from olca.utils import load_environment, initialize_langfuse
 from olca.tracing import TracingManager
-from olca.olcahelper import setup_required_directories, initialize_config_file
+from olca.olcahelper import setup_required_directories, initialize_config_file, load_model_provider
 from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
 
 #jgwill/olca1
@@ -54,7 +55,7 @@ dotenv.load_dotenv()
 
 # First we initialize the model we want to use.
 from json import load
-from langchain_openai import ChatOpenAI,OpenAI
+from langchain_openai import OpenAI
 from langchain.agents import AgentExecutor, create_react_agent
 
 from langchain_community.agent_toolkits.load_tools import load_tools
@@ -228,7 +229,7 @@ def main():
     print("Recursion Limit:", recursion_limit)
     print("Trace:", tracing_enabled)
     
-    model = ChatOpenAI(model=model_name, temperature=0)
+    model = load_model_provider(model_name)
     selected_tools = ["terminal"]
     
     human_switch = args.human

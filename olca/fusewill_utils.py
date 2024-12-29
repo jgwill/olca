@@ -8,11 +8,11 @@ import datetime  # Add this import
 import pytz      # Add this import
 
 # Load .env from the current working directory
-dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
+dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"), override=True)
 
 # Try loading from home directory if variables are still not set
 if not os.environ.get("LANGFUSE_PUBLIC_KEY") or not os.environ.get("LANGFUSE_SECRET_KEY") or not os.environ.get("LANGFUSE_HOST"):
-    dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
+    dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"), override=True)
 
 # Final check before exiting
 missing_vars = []
@@ -33,7 +33,6 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import json
 
-import dotenv
 _DEBUG_=False
 if _DEBUG_:
     print(os.environ.get("LANGFUSE_PUBLIC_KEY"))
@@ -43,7 +42,8 @@ if _DEBUG_:
 langfuse = Langfuse(
     public_key=os.environ.get("LANGFUSE_PUBLIC_KEY"),
     secret_key=os.environ.get("LANGFUSE_SECRET_KEY"),
-    host=os.environ.get("LANGFUSE_HOST")
+    host=os.environ.get("LANGFUSE_HOST"),
+    release=os.environ.get("LANGFUSE_RELEASE", None)
 )
     
 def open_trace_in_browser(trace_id):
@@ -242,3 +242,99 @@ def search_traces(
     except Exception as e:
         print(f"Error searching traces: {e}")
         return []
+
+def fetch_all_traces(start_date=None, end_date=None):
+    all_traces = []
+    page = 1
+    chunk_size = 100
+    params = {}
+    if start_date:
+        params['from_timestamp'] = datetime.datetime.fromisoformat(start_date).replace(tzinfo=pytz.UTC)
+    if end_date:
+        params['to_timestamp'] = datetime.datetime.fromisoformat(end_date).replace(tzinfo=pytz.UTC)
+    
+    while True:
+        partial = langfuse.get_traces(limit=chunk_size, page=page, **params)
+        if not partial or not partial.data:
+            break
+        all_traces.extend(partial.data)
+        if len(partial.data) < chunk_size:
+            break
+        page += 1
+    return all_traces
+
+def export_traces(format='json', output_path=None, start_date=None, end_date=None):
+    """
+    Export traces to a given format (json or csv).
+    """
+    try:
+        all_traces = fetch_all_traces(start_date=start_date, end_date=end_date)
+        if not output_path:
+            output_path = f"./traces_export.{format}"
+
+        # Ensure the output directory exists
+        output_dir = os.path.dirname(output_path)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        if format == 'json':
+            with open(output_path, 'w') as f:
+                json.dump([t.__dict__ for t in all_traces], f, indent=2, default=str)
+        elif format == 'csv':
+            import csv
+            fieldnames = ['id', 'name', 'input', 'output', 'createdAt']
+            with open(output_path, 'w', newline='') as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                for t in all_traces:
+                    writer.writerow({
+                        'id': t.id,
+                        'name': t.name,
+                        'input': t.input,
+                        'output': t.output,
+                        'createdAt': str(t.createdAt)
+                    })
+
+        if all_traces:
+            # Sort traces by createdAt to ensure the oldest date is first
+            all_traces.sort(key=lambda x: x.createdAt)
+            first_trace_date = datetime.datetime.fromisoformat(all_traces[0].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
+            last_trace_date = datetime.datetime.fromisoformat(all_traces[-1].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
+            print(f"Traces exported to {output_path}. Total traces exported: {len(all_traces)}")
+            print(f"Date range: {first_trace_date} to {last_trace_date}")
+        else:
+            print(f"Traces exported to {output_path}. Total traces exported: {len(all_traces)}")
+    except Exception as e:
+        print(f"Error exporting traces: {e}")
+
+def import_traces(format='json', input_path=None):
+    """
+    Import traces from a given file (json or csv) into Langfuse.
+    """
+    if not input_path:
+        print("No input file provided for importing traces.")
+        return
+
+    try:
+        if format == 'json':
+            with open(input_path, 'r') as f:
+                data = json.load(f)
+        elif format == 'csv':
+            import csv
+            data = []
+            with open(input_path, 'r', newline='') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    data.append(row)
+
+        # Create new traces in Langfuse from data
+        for item in data:
+            langfuse.create_trace(
+                name=item.get('name', 'Imported Trace'),
+                input=item.get('input', ''),
+                output=item.get('output', '')
+                # pass other fields as needed
+            )
+        print(f"Imported {len(data)} traces from {input_path}")
+    except Exception as e:
+        print(f"Error importing traces: {e}")

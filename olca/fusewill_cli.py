@@ -14,7 +14,9 @@ from fusewill_utils import (
     open_trace_in_browser,
     print_traces,
     print_trace,
-    list_traces_by_score  # Ensure the updated function is imported
+    list_traces_by_score,  # Ensure the updated function is imported
+    export_traces,
+    import_traces
 )
 import dotenv
 import json
@@ -105,6 +107,18 @@ def main():
     parser_search.add_argument('--metadata', nargs='*', help='Metadata filters in key=value format')
     parser_search.add_argument('-L', '--limit', type=int, default=100, help='Number of traces to fetch')
     parser_search.add_argument('-o', '--output', type=str, help='Output JSON file path')
+
+    # export_traces command
+    parser_export = subparsers.add_parser('export_traces', help='Export traces', aliases=['et'])
+    parser_export.add_argument('--format', choices=['json','csv'], default='json', help='Export format')
+    parser_export.add_argument('-o','--output', type=str, help='Output file path')
+    parser_export.add_argument('--start_date', type=str, help='Start date in ISO format (e.g., 2024-01-01)')
+    parser_export.add_argument('--end_date', type=str, help='End date in ISO format (e.g., 2024-12-31)')
+
+    # import_traces command
+    parser_import = subparsers.add_parser('import_traces', help='Import traces', aliases=['it'])
+    parser_import.add_argument('--format', choices=['json','csv'], default='json', help='Import format')
+    parser_import.add_argument('--input', type=str, required=True, help='Input file path to read from')
 
     args = parser.parse_args()
 
@@ -219,6 +233,14 @@ def main():
                     fu.print_trace(trace)
         else:
             print("No traces found matching the criteria.")
+    elif args.command == 'export_traces' or args.command == 'et':
+        output_path = args.output
+        if output_path:
+            if not output_path.endswith(f".{args.format}"):
+                output_path += f".{args.format}"
+        fu.export_traces(format=args.format, output_path=output_path, start_date=args.start_date, end_date=args.end_date)
+    elif args.command == 'import_traces' or args.command == 'it':
+        fu.import_traces(format=args.format, input_path=args.input)
     else:
         parser.print_help()
         exit(1)

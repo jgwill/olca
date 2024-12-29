@@ -25,31 +25,6 @@ def setup_required_directories(system_instructions, user_input):
     except:
         ensure_directories_exist()
 
-def parse_provider_uri(uri: str):
-    if "://" not in uri:
-        return "openai", uri, None, {}
-    parts = uri.split("://")
-    provider = parts[0]
-    remainder = parts[1]
-    host = None
-    options = {}
-    if "@" in remainder:
-        model, host_part = remainder.split("@", 1)
-        host = host_part
-    else:
-        model = remainder
-    return provider, model, host, options
-
-def load_model_provider(uri: str):
-    provider, model, host, options = parse_provider_uri(uri)
-    if provider == "ollama":
-        from langchain_ollama import OllamaLLM
-        return OllamaLLM(model=model, base_url=f"http://{host}" if host else None)
-    elif provider == "openai":
-        from langchain_openai import ChatOpenAI
-        return ChatOpenAI(model=model)
-    raise Exception(f"Unsupported provider: {provider}")
-
 def initialize_config_file():
     try:
         default_system_instructions = "You are interacting using the human tool addressing carefully what the user is asking."

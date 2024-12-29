@@ -230,6 +230,9 @@ def main():
     system_instructions = config.get('system_instructions', '')
     user_input = config.get('user_input', '')
     default_model_id = "gpt-4o-mini"
+    recursion_limit = config.get('recursion_limit', 15)
+    disable_system_append = _parse_args().disable_system_append
+    # Use the system_instructions and user_input in your CLI logic
     model_name = config.get('model_name', default_model_id)
     provider, base_model, host = parse_model_uri(model_name)
     
@@ -244,6 +247,12 @@ def main():
         from langchain_openai import ChatOpenAI
         model = ChatOpenAI(model=model_name, temperature=0)
 
+    print("System Instructions:", system_instructions)
+    print("User Input:", user_input)
+    print("Recursion Limit:", recursion_limit)
+    print("Trace:", tracing_enabled)
+    print("Model Name:", model_name)
+    
     selected_tools = ["terminal"]
     
     disable_system_append = _parse_args().disable_system_append

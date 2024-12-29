@@ -154,6 +154,18 @@ def _parse_args():
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
     return parser.parse_args()
 
+def parse_model_uri(uri: str):
+    # Example: "ollama://llama2@localhost"
+    if "://" not in uri:
+        return "openai", uri, None  # default provider is openai
+    provider, rest = uri.split("://", 1)
+    host = None
+    if "@" in rest:
+        base_model, host = rest.split("@", 1)
+    else:
+        base_model = rest
+    return provider, base_model, host
+
 def main():
     args = _parse_args()
     olca_config_file = 'olca.yml'
@@ -219,18 +231,22 @@ def main():
     user_input = config.get('user_input', '')
     default_model_id = "gpt-4o-mini"
     model_name = config.get('model_name', default_model_id)
-    recursion_limit = config.get('recursion_limit', 15)
-    disable_system_append = _parse_args().disable_system_append
+    provider, base_model, host = parse_model_uri(model_name)
     
-    # Use the system_instructions and user_input in your CLI logic
-    print("System Instructions:", system_instructions)
-    print("User Input:", user_input)
-    print("Model Name:", model_name)
-    print("Recursion Limit:", recursion_limit)
-    print("Trace:", tracing_enabled)
-    
-    model = ChatOpenAI(model=model_name, temperature=0)
+    if provider == "ollama":
+        from langchain_ollama import OllamaLLM
+        model = OllamaLLM(model=base_model, base_url=host if host else None)
+    elif provider == "openai":
+        from langchain_openai import ChatOpenAI
+        model = ChatOpenAI(model=base_model, temperature=0)
+    else:
+        # default fallback
+        from langchain_openai import ChatOpenAI
+        model = ChatOpenAI(model=model_name, temperature=0)
+
     selected_tools = ["terminal"]
+    
+    disable_system_append = _parse_args().disable_system_append
     
     human_switch = args.human
     #look in olca_config.yaml for human: true

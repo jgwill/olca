@@ -26,6 +26,8 @@ def setup_required_directories(system_instructions, user_input):
         ensure_directories_exist()
 
 def parse_provider_uri(uri: str):
+    if "://" not in uri:
+        return "openai", uri, None, {}
     parts = uri.split("://")
     provider = parts[0]
     remainder = parts[1]

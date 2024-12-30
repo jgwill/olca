@@ -56,7 +56,7 @@ dotenv.load_dotenv()
 # First we initialize the model we want to use.
 from json import load
 from langchain_openai import ChatOpenAI,OpenAI
-from langchain.agents import AgentExecutor, create_react_agent
+#from langchain.agents import AgentExecutor, create_react_agent
 
 from langchain_community.agent_toolkits.load_tools import load_tools
 
@@ -239,6 +239,7 @@ def main():
     if provider == "ollama":
         from langchain_ollama import OllamaLLM
         model = OllamaLLM(model=base_model, base_url=host if host else None)
+        
     elif provider == "openai":
         from langchain_openai import ChatOpenAI
         model = ChatOpenAI(model=base_model, temperature=0)

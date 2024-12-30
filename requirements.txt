@@ -10,9 +10,10 @@ langchain
 langchain-community
 langsmith
 langchain-openai
-langchain-ollama
+langchain_ollama
 llm
 click
 langgraph
 langfuse
 pytz
+google.generativeai

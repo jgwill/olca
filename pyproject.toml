@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "olca"
-version = "0.2.60"
+version = "0.2.62"
 
 description = "A Python package for experimental usage of Langchain and Human-in-the-Loop"
 readme = "README.md"
@@ -27,11 +27,13 @@ dependencies = [
     "markdown",
     "langchain",
     "langchain-openai",
+    "langchain-ollama",
     "langchain-experimental",
     "click",
     "langgraph",
     "langfuse",
     "pytz",
+    "google.generativeai",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

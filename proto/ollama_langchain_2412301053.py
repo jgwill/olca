@@ -38,9 +38,7 @@ tools = load_tools(selected_tools, allow_dangerous_tools=True)
 # Create the chain with human-in-the-loop
 graph = create_react_agent(
     model,
-    tools=tools,  # Add any terminal tools if needed
-    interrupt_before=["tools"],
-    checkpointer=memory
+    tools=tools
 )
 
 # Example input

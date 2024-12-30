@@ -65,3 +65,13 @@ def initialize_config_file():
     except KeyboardInterrupt:
         print("\nConfiguration canceled by user.")
         exit(0)
+
+def prepare_input(user_input, system_instructions, append_prompt=True, human=False):
+    from olca.prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
+    appended_prompt = system_instructions + SYSTEM_PROMPT_APPEND if append_prompt else system_instructions
+    appended_prompt = appended_prompt + HUMAN_APPEND_PROMPT if human else appended_prompt
+    inputs = {"messages": [
+        ("system", appended_prompt),
+        ("user", user_input)
+    ]}
+    return inputs, system_instructions, user_input

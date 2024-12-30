@@ -128,18 +128,6 @@ def print_stream(stream):
         except Exception as e:
             print(s)
 
-def prepare_input(user_input, system_instructions,append_prompt=True, human=False):
-    appended_prompt = system_instructions + SYSTEM_PROMPT_APPEND if append_prompt else system_instructions
-    appended_prompt = appended_prompt + HUMAN_APPEND_PROMPT if human else appended_prompt
-    
-    inputs = {"messages": [
-    ("system",
-     appended_prompt),
-    ("user", user_input     )
-    ]}
-        
-    return inputs,system_instructions,user_input
-
 OLCA_DESCRIPTION = "OlCA (Orpheus Langchain CLI Assistant) (very Experimental and dangerous)"
 OLCA_EPILOG = "For more information: https://github.com/jgwill/orpheuspypractice/wiki/olca"
 OLCA_USAGE="olca [-D] [-H] [-M] [-T] [init] [-y]"

@@ -299,7 +299,7 @@ def export_traces(format='json', output_path=None, start_date=None, end_date=Non
             # Sort traces by createdAt to ensure the oldest date is first
             all_traces.sort(key=lambda x: x.createdAt)
             first_trace_date = datetime.datetime.fromisoformat(all_traces[0].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
-            last_trace_date = datetime.datetime.fromisoformat(all_traces[-1].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
+            last_trace_date = datetime.datetime.fromisoformat(all_traces[-1].CreatedAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
             print(f"Traces exported to {output_path}. Total traces exported: {len(all_traces)}")
             print(f"Date range: {first_trace_date} to {last_trace_date}")
         else:
@@ -338,3 +338,80 @@ def import_traces(format='json', input_path=None):
         print(f"Imported {len(data)} traces from {input_path}")
     except Exception as e:
         print(f"Error importing traces: {e}")
+
+def list_sessions(limit=100, start_date=None, end_date=None):
+    """
+    List all sessions with optional date filtering.
+    Retrieves multiple pages so we don't miss older sessions.
+    """
+    base_url = os.environ.get("LANGFUSE_HOST")
+    public_key = os.environ.get("LANGFUSE_PUBLIC_KEY")
+    secret_key = os.environ.get("LANGFUSE_SECRET_KEY")
+    url = f"{base_url}/api/public/sessions"
+    sessions = []
+    page = 1
+    while True:
+        params = {
+            "page": page,
+            "limit": limit
+        }
+        if start_date:
+            params["fromTimestamp"] = datetime.datetime.fromisoformat(start_date).isoformat() + 'Z'
+        if end_date:
+            params["toTimestamp"] = datetime.datetime.fromisoformat(end_date).isoformat() + 'Z'
+        
+        try:
+            response = requests.get(url, auth=(public_key, secret_key), params=params)
+            response.raise_for_status()
+            data = response.json()
+        except Exception as e:
+            print(f"Error retrieving sessions: {e}")
+            break
+        
+        if "data" not in data or len(data["data"]) == 0:
+            break
+        
+        sessions.extend(data["data"])
+        if len(data["data"]) < limit:
+            break
+        page += 1
+    
+    return sessions
+
+def get_session(session_id):
+    """
+    Get details of a specific session including its traces.
+    """
+    base_url = os.environ.get("LANGFUSE_HOST")
+    public_key = os.environ.get("LANGFUSE_PUBLIC_KEY")
+    secret_key = os.environ.get("LANGFUSE_SECRET_KEY")
+    url = f"{base_url}/api/public/sessions/{session_id}"
+
+    try:
+        response = requests.get(url, auth=(public_key, secret_key))
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error retrieving session {session_id}: {e}")
+        return None
+
+def get_upload_url(trace_id, content_type, content_length):
+    """
+    Get a presigned URL for media upload.
+    """
+    # TODO: Implement API call to POST /media
+    pass
+
+def get_media(media_id):
+    """
+    Retrieve media record details.
+    """
+    # TODO: Implement API call to GET /media/{mediaId}
+    pass
+
+def get_daily_metrics(trace_name=None, user_id=None, tags=None, from_timestamp=None, to_timestamp=None):
+    """
+    Get daily metrics with optional filtering.
+    """
+    # TODO: Implement API call to GET /metrics/daily with query params
+    pass

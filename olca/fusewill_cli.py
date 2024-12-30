@@ -120,6 +120,37 @@ def main():
     parser_import.add_argument('--format', choices=['json','csv'], default='json', help='Import format')
     parser_import.add_argument('--input', type=str, required=True, help='Input file path to read from')
 
+    # list_sessions command
+    parser_list_sessions = subparsers.add_parser('list_sessions', help='List sessions', aliases=['lss'])
+    parser_list_sessions.add_argument('-L','--limit', type=int, default=100, help='Number of sessions to fetch')
+    parser_list_sessions.add_argument('--start_date', type=str, help='Start date in ISO format (e.g., 2024-01-01)')
+    parser_list_sessions.add_argument('--end_date', type=str, help='End date in ISO format (e.g., 2024-12-31)')
+    parser_list_sessions.add_argument('--format', choices=['json','csv'], default='json', help='Output format (json or csv)')
+    parser_list_sessions.add_argument('-o','--output', type=str, help='Optional output file path')
+
+    # get_session command
+    parser_get_session = subparsers.add_parser('get_session', help='Get a session by ID', aliases=['gsess'])
+    parser_get_session.add_argument('session_id', help='Session ID')
+    parser_get_session.add_argument('-o','--output', type=str, help='Output file path (JSON or CSV)')
+
+    # get_media command
+    parser_get_media = subparsers.add_parser('get_media', help='Retrieve media details')
+    parser_get_media.add_argument('media_id', help='Media ID')
+
+    # get_upload_url command
+    parser_upload_url = subparsers.add_parser('get_upload_url', help='Get a presigned upload URL')
+    parser_upload_url.add_argument('trace_id', help='Trace ID')
+    parser_upload_url.add_argument('--content_type', required=True, help='Content-Type of the media')
+    parser_upload_url.add_argument('--content_length', type=int, required=True, help='Size of the media in bytes')
+
+    # get_daily_metrics command
+    parser_daily_metrics = subparsers.add_parser('get_daily_metrics', help='Fetch daily metrics', aliases=['gdm'])
+    parser_daily_metrics.add_argument('--trace_name', type=str, help='Optional trace name filter')
+    parser_daily_metrics.add_argument('--user_id', type=str, help='Optional user ID filter')
+    parser_daily_metrics.add_argument('--tags', nargs='*', help='Optional tags for filtering')
+    parser_daily_metrics.add_argument('--from_timestamp', type=str, help='Start date in ISO format')
+    parser_daily_metrics.add_argument('--to_timestamp', type=str, help='End date in ISO format')
+
     args = parser.parse_args()
 
     if args.command == 'list_traces' or args.command == 'lt':
@@ -241,6 +272,71 @@ def main():
         fu.export_traces(format=args.format, output_path=output_path, start_date=args.start_date, end_date=args.end_date)
     elif args.command == 'import_traces' or args.command == 'it':
         fu.import_traces(format=args.format, input_path=args.input)
+    elif args.command == 'list_sessions' or args.command == 'lss':
+        sessions = fu.list_sessions(
+            limit=args.limit,
+            start_date=args.start_date,
+            end_date=args.end_date
+        )
+
+        if not sessions:
+            print("No sessions found.")
+        else:
+            if not args.output:
+                # Print to standard output
+                for s in sessions:
+                    print(s)
+            else:
+                # Ensure output file extension matches --format
+                output_path = args.output
+                if not output_path.endswith(f".{args.format}"):
+                    output_path += f".{args.format}"
+
+                if args.format == 'csv':
+                    import csv
+                    with open(output_path, 'w', newline='') as f:
+                        writer = csv.DictWriter(f, fieldnames=sessions[0].keys())
+                        writer.writeheader()
+                        for s in sessions:
+                            writer.writerow(s)
+                else:  # default to JSON
+                    import json
+                    with open(output_path, 'w') as f:
+                        json.dump(sessions, f, indent=2)
+
+                print(f"Sessions written to {os.path.realpath(output_path)}")
+    elif args.command == 'get_session' or args.command == 'gsess':
+        session = fu.get_session(args.session_id)
+        if session:
+            if args.output:
+                if args.output.endswith('.csv'):
+                    import csv
+                    with open(args.output, 'w', newline='') as f:
+                        writer = csv.DictWriter(f, fieldnames=session.keys())
+                        writer.writeheader()
+                        writer.writerow(session)
+                    print(f"Session written to {os.path.realpath(args.output)}")
+                else:
+                    import json
+                    with open(args.output, 'w') as f:
+                        json.dump(session, f, indent=2)
+                    print(f"Session written to {os.path.realpath(args.output)}")
+            else:
+                print(session)
+        else:
+            print(f"No session found for ID {args.session_id}")
+    elif args.command == 'get_media':
+        fu.get_media(args.media_id)
+    elif args.command == 'get_upload_url':
+        fu.get_upload_url(args.trace_id, args.content_type, args.content_length)
+    elif args.command == 'get_daily_metrics' or args.command == 'gdm':
+        fu.get_daily_metrics(
+            trace_name=args.trace_name,
+            user_id=args.user_id,
+            tags=args.tags,
+            from_timestamp=args.from_timestamp,
+            to_timestamp=args.to_timestamp
+        )
     else:
         parser.print_help()
         exit(1)

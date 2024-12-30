@@ -33,7 +33,7 @@ def human_review(state):
 
 # Set up memory for human-in-the-loop
 memory = MemorySaver()
-selected_tools = ["terminal"]
+selected_tools = ["terminal","human"]
 tools = load_tools(selected_tools, allow_dangerous_tools=True)
 # Create the chain with human-in-the-loop
 graph = create_react_agent(
@@ -42,7 +42,7 @@ graph = create_react_agent(
 )
 
 # Example input
-inputs = {"messages": [("user", "What is the weather today?")]}
+inputs = {"messages": [("user", "Answer the question :What is Langchain? and then present that to the user to accept the answer")]}
 
 # Run the chain
 output_stream = graph.stream(inputs)

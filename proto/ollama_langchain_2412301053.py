@@ -42,7 +42,7 @@ graph = create_react_agent(
 )
 
 # Example input
-inputs = {"messages": [("user", "Answer the question :What is Langchain? and then present that to the user to accept the answer")]}
+inputs = {"messages": [("system","You interact well and try to resolve question using your common LLM, just present results to the user."),("user", "Answer the question :What is Langchain? and then present that to the user to accept the answer(make sure to present the results).  Write your status at each steps in the file ./status.txt (make sure you read it and update it at each time keeping an history)")]}
 
 # Run the chain
 output_stream = graph.stream(inputs)

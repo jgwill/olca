@@ -4,7 +4,6 @@ oLCa is a Python package that provides a CLI tool for Experimenting Langchain wi
 
 ## Features
 
-
 ## Installation
 
 To install the package, you can use pip:
@@ -13,10 +12,30 @@ To install the package, you can use pip:
 pip install olca
 ```
 
+## Quick Start
+
+1. Install the package:
+   ```bash
+   pip install olca
+   ```
+2. Initialize configuration:
+   ```bash
+   olca init
+   ```
+3. Run the CLI with tracing:
+   ```bash
+   olca -T
+   ```
+
+## Environment Variables
+
+Set LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY, and LANGFUSE_HOST for tracing with Langfuse.  
+Set LANGCHAIN_API_KEY for LangSmith tracing.  
+Optionally, set OPENAI_API_KEY for OpenAI usage.  
+
 ## Usage
 
 ### CLI Tool
-
 
 #### Help
 
@@ -26,8 +45,6 @@ To see the available commands and options, use the `--help` flag:
 olca2 --help
 ```
 
-
-
 ## fusewill
 
 The `fusewill` command is a CLI tool that provides functionalities for interacting with Langfuse, including tracing, dataset management, and prompt operations.
@@ -36,11 +53,10 @@ The `fusewill` command is a CLI tool that provides functionalities for interacti
 
 To see the available commands and options for `fusewill`, use the `--help` flag:
 
-
 ----
+
 IMPORTED README from olca1
 ----
-
 
 ### Olca
 

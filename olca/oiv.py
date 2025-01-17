@@ -76,7 +76,7 @@ def serialize_response_to_json_file(resp, filename):
     f.write(json_str)
     
 def serialize_response_to_markdown(o):
-    output=o["output"]["output"]
+    output=o["output"]
     string_md="# Output\n"
     #string_md+=f"## Model\n{o['model']}\n"
     #string_md+=f"## Prompt\n{o['prompt']['prompt']}\n"
@@ -99,7 +99,7 @@ def main():
     resp = ask_agent(input_request,tool_hub_tag=tool_hub_tag,chatbot_model=args.chatbot_model)
     outdir=os.path.join(os.getcwd(),"output")
     os.makedirs(outdir, exist_ok=True)
-    out_filename = f"{args.prefix}output-{tlid.get_minutes()}.json"
+    out_filename = f"{args.prefix}{tlid.get_minutes()}.json"
     outfile=os.path.join(outdir,out_filename)
     o={}
     prompt_dict = {

@@ -103,12 +103,12 @@ def main():
     outfile=os.path.join(outdir,out_filename)
     o={}
     prompt_dict = {
-        "prompt": str(prompt)
+        "promptdata": str(prompt)
     }
     o["model"]=args.chatbot_model
     o["prompt"]=prompt_dict
     o["input"]=input_request
-    o["output"]=resp
+    o["output"]=resp["output"]
     serialize_response_to_json_file(o, outfile)
     serialize_response_to_markdown_file(o, outfile.replace(".json",".md"))
     VERBOSE_RESULT=False

@@ -5,8 +5,12 @@ import dotenv
 from getpass import getpass
 dotenv.load_dotenv()
 
+#print(os.environ.get("OPENAI_API_KEY"))
 if "OPENAI_API_KEY" not in os.environ:
-    os.environ["OPENAI_API_KEY"] = getpass()
+    #try load from home/.env
+    dotenv.load_dotenv(os.path.expanduser("~/.env"))
+    #print(os.environ.get("OPENAI_API_KEY"))
+#     os.environ["OPENAI_API_KEY"] = getpass()
     
     
     
@@ -93,13 +97,16 @@ Image(chain.get_graph().draw_mermaid_png())
 
 
 # Stream chain steps:
+try:
+    example_query = "What is 551368 divided by 82"
+    events = chain.astream(
+        {"messages": [("user", example_query)]},
+        stream_mode="values",
+    )
+    async for event in events:
+        event["messages"][-1].pretty_print()
+except Exception as e:
+    # handle connection or http error
+    print("Connection error:", e)
 
-example_query = "What is 551368 divided by 82"
-
-events = chain.astream(
-    {"messages": [("user", example_query)]},
-    stream_mode="values",
-)
-async for event in events:
-    event["messages"][-1].pretty_print()
 # %%

@@ -31,7 +31,8 @@ setup(
         'langchain-ollama',
         'langgraph',
         'llm',
-        'langgraph'
+        'langgraph',
+        'arxiv',
     ],
     entry_points={
         'console_scripts': [

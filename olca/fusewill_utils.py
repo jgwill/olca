@@ -123,7 +123,7 @@ def list_traces_by_score(score_name, min_value=None, max_value=None, limit=100):
     return filtered_traces
 
 def add_score_to_a_trace(trace_id, generation_id, name, value, data_type="NUMERIC", comment=""):
-    langfuse.score(
+    result_add_score_to_a_trace=langfuse.score(
         trace_id=trace_id,
         observation_id=generation_id,
         name=name,
@@ -131,11 +131,16 @@ def add_score_to_a_trace(trace_id, generation_id, name, value, data_type="NUMERI
         data_type=data_type,
         comment=comment
     )
+    return result_add_score_to_a_trace
 
 def create_score(name, data_type, description="", possible_values=None, min_value=None, max_value=None):
-    langfuse.score(
+    placeholder_value = ""
+    if data_type.upper() == "BOOLEAN":
+        placeholder_value = "1"
+
+    resulting_score = langfuse.score(
         name=name,
-        value="",  # Provide a placeholder value
+        value=placeholder_value,
         data_type=data_type,
         description=description,
         # For categorical:
@@ -143,11 +148,17 @@ def create_score(name, data_type, description="", possible_values=None, min_valu
         # For numeric:
         **({"min_value": min_value, "max_value": max_value} if data_type == "NUMERIC" and min_value is not None and max_value is not None else {})
     )
+    return resulting_score
 
 def score_exists(name):
-    scores = langfuse.get_scores()
-    for score in scores.data:
-        if score.name == name:
+    """
+    Check if a score with the given name exists by calling list_scores().
+    """
+    scores = list_scores()
+    if not scores or scores.get('meta', {}).get('totalItems', 0) == 0:
+        return False
+    for sc in scores:
+        if sc.get("name") == name:
             return True
     return False
 
@@ -265,7 +276,7 @@ def fetch_all_traces(start_date=None, end_date=None):
 
 def export_traces(format='json', output_path=None, start_date=None, end_date=None):
     """
-    Export traces to a given format (json or csv).
+    Export traces along with their full score details.
     """
     try:
         all_traces = fetch_all_traces(start_date=start_date, end_date=end_date)
@@ -277,9 +288,23 @@ def export_traces(format='json', output_path=None, start_date=None, end_date=Non
         if output_dir and not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
+        all_scores=list_scores()
+        exported_data = []
+        for t in all_traces:
+            # fetch full score details
+            score_details = []
+            if t.scores:
+                for s_id in t.scores:
+                    s_detail = get_score_by_id(s_id)
+                    if s_detail:
+                        score_details.append(s_detail)
+            t_dict = t.__dict__
+            t_dict["score_details"] = score_details
+            exported_data.append(t_dict)
+
         if format == 'json':
             with open(output_path, 'w') as f:
-                json.dump([t.__dict__ for t in all_traces], f, indent=2, default=str)
+                json.dump(exported_data, f, indent=2, default=str)
         elif format == 'csv':
             import csv
             fieldnames = ['id', 'name', 'input', 'output', 'createdAt']
@@ -299,7 +324,7 @@ def export_traces(format='json', output_path=None, start_date=None, end_date=Non
             # Sort traces by createdAt to ensure the oldest date is first
             all_traces.sort(key=lambda x: x.createdAt)
             first_trace_date = datetime.datetime.fromisoformat(all_traces[0].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
-            last_trace_date = datetime.datetime.fromisoformat(all_traces[-1].CreatedAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
+            last_trace_date = datetime.datetime.fromisoformat(all_traces[-1].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
             print(f"Traces exported to {output_path}. Total traces exported: {len(all_traces)}")
             print(f"Date range: {first_trace_date} to {last_trace_date}")
         else:
@@ -307,9 +332,29 @@ def export_traces(format='json', output_path=None, start_date=None, end_date=Non
     except Exception as e:
         print(f"Error exporting traces: {e}")
 
+def create_new_trace(name, input_text, output_text, session_id=None, metadata=None, timestamp=None):
+    """
+    Creates a new trace with an optional timestamp.
+    """
+    parsed_timestamp = None
+    if timestamp:
+        try:
+            parsed_timestamp = datetime.datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+        except ValueError:
+            pass
+    trace_created=langfuse.trace(
+        name=name,
+        input=input_text,
+        output=output_text,
+        session_id=session_id,
+        metadata=metadata,
+        timestamp=parsed_timestamp
+    )
+    return trace_created
+
 def import_traces(format='json', input_path=None):
     """
-    Import traces from a given file (json or csv) into Langfuse.
+    Import traces. If any score doesn't exist, create it and attach it to the trace.
     """
     if not input_path:
         print("No input file provided for importing traces.")
@@ -327,14 +372,51 @@ def import_traces(format='json', input_path=None):
                 for row in reader:
                     data.append(row)
 
+        if isinstance(data, dict):
+            data = [data]
+
         # Create new traces in Langfuse from data
         for item in data:
-            langfuse.create_trace(
+            trace_timestamp = item.get('timestamp') or item.get('createdAt')
+            new_trace = create_new_trace(
                 name=item.get('name', 'Imported Trace'),
-                input=item.get('input', ''),
-                output=item.get('output', '')
-                # pass other fields as needed
+                input_text=item.get('input', ''),
+                output_text=item.get('output', ''),
+                session_id=item.get('session_id'),
+                metadata=item.get('metadata'),
+                timestamp=trace_timestamp
             )
+            # handle imported scores
+            for s_detail in item.get("score_details", []):
+                score_name = s_detail["name"]
+                score_value = str(s_detail.get("value", "0"))
+                score_data_type = s_detail.get("dataType", "NUMERIC")
+                score_comment = s_detail.get("comment", "")
+                score_description = s_detail.get("description", "")
+                score_possible_values = s_detail.get("possible_values")
+                minimum_score_value = s_detail.get("min_value")
+                max_score_value = s_detail.get("max_value")
+                if not score_exists(score_name):
+                    resulting_score=create_score(
+                        name=score_name,
+                        data_type=score_data_type,
+                        description=score_description,
+                        possible_values=score_possible_values,
+                        min_value=minimum_score_value,
+                        max_value=max_score_value
+                        
+                    )
+                result_add_score_to_a_trace=add_score_to_a_trace(
+                    trace_id=new_trace.id,
+                    generation_id=None,  # Replace as needed if your data includes observation IDs
+                    name=score_name,
+                    value=score_value,
+                    data_type=score_data_type,
+                    comment=score_comment
+                )
+                print(f"Added score {score_name} to trace {new_trace.id}")
+                print(result_add_score_to_a_trace)
+                
         print(f"Imported {len(data)} traces from {input_path}")
     except Exception as e:
         print(f"Error importing traces: {e}")

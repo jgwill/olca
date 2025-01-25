@@ -231,15 +231,15 @@ def main():
         import ollama
         from langchain_ollama import OllamaLLM
         try:
-            ollama.Client(base_url=host if host else None).show(base_model)
+            ollama.Client(host=host if host else None).show(base_model)
         except:
             print(f"Model {base_model} not found, pulling it...")
-            pull_stream = ollama.Client(base_url=host if host else None).pull(base_model, stream=True)
+            pull_stream = ollama.Client(host=host if host else None).pull(base_model, stream=True)
             for chunk in pull_stream:
                 pass
             print(f"\nPulled {base_model}")
 
-        model = OllamaLLM(model=base_model, base_url=host if host else None)
+        model = OllamaLLM(model=base_model, host=host if host else None)
         
     elif provider == "openai":
         from langchain_openai import ChatOpenAI

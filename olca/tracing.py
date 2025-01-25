@@ -1,6 +1,4 @@
 import os
-from langfuse.callback import CallbackHandler as LangfuseCallbackHandler
-from langfuse import Langfuse
 from olca.utils import initialize_langfuse
 import warnings
 
@@ -35,6 +33,8 @@ class TracingManager:
             os.environ["LANGCHAIN_TRACING_V2"] = "true"
 
     def _setup_langfuse(self):
+        from langfuse.callback import CallbackHandler as LangfuseCallbackHandler
+        from langfuse import Langfuse
         self.langfuse = initialize_langfuse()
         if not self.langfuse:
             print("Warning: Missing Langfuse environment variables")

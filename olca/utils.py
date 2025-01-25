@@ -2,7 +2,6 @@ import os
 import sys
 import dotenv
 import webbrowser
-from langfuse import Langfuse
 
 def load_environment():
     dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
@@ -13,6 +12,7 @@ def load_environment():
         dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
 
 def initialize_langfuse( debug=False):
+    from langfuse import Langfuse
     required_vars = ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"]
     if not all(os.getenv(var) for var in required_vars):
         return None

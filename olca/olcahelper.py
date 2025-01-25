@@ -43,9 +43,15 @@ def initialize_config_file():
             "temperature": float(input("temperature [0]: ") or default_temperature),
             "human": input("human [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_human_input,
             "tracing": input("tracing [true]: ").lower() in ["true", "yes", "y", "1", ""] or use_default_tracing,
-            "tracing_providers": ["langsmith", "langfuse"]
         }
-        
+
+        tracing_providers = []
+        if input("Use langsmith for tracing? [Y/n]: ").lower() in ["y", "yes", ""]:
+            tracing_providers.append("langsmith")
+        if input("Use langfuse for tracing? [Y/n]: ").lower() in ["y", "yes", ""]:
+            tracing_providers.append("langfuse")
+        config["tracing_providers"] = tracing_providers
+
         user_system_instructions = input(f"system_instructions [{default_system_instructions}]: ")
         user_system_instructions = user_system_instructions or default_system_instructions
         user_system_instructions = user_system_instructions.replace("\n", " ").replace("\r", " ").replace("\t", " ")

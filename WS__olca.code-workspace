@@ -10,10 +10,14 @@
 				"file": ".copilot-instructions.md"
 			},
 			{
+				"file": ".stc-copilot-instructions.md"
+			},
+			{
 				"text": "Dont apologize."
 			}
 		],
 		"github.copilot.advanced": {
+
 
 		}
 	}

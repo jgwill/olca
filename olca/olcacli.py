@@ -161,9 +161,6 @@ def main():
     # Load environment variables first
     load_environment()
     
-    # Initialize Langfuse if needed
-    langfuse = initialize_langfuse(debug=True if args.debug else False)
-    
     if args.init:
         if os.path.exists(olca_config_file):
             print("Error: Configuration file already exists. Cannot run 'olca init'.")
@@ -179,6 +176,12 @@ def main():
         return
 
     config = load_config(olca_config_file)
+
+    tracing_providers = config.get('tracing_providers', [])
+    if 'langfuse' in tracing_providers:
+        langfuse = initialize_langfuse(debug=True if args.debug else False)
+    else:
+        langfuse = None
     
     # Initialize tracing
     tracing_manager = TracingManager(config)

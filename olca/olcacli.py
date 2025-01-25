@@ -225,7 +225,17 @@ def main():
     provider, base_model, host = parse_model_uri(model_name)
     
     if provider == "ollama":
+        import ollama
         from langchain_ollama import OllamaLLM
+        try:
+            ollama.Client(base_url=host if host else None).show(base_model)
+        except:
+            print(f"Model {base_model} not found, pulling it...")
+            pull_stream = ollama.Client(base_url=host if host else None).pull(base_model, stream=True)
+            for chunk in pull_stream:
+                pass
+            print(f"\nPulled {base_model}")
+
         model = OllamaLLM(model=base_model, base_url=host if host else None)
         
     elif provider == "openai":

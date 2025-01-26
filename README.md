@@ -73,11 +73,16 @@ To initialize `olca`, you need to create a configuration file named `olca.yml`. 
 ```yaml
 api_keyname: OPENAI_API_KEY__o450olca241128
 human: true
-model_name: gpt-4o-mini
+model_name: gpt-4o-mini #or bellow:
+model_name: ollama://llama3.1:latest #or with host
+model_name: ollama://llama3.1:latest@mymachine.mydomain.com:11434
 recursion_limit: 300
 system_instructions: You focus on interacting with human and do what they ask.  Make sure you dont quit the program.
 temperature: 0.0
 tracing: true
+tracing_providers:
+- langsmith
+- langfuse
 user_input: Look in the file 3act.md and in ./story, we have created a story point by point and we need you to generate the next iteration of the book in the folder ./book.  You use what you find in ./story to start the work.  Give me your plan to correct or accept.
 ```
 

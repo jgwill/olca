@@ -229,7 +229,7 @@ def main():
     
     if provider == "ollama":
         import ollama
-        from langchain_ollama import OllamaLLM
+        from langchain_ollama import ChatOllama
         try:
             ollama.Client(host=host if host else None).show(base_model)
         except:
@@ -239,7 +239,7 @@ def main():
                 pass
             print(f"\nPulled {base_model}")
 
-        model = OllamaLLM(model=base_model, host=host if host else None)
+        model = ChatOllama(model=base_model, host=host if host else None)
         
     elif provider == "openai":
         from langchain_openai import ChatOpenAI

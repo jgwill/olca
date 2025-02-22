@@ -497,3 +497,30 @@ def get_daily_metrics(trace_name=None, user_id=None, tags=None, from_timestamp=N
     """
     # TODO: Implement API call to GET /metrics/daily with query params
     pass
+
+def list_prompts(name=None, label=None, tag=None, limit=100, start_date=None, end_date=None):
+    """
+    List prompts with optional filtering.
+    """
+    base_url = os.environ.get("LANGFUSE_HOST")
+    public_key = os.environ.get("LANGFUSE_PUBLIC_KEY")
+    secret_key = os.environ.get("LANGFUSE_SECRET_KEY")
+    url = f"{base_url}/api/public/v2/prompts"
+    params = {"limit": limit}
+    if name:
+        params["name"] = name
+    if label:
+        params["label"] = label
+    if tag:
+        params["tag"] = tag
+    if start_date:
+        params["fromUpdatedAt"] = datetime.datetime.fromisoformat(start_date).isoformat() + 'Z'
+    if end_date:
+        params["toUpdatedAt"] = datetime.datetime.fromisoformat(end_date).isoformat() + 'Z'
+    try:
+        response = requests.get(url, auth=(public_key, secret_key), params=params)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error retrieving prompts: {e}")
+        return None

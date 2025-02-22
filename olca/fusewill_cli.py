@@ -151,6 +151,16 @@ def main():
     parser_daily_metrics.add_argument('--from_timestamp', type=str, help='Start date in ISO format')
     parser_daily_metrics.add_argument('--to_timestamp', type=str, help='End date in ISO format')
 
+    # list_prompts command
+    parser_list_prompts = subparsers.add_parser('list_prompts', help='List prompts', aliases=['lp'])
+    parser_list_prompts.add_argument('--name', type=str, help='Filter by prompt name')
+    parser_list_prompts.add_argument('--label', type=str, help='Filter by prompt label')
+    parser_list_prompts.add_argument('--tag', type=str, help='Filter by prompt tag')
+    parser_list_prompts.add_argument('-L', '--limit', type=int, default=100, help='Number of prompts to fetch')
+    parser_list_prompts.add_argument('--start_date', type=str, help='Start date in ISO format')
+    parser_list_prompts.add_argument('--end_date', type=str, help='End date in ISO format')
+    parser_list_prompts.add_argument('-o', '--output', type=str, help='Output JSON file path')
+
     args = parser.parse_args()
 
     if args.command == 'list_traces' or args.command == 'lt':
@@ -337,6 +347,27 @@ def main():
             from_timestamp=args.from_timestamp,
             to_timestamp=args.to_timestamp
         )
+    elif args.command == 'list_prompts' or args.command == 'lp':
+        prompts = fu.list_prompts(
+            name=args.name,
+            label=args.label,
+            tag=args.tag,
+            limit=args.limit,
+            start_date=args.start_date,
+            end_date=args.end_date
+        )
+        if prompts:
+            if args.output:
+                try:
+                    with open(args.output, 'w') as f:
+                        json.dump(prompts, f, indent=2)
+                    print(f"Prompts written to {os.path.realpath(args.output)}")
+                except Exception as e:
+                    print(f"Error writing to file {args.output}: {e}")
+            else:
+                print(json.dumps(prompts, indent=2))
+        else:
+            print("No prompts found.")
     else:
         parser.print_help()
         exit(1)

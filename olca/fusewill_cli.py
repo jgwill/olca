@@ -1,7 +1,7 @@
 from ast import alias
 import os
 import sys
-import json
+import json as _json
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import argparse
 import fusewill_utils as fu
@@ -187,7 +187,7 @@ def main():
                     print("Quitting.")
                     break
     elif args.command == 'create_dataset' or args.command == 'cd':
-        metadata = json.loads(args.metadata)
+        metadata = _json.loads(args.metadata)
         create_dataset(name=args.name, description=args.description, metadata=metadata)
     elif args.command == 'create_prompt':
         create_prompt(
@@ -234,12 +234,12 @@ def main():
             if args.output:
                 try:
                     with open(args.output, 'w') as f:
-                        json.dump(scores, f, indent=2)
+                        _json.dump(scores, f, indent=2)
                     print(f"Scores written to {os.path.realpath(args.output)}")
                 except Exception as e:
                     print(f"Error writing to file {args.output}: {e}")
             else:
-                print(json.dumps(scores, indent=2))
+                print(_json.dumps(scores, indent=2))
         else:
             print("No scores found.")
     elif args.command == 'search_traces' or args.command == 'st':
@@ -265,7 +265,7 @@ def main():
             if args.output:
                 try:
                     with open(args.output, 'w') as f:
-                        json.dump([trace.__dict__ for trace in traces], f, indent=2, default=str)
+                        _json.dump([trace.__dict__ for trace in traces], f, indent=2, default=str)
                     print(f"Traces written to {os.path.realpath(args.output)}")
                 except Exception as e:
                     print(f"Error writing to file {args.output}: {e}")
@@ -310,9 +310,9 @@ def main():
                         for s in sessions:
                             writer.writerow(s)
                 else:  # default to JSON
-                    import json
+                    import _json
                     with open(output_path, 'w') as f:
-                        json.dump(sessions, f, indent=2)
+                        _json.dump(sessions, f, indent=2)
 
                 print(f"Sessions written to {os.path.realpath(output_path)}")
     elif args.command == 'get_session' or args.command == 'gsess':
@@ -327,9 +327,9 @@ def main():
                         writer.writerow(session)
                     print(f"Session written to {os.path.realpath(args.output)}")
                 else:
-                    import json
+                    import _json
                     with open(args.output, 'w') as f:
-                        json.dump(session, f, indent=2)
+                        _json.dump(session, f, indent=2)
                     print(f"Session written to {os.path.realpath(args.output)}")
             else:
                 print(session)
@@ -360,12 +360,12 @@ def main():
             if args.output:
                 try:
                     with open(args.output, 'w') as f:
-                        json.dump(prompts, f, indent=2)
+                        _json.dump(prompts, f, indent=2)
                     print(f"Prompts written to {os.path.realpath(args.output)}")
                 except Exception as e:
                     print(f"Error writing to file {args.output}: {e}")
             else:
-                print(json.dumps(prompts, indent=2))
+                print(_json.dumps(prompts, indent=2))
         else:
             print("No prompts found.")
     else:

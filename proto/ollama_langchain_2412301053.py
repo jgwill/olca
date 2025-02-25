@@ -21,7 +21,10 @@ def set_env(var: str):
 set_env("LANGCHAIN_API_KEY")  # Optional for tracing
 
 # Initialize the Ollama model
-model = ChatOllama(model="llama3.1", temperature=0)
+model_name = "llama3.1"
+
+
+model = ChatOllama(model=model_name, temperature=0)
 
 # Define the human-in-the-loop function
 def human_review(state):

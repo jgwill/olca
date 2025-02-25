@@ -1,6 +1,7 @@
 from ast import alias
 import os
 import sys
+import json
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import argparse
 import fusewill_utils as fu
@@ -19,7 +20,6 @@ from fusewill_utils import (
     import_traces
 )
 import dotenv
-import json
 import sys, termios, tty
 #dotenv.load_dotenv()
 

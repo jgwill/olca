@@ -75,7 +75,7 @@ def list_scores():
     base_url = os.environ.get("LANGFUSE_HOST")
     public_key = os.environ.get("LANGFUSE_PUBLIC_KEY")
     secret_key = os.environ.get("LANGFUSE_SECRET_KEY")
-    url = f"{base_url}/api/public/score-configs"
+    url = f"{base_url}/api/public/scores"
     try:
         response = requests.get(url, auth=(public_key, secret_key))
         response.raise_for_status()

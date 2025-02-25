@@ -1,6 +1,6 @@
 import os
 import sys
-import json
+import json as _json
 import dotenv
 import webbrowser
 import requests  # Add this import
@@ -304,7 +304,7 @@ def export_traces(format='json', output_path=None, start_date=None, end_date=Non
 
         if format == 'json':
             with open(output_path, 'w') as f:
-                json.dump(exported_data, f, indent=2, default=str)
+                _json.dump(exported_data, f, indent=2, default=str)
         elif format == 'csv':
             import csv
             fieldnames = ['id', 'name', 'input', 'output', 'createdAt']
@@ -324,7 +324,7 @@ def export_traces(format='json', output_path=None, start_date=None, end_date=Non
             # Sort traces by createdAt to ensure the oldest date is first
             all_traces.sort(key=lambda x: x.createdAt)
             first_trace_date = datetime.datetime.fromisoformat(all_traces[0].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
-            last_trace_date = datetime.datetime.fromisoformat(all_traces[-1].createdAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
+            last_trace_date = datetime.datetime.fromisoformat(all_traces[-1].CreatedAt.replace('Z', '+00:00')).strftime('%Y-%m-%d %H:%M:%S')
             print(f"Traces exported to {output_path}. Total traces exported: {len(all_traces)}")
             print(f"Date range: {first_trace_date} to {last_trace_date}")
         else:
@@ -363,7 +363,7 @@ def import_traces(format='json', input_path=None):
     try:
         if format == 'json':
             with open(input_path, 'r') as f:
-                data = json.load(f)
+                data = _json.load(f)
         elif format == 'csv':
             import csv
             data = []

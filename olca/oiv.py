@@ -77,7 +77,7 @@ def serialize_response_to_json_file(resp, filename):
     
 def serialize_response_to_markdown(o):
     output=o["output"]
-    string_md="# Output\n"
+    string_md=""
     #string_md+=f"## Model\n{o['model']}\n"
     #string_md+=f"## Prompt\n{o['prompt']['prompt']}\n"
     string_md+=f"## Input\n{o['input']}\n"

@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore", message="The function `loads` is in beta. It i
 DEBUG_MODE=False
 
 prompt=None
-def _create_agent_tools(tool_name = "arxiv",temperature = 0.0,tool_hub_tag = "jgwill/react",chatbot_model = "gpt-4o-mini"):
+def _create_agent_tools(tool_name = "arxiv",temperature = 0.0,tool_hub_tag = "jgwill/oiv",chatbot_model = "gpt-4o-mini"):
     global prompt
     
     llm = ChatOpenAI(temperature=temperature,name=chatbot_model)
@@ -54,7 +54,7 @@ def create_agent_executor(tools, agent) -> AgentExecutor:
 # tools, agent=_create_agent_tools()
 
 # agent_executor=create_agent_executor(tools, agent)
-def ask_agent(input_request, agent_executor=None,tool_hub_tag = "jgwill/react",chatbot_model = "gpt-4o-mini"):
+def ask_agent(input_request, agent_executor=None,tool_hub_tag = "jgwill/oiv",chatbot_model = "gpt-4o-mini"):
   if agent_executor is None:
     tools, agent = _create_agent_tools(tool_hub_tag=tool_hub_tag)
     agent_executor = create_agent_executor(tools, agent)
@@ -95,7 +95,7 @@ def main():
     args = parse_cli_arguments()
 
     input_request = args.input
-    tool_hub_tag = "jgwill/react" if args.hub_tag is None else args.hub_tag
+    tool_hub_tag = "jgwill/oiv" if args.hub_tag is None else args.hub_tag
     resp = ask_agent(input_request,tool_hub_tag=tool_hub_tag,chatbot_model=args.chatbot_model)
     outdir=os.path.join(os.getcwd(),"output")
     os.makedirs(outdir, exist_ok=True)
@@ -131,7 +131,7 @@ def parse_cli_arguments():
                         help='an input request for the searched article')
     ##--hub_tag
     parser.add_argument('-H','-ht','--hub_tag', type=str,
-                        help='The hub tag for the process',default="jgwill/react")
+                        help='The hub tag for the process',default="jgwill/oiv")
     #--chatbot_model
     parser.add_argument('-M','-m','--chatbot_model', type=str,
                         help='a chatbot model for the processing',default="gpt-4o-mini")

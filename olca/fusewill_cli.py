@@ -310,7 +310,6 @@ def main():
                         for s in sessions:
                             writer.writerow(s)
                 else:  # default to JSON
-                    import _json
                     with open(output_path, 'w') as f:
                         _json.dump(sessions, f, indent=2)
 
@@ -327,7 +326,6 @@ def main():
                         writer.writerow(session)
                     print(f"Session written to {os.path.realpath(args.output)}")
                 else:
-                    import _json
                     with open(args.output, 'w') as f:
                         _json.dump(session, f, indent=2)
                     print(f"Session written to {os.path.realpath(args.output)}")

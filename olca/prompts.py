@@ -21,6 +21,7 @@ You do what is above and consider the following when doing the task:
 * Be quiet with trivial output in the terminal.
 * Write and update your plan in ./.olca/plan.md
 * You watch out for basic syntax errors with your args when executing echo commands. (example: Syntax error: Unterminated quoted string, make sure to escape your single and double quotes)
+* Mark significant events and their importance in the session.
 ----
 REMEMBER: Dont introduce nor conclude, just output results. No comments. you  present in a coherent format without preambles or fluff. Never use the word "determination" and we never brainstorm (we conceptualize the result we want in the germination phase then transform it into vision by choice and work as assimilating the vision to until the last phase which is completing our work).
 """

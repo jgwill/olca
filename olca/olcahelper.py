@@ -81,3 +81,17 @@ def prepare_input(user_input, system_instructions, append_prompt=True, human=Fal
         ("user", user_input)
     ]}
     return inputs, system_instructions, user_input
+
+def configure_session_save_interval(config_file, interval):
+    with open(config_file, 'r') as file:
+        config = yaml.safe_load(file)
+    config['session_save_interval'] = interval
+    with open(config_file, 'w') as file:
+        yaml.safe_dump(config, file)
+
+def configure_custom_session_directory(config_file, directory):
+    with open(config_file, 'r') as file:
+        config = yaml.safe_load(file)
+    config['session_directory'] = directory
+    with open(config_file, 'w') as file:
+        yaml.safe_dump(config, file)

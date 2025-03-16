@@ -107,3 +107,108 @@ The `olca` script provides a user-friendly CLI that allows you to interact with 
 #### GitHub Integration
 
 `olca` is designed to integrate seamlessly with GitHub workflows and issue management. You can provide an issue ID to the agent, and it will commit and push changes directly to the specified issue. This feature streamlines the development process and reduces the need for manual intervention. Additionally, `olca` maintains detailed logs of its actions and updates, ensuring transparency and traceability in its operations.
+
+### Persistent Session Memory
+
+The Persistent Session Memory feature allows OLCA to retain execution context across sessions and directory changes, ensuring seamless workflow continuation.
+
+**Key Features:**
+* Automatically saves session states to `~/.olca_sessions/`.
+* Resumes the last execution state if OLCA is restarted in the same directory.
+* Creates a new session if no prior session exists.
+
+**Example Use Case:**
+```sh
+> cd ~/projects/story-triac  
+> olca --session triac_outline  
+> olca generate_structure  
+```
+* Session automatically saves to `~/.olca_sessions/triac_outline.json`
+* Restarting OLCA in the same directory resumes from the last state
+
+### Parent Directory Inheritance
+
+The Parent Directory Inheritance feature allows OLCA to check parent directories for an active session if no session is found in the current directory.
+
+**Key Features:**
+* Configurable behavior controlled by `inherit_parent_session=true`.
+* Recursively checks parent directories until it finds an active session.
+* Starts a fresh session if no session is found and inheritance is disabled.
+
+**Example Use Case:**
+```sh
+> cd ~/projects/story-triac/drafts  
+> olca  
+```
+* If parent inheritance is enabled, OLCA loads `triac_outline` from `projects/story-triac/`.
+* If disabled, OLCA starts a fresh session.
+
+### Ephemeral Sessions (`--temp-session`)
+
+The Ephemeral Sessions feature allows users to run OLCA in temporary mode, where execution state is stored only in memory and disappears after the process ends.
+
+**Key Features:**
+* Does not save state to disk.
+* Session tracking occurs only while OLCA is running.
+
+**Example Use Case:**
+```sh
+> olca --temp-session  
+```
+* Session exists in RAM only, disappears after process ends.
+
+### Session Save Interval
+
+The session save interval is configurable in `olca.yml` via the `session_save_interval` option.
+
+### Custom Session Directory
+
+The session directory is configurable in `olca.yml` via the `session_directory` option.
+
+### Redis Upstash Integration
+
+OLCA can store session data in Redis Upstash and access it via a REST API.
+
+### List Active Sessions
+
+Added a command to list all active sessions in `olca/olcacli.py`.
+
+### Export Sessions
+
+Added a command to export sessions in `olca/olcacli.py`.
+
+### Shared Scratchpad
+
+Added a command to share a scratchpad between OLCA and another agent using Redis memory.
+
+### Nested Sessions
+
+A session can be the child of a session managed in a Redis memory key.
+
+### QStash Integration
+
+OLCA can use QStash to trigger the start of a session, with a new command in `olca/olcacli.py` to listen for QStash messages and start sessions.
+
+### `olca.yml` Configuration
+
+`olca.yml` now includes all features, avoiding the need for CLI arguments.
+
+### Session Management Commands
+
+Added `list_sessions` and `get_session` commands in `olca/olcacli.py` to manage and retrieve session data.
+
+### Contextual Continuity
+
+Implemented `prepare_input` function in `olca/olcahelper.py` to prepare inputs considering past sessions' context.
+
+### Significant Events
+
+Updated `SYSTEM_PROMPT_APPEND` in `olca/prompts.py` to include instructions for marking significant events and their importance.
+
+### Contextual Reintegration
+
+`initialize_config_file` function in `olca/olcahelper.py` now sets up a configuration that supports contextual reintegration.
+
+### Recursive Continuity
+
+Added `SessionState`, `RedStone`, `EchoNode`, `MetaFramework`, and `FractalLibrary` classes to manage recursive continuity and dynamic adaptation.

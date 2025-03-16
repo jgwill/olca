@@ -10,6 +10,9 @@ from olca.utils import load_environment, initialize_langfuse
 from olca.tracing import TracingManager
 from olca.olcahelper import setup_required_directories, initialize_config_file, prepare_input
 from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
+import json
+import redis
+import requests
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -43,6 +46,78 @@ def load_config(config_file):
         config = yaml.safe_load(file)
     return config
 
+def save_session_state(session_id, state, session_directory):
+    session_file = os.path.join(session_directory, f"{session_id}.json")
+    with open(session_file, 'w') as file:
+        json.dump(state, file)
+
+def load_session_state(session_id, session_directory):
+    session_file = os.path.join(session_directory, f"{session_id}.json")
+    if os.path.exists(session_file):
+        with open(session_file, 'r') as file:
+            return json.load(file)
+    return None
+
+def get_session_id_from_file():
+    if os.path.exists("OLCA_SESSION_ID"):
+        with open("OLCA_SESSION_ID", 'r') as file:
+            return file.read().strip()
+    return None
+
+def find_parent_session_id(current_directory):
+    parent_directory = os.path.dirname(current_directory)
+    while parent_directory != current_directory:
+        session_id = get_session_id_from_file()
+        if session_id:
+            return session_id
+        current_directory = parent_directory
+        parent_directory = os.path.dirname(current_directory)
+    return None
+
+def list_active_sessions(session_directory):
+    sessions = []
+    for filename in os.listdir(session_directory):
+        if filename.endswith(".json"):
+            sessions.append(filename[:-5])
+    return sessions
+
+def export_sessions(session_directory, output_file):
+    sessions = {}
+    for filename in os.listdir(session_directory):
+        if filename.endswith(".json"):
+            session_id = filename[:-5]
+            with open(os.path.join(session_directory, filename), 'r') as file:
+                sessions[session_id] = json.load(file)
+    with open(output_file, 'w') as file:
+        json.dump(sessions, file)
+
+def store_session_in_redis(session_id, state, redis_url):
+    redis_client = redis.Redis.from_url(redis_url)
+    redis_client.set(session_id, json.dumps(state))
+
+def load_session_from_redis(session_id, redis_url):
+    redis_client = redis.Redis.from_url(redis_url)
+    state = redis_client.get(session_id)
+    if state:
+        return json.loads(state)
+    return None
+
+def handle_qstash_messages(qstash_topic, qstash_token):
+    headers = {
+        "Authorization": f"Bearer {qstash_token}"
+    }
+    response = requests.get(f"https://qstash.upstash.io/v1/topics/{qstash_topic}/messages", headers=headers)
+    if response.status_code == 200:
+        messages = response.json()
+        for message in messages:
+            session_id = message.get("session_id")
+            if session_id:
+                state = load_session_state(session_id, "~/.olca_sessions/")
+                if state:
+                    print(f"Starting session {session_id} with state: {state}")
+                    # Start the session with the loaded state
+    else:
+        print(f"Failed to fetch messages from QStash: {response.status_code}")
 
 #%%
 
@@ -130,7 +205,7 @@ def print_stream(stream):
 
 OLCA_DESCRIPTION = "OlCA (Orpheus Langchain CLI Assistant) (very Experimental and dangerous)"
 OLCA_EPILOG = "For more information: https://github.com/jgwill/orpheuspypractice/wiki/olca"
-OLCA_USAGE="olca [-D] [-H] [-M] [-T] [init] [-y]"
+OLCA_USAGE="olca [-D] [-H] [-M] [-T] [init] [-y] [--temp-session] [list_active_sessions] [export_sessions]"
 def _parse_args():
     parser = argparse.ArgumentParser(description=OLCA_DESCRIPTION, epilog=OLCA_EPILOG,usage=OLCA_USAGE)
     parser.add_argument("-D", "--disable-system-append", action="store_true", help="Disable prompt appended to system instructions")
@@ -138,8 +213,11 @@ def _parse_args():
     parser.add_argument("-M", "--math", action="store_true", help="Enable math tool")
     parser.add_argument("-T", "--tracing", action="store_true", help="Enable tracing")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
+    parser.add_argument("--temp-session", action="store_true", help="Run OLCA in temporary session mode")
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
+    parser.add_argument("list_active_sessions", nargs='?', help="List all active sessions")
+    parser.add_argument("export_sessions", nargs='?', help="Export all sessions to a file")
     return parser.parse_args()
 
 def parse_model_uri(uri: str):
@@ -296,6 +374,41 @@ def main():
     
     setup_required_directories(system_instructions, user_input)
     
+    session_directory = config.get('session_directory', '~/.olca_sessions/')
+    session_save_interval = config.get('session_save_interval', 300)
+    inherit_parent_session = config.get('inherit_parent_session', False)
+    redis_upstash_enabled = config.get('redis_upstash', {}).get('enabled', False)
+    redis_upstash_url = config.get('redis_upstash', {}).get('url', 'redis://localhost:6379')
+    qstash_enabled = config.get('qstash', {}).get('enabled', False)
+    qstash_topic = config.get('qstash', {}).get('topic', '')
+    qstash_token = os.getenv('QSTASH_TOKEN', '')
+
+    if args.list_active_sessions:
+        sessions = list_active_sessions(session_directory)
+        print("Active Sessions:", sessions)
+        return
+
+    if args.export_sessions:
+        export_sessions(session_directory, args.export_sessions)
+        print(f"Sessions exported to {args.export_sessions}")
+        return
+
+    session_id = get_session_id_from_file()
+    if not session_id and inherit_parent_session:
+        session_id = find_parent_session_id(os.getcwd())
+    if not session_id:
+        session_id = "default_session"
+
+    if args.temp_session:
+        session_state = {}
+    else:
+        if redis_upstash_enabled:
+            session_state = load_session_from_redis(session_id, redis_upstash_url)
+        else:
+            session_state = load_session_state(session_id, session_directory)
+        if not session_state:
+            session_state = {}
+
     try:
         graph_config = {"callbacks": callbacks} if callbacks else {}
         if recursion_limit:
@@ -309,6 +422,15 @@ def main():
         tracing_manager.flush()
         tracing_manager.shutdown()
         exit(0)
+
+    if not args.temp_session:
+        if redis_upstash_enabled:
+            store_session_in_redis(session_id, session_state, redis_upstash_url)
+        else:
+            save_session_state(session_id, session_state, session_directory)
+
+    if qstash_enabled:
+        handle_qstash_messages(qstash_topic, qstash_token)
 
 if __name__ == "__main__":
     try:

@@ -1,6 +1,9 @@
 import os
 from olca.utils import initialize_langfuse
 import warnings
+import requests
+import redis
+import json
 
 # Ignore specific Langfuse warning
 warnings.filterwarnings("ignore", message="Item exceeds size limit", category=UserWarning)
@@ -52,3 +55,27 @@ class TracingManager:
     def shutdown(self):
         if self.langfuse:
             self.langfuse.shutdown()
+
+def handle_qstash_messages(qstash_topic, qstash_token):
+    headers = {
+        "Authorization": f"Bearer {qstash_token}"
+    }
+    response = requests.get(f"https://qstash.upstash.io/v1/topics/{qstash_topic}/messages", headers=headers)
+    if response.status_code == 200:
+        messages = response.json()
+        for message in messages:
+            session_id = message.get("session_id")
+            if session_id:
+                state = load_session_from_redis(session_id, "redis://localhost:6379")
+                if state:
+                    print(f"Starting session {session_id} with state: {state}")
+                    # Start the session with the loaded state
+    else:
+        print(f"Failed to fetch messages from QStash: {response.status_code}")
+
+def load_session_from_redis(session_id, redis_url):
+    redis_client = redis.Redis.from_url(redis_url)
+    state = redis_client.get(session_id)
+    if state:
+        return json.loads(state)
+    return None

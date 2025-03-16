@@ -212,3 +212,8 @@ Updated `SYSTEM_PROMPT_APPEND` in `olca/prompts.py` to include instructions for 
 ### Recursive Continuity
 
 Added `SessionState`, `RedStone`, `EchoNode`, `MetaFramework`, and `FractalLibrary` classes to manage recursive continuity and dynamic adaptation.
+
+## Persistent Sessions and QStash
+- You can now save and load sessions using the new commands.
+- Redis-based storage enables persistent state across runs.
+- QStash message handling automates asynchronous triggers.

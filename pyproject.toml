@@ -7,34 +7,32 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "olca"
-version = "0.3.0"
+version = "0.3.2"
 
 description = "A Python package for experimental usage of Langchain and Human-in-the-Loop"
 readme = "README.md"
 requires-python = ">=3.6"
 license = { file = "LICENSE" }
-authors = [
-    { name = "Jean GUillaume ISabelle", email = "jgi@jgwill.com" }
-]
+authors = [{ name = "Jean GUillaume ISabelle", email = "jgi@jgwill.com" }]
 dependencies = [
-    "boto3",
-    "mutagen",
-    "certifi",
-    "charset-normalizer",
-    "idna",
-    "redis",
-    "requests",
-    "markdown",
-    "langchain",
-    "langchain-openai",
-    "langchain-ollama",
-    "langchain-experimental",
-    "click",
-    "langgraph",
-    "langfuse",
+    "boto3>=1.26.0",
+    "mutagen>=1.45.0",
+    "certifi>=2022.12.7",
+    "charset-normalizer>=2.1.1",
+    "idna>=3.4",
+    "redis>=4.5.1",
+    "requests>=2.28.1",
+    "markdown>=3.4.2",
+    "langchain>=0.0.206",
+    "langchain-openai>=0.0.206",
+    "langchain-ollama>=0.0.1",
+    "langchain-experimental>=0.0.1",
+    "click>=8.0.0",
+    "langgraph>=0.1.0",
+    "langfuse>=0.0.1",
     "pytz",
     "google.generativeai",
-    "arxiv",
+    "arxiv>=1.2.0",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -47,4 +45,3 @@ olca2 = "olca.olcacli:main"
 olca = "olca.olcacli:main"
 fusewill = "olca.fusewill_cli:main"
 oiv = "olca.oiv:main"
-

@@ -81,3 +81,33 @@ def prepare_input(user_input, system_instructions, append_prompt=True, human=Fal
         ("user", user_input)
     ]}
     return inputs, system_instructions, user_input
+
+def identify_common_ui_states(screenshots):
+    common_ui_states = []
+    for screenshot in screenshots:
+        # Extract UI state from screenshot
+        ui_state = extract_ui_state(screenshot)
+        if ui_state not in common_ui_states:
+            common_ui_states.append(ui_state)
+    return common_ui_states
+
+def apply_three_act_structure(events):
+    act1, act2, act3 = [], [], []
+    for event in events:
+        if is_act1_event(event):
+            act1.append(event)
+        elif is_act2_event(event):
+            act2.append(event)
+        elif is_act3_event(event):
+            act3.append(event)
+    return act1, act2, act3
+
+def detect_unique_residual_markers(screenshots):
+    residual_markers = []
+    for screenshot in screenshots:
+        # Extract residual markers from screenshot
+        markers = extract_residual_markers(screenshot)
+        for marker in markers:
+            if marker not in residual_markers:
+                residual_markers.append(marker)
+    return residual_markers

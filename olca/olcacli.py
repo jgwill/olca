@@ -10,6 +10,11 @@ from olca.utils import load_environment, initialize_langfuse
 from olca.tracing import TracingManager
 from olca.olcahelper import setup_required_directories, initialize_config_file, prepare_input
 from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
+from datetime import datetime
+import json
+from PIL import Image
+import pytesseract
+import ollama
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -140,6 +145,7 @@ def _parse_args():
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
+    parser.add_argument("--screenshot", type=str, help="Path to the screenshot to process")
     return parser.parse_args()
 
 def parse_model_uri(uri: str):
@@ -153,6 +159,28 @@ def parse_model_uri(uri: str):
     else:
         base_model = rest
     return provider, base_model, host
+
+def extract_metadata_from_screenshot(screenshot_path):
+    timestamp = datetime.now().isoformat()
+    image = Image.open(screenshot_path)
+    text = pytesseract.image_to_string(image)
+    return {
+        "timestamp": timestamp,
+        "text": text
+    }
+
+def generate_narrative(metadata, model):
+    prompt = f"Generate a narrative based on the following metadata: {json.dumps(metadata)}"
+    response = model.invoke({"input": prompt})
+    return response["output"]
+
+def save_narrative(narrative, output_dir="OLCA_Narratives"):
+    os.makedirs(output_dir, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    output_path = os.path.join(output_dir, f"narrative_{timestamp}.json")
+    with open(output_path, 'w') as f:
+        json.dump(narrative, f, indent=2)
+    print(f"Narrative saved to {output_path}")
 
 def main():
     args = _parse_args()
@@ -296,6 +324,12 @@ def main():
     
     setup_required_directories(system_instructions, user_input)
     
+    if args.screenshot:
+        metadata = extract_metadata_from_screenshot(args.screenshot)
+        narrative = generate_narrative(metadata, model)
+        save_narrative(narrative)
+        return
+
     try:
         graph_config = {"callbacks": callbacks} if callbacks else {}
         if recursion_limit:

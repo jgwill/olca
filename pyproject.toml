@@ -35,6 +35,7 @@ dependencies = [
     "pytz",
     "google.generativeai",
     "arxiv",
+    "tlid",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

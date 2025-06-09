@@ -40,8 +40,10 @@ pip install olca
 | `olca`  | Main CLI agent for interacting with models and tools. |
 | `fusewill` | Langfuse helper CLI for traces, datasets and prompts. |
 | `oiv` | Prototype CLI for retrieving and summarizing papers. |
+| `coaia` | Optional helpers from `coaiapy` for stashing and audio tools. |
 
 Use `--help` with any command to see its options.
+Try `olca --help`, `fusewill --help`, `oiv --help`, or `coaia --help` for full details.
 
 ### Examples
 ```bash
@@ -49,6 +51,7 @@ olca -H -T
 fusewill list_traces -L 5
 oiv -I "quantum computing"
 coaia transcribe sample.wav
+coaia tash project::notes < README.md
 ```
 
 
@@ -57,6 +60,7 @@ coaia transcribe sample.wav
 Required for Langfuse: `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, and `LANGFUSE_HOST`.
 Set `LANGCHAIN_API_KEY` for LangSmith tracing.
 Set `OPENAI_API_KEY` if using OpenAI models.
+Set `KV_REST_API_URL` and `KV_REST_API_TOKEN` for `coaia tash` Redis features.
 Environment variables can be placed in a `.env` file or your shell session.
 
 

@@ -2,7 +2,7 @@
 
 ## Documentation Improvements
 - [x] Expand README with command summaries.
-- [ ] Provide usage examples for each CLI tool (`olca`, `fusewill`, `oiv`).
+- [x] Provide usage examples for each CLI tool (`olca`, `fusewill`, `oiv`, `coaia`).
 - [x] Document required environment variables in more detail.
 
 ## Code Enhancements
@@ -12,6 +12,7 @@
 - [ ] Review CLI argument parsing for `oiv` and provide `--help` output.
 - [ ] Implement missing TODO functions in `fusewill_utils.py` (upload_url, get_media, get_daily_metrics).
 - [ ] Expose `coaia` audio and summarization helpers.
+- [ ] Document Redis environment variables (`KV_REST_API_URL` and `KV_REST_API_TOKEN`).
 
 ## LangGraph Upgrade
 - [ ] Document streaming modes in README.

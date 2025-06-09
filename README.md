@@ -3,6 +3,12 @@
 oLCa is a Python package that provides a CLI tool for Experimenting Langchain with OpenAI wrapper around interacting thru the human-in-the-loop tool.
 
 ## Features
+- Interactive CLI agent using LangChain with OpenAI or Ollama models.
+- Optional human-in-the-loop support.
+- Tracing with LangSmith and Langfuse.
+- `fusewill` utilities for managing Langfuse traces and datasets.
+- `oiv` helper for searching and summarizing arXiv papers.
+- Optional `coaia` commands from the `coaiapy` package for audio and Redis stashing.
 
 ## Installation
 
@@ -37,12 +43,22 @@ pip install olca
 
 Use `--help` with any command to see its options.
 
+### Examples
+```bash
+olca -H -T
+fusewill list_traces -L 5
+oiv -I "quantum computing"
+coaia transcribe sample.wav
+```
+
 
 ## Environment Variables
 
-Set LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY, and LANGFUSE_HOST for tracing with Langfuse.  
-Set LANGCHAIN_API_KEY for LangSmith tracing.  
-Optionally, set OPENAI_API_KEY for OpenAI usage.  
+Required for Langfuse: `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, and `LANGFUSE_HOST`.
+Set `LANGCHAIN_API_KEY` for LangSmith tracing.
+Set `OPENAI_API_KEY` if using OpenAI models.
+Environment variables can be placed in a `.env` file or your shell session.
+
 
 ## Usage
 
@@ -53,7 +69,7 @@ Optionally, set OPENAI_API_KEY for OpenAI usage.
 To see the available commands and options, use the `--help` flag:
 
 ```bash
-olca2 --help
+olca --help
 ```
 
 ## fusewill

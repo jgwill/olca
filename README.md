@@ -27,6 +27,17 @@ pip install olca
    olca -T
    ```
 
+## Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `olca`  | Main CLI agent for interacting with models and tools. |
+| `fusewill` | Langfuse helper CLI for traces, datasets and prompts. |
+| `oiv` | Prototype CLI for retrieving and summarizing papers. |
+
+Use `--help` with any command to see its options.
+
+
 ## Environment Variables
 
 Set LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY, and LANGFUSE_HOST for tracing with Langfuse.  

@@ -3,9 +3,9 @@
 ## Documentation Improvements
 - [x] Expand README with command summaries and examples
 - [x] Document required environment variables
-- [ ] Describe LangGraph streaming modes
-- [ ] Include `fusewill --help` and `coaia fuse` examples in docs
-- [ ] Document `oiv --help` usage
+- [x] Describe LangGraph streaming modes
+- [x] Include `fusewill --help` and `coaia fuse` examples in docs
+- [x] Document `oiv --help` usage
 
 ## Code Enhancements
 - [ ] Integrate `coaiapy` utilities and remove local `fusewill_utils`
@@ -17,7 +17,7 @@
 - [ ] Expose `coaia` audio helpers within the package
 
 ## LangGraph Upgrade
-- [ ] Upgrade to `langgraph>=0.4.8`
+- [x] Upgrade to `langgraph>=0.4.8`
 - [ ] Refactor `olcacli.py` with `StateGraph`
 - [ ] Add examples for `graph.stream` usage
 - [ ] Implement `--stream` CLI option with typed state support

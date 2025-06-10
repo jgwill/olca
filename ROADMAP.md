@@ -3,24 +3,26 @@
 Upcoming improvements for `oLCa`.
 
 ## LangGraph 0.4 Migration
-- Upgrade dependency to `langgraph>=0.4.8`.
+- Upgrade dependency to `langgraph>=0.4.8` and audit breaking changes.
 - Refactor graph creation to use the `StateGraph` APIs.
 - Leverage streaming modes (`updates`, `values`, `custom`, `messages`).
-- Add examples for `graph.stream` with asynchronous iteration.
+- Add examples for `graph.stream` with asynchronous iteration and callbacks.
 - Investigate checkpointing and subgraph reuse for complex workflows.
 - Update CLI to expose a `--stream` flag and document streaming modes.
-- Explore typed state definitions for safer graphs.
-- Provide helper utilities for streaming output to STDOUT.
-- Plan example notebooks showing LangGraph 0.4 features.
+- Provide typed state helpers so handlers can declare input/output types.
+- Offer utilities for streaming output to STDOUT or websockets.
+- Prepare example notebooks demonstrating 0.4 features and typed states.
 
 ## FuseWill from `coaiapy`
 - Remove local `fusewill_utils` in favour of `coaiapy.fusewill`.
-- Import `fusewill` CLI entry point from the package.
-- Ensure backward compatibility with existing commands.
-- Document new options provided by `coaia fuse`.
+- Import the `fusewill` CLI entry point from that package.
+- Keep backward compatibility with existing commands.
+- Document new options provided by `coaia fuse` and dataset helpers.
+- Replace `fusewill_cli.py` with thin wrappers around `coaiapy.cofuse`.
 - Sync README examples with `coaiapy` fusewill usage.
-- Provide wrappers so `olca fuse` calls directly into `coaiapy`.
+- Add wrappers so `olca fuse` calls directly into `coaiapy` modules.
 - Outline dataset utilities available through `coaia fuse --help`.
+- Consider additional helpers like `coaia p` for tagging traces.
 
 ## Extra Utilities
 - Support `coaia tash` for storing text notes in Redis.

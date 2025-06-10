@@ -30,12 +30,13 @@ dependencies = [
     "langchain-ollama",
     "langchain-experimental",
     "click",
-    "langgraph",
+    "langgraph>=0.4.8",
     "langfuse",
     "pytz",
     "google.generativeai",
     "arxiv",
     "tlid",
+    "coaiapy",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

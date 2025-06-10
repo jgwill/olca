@@ -41,13 +41,14 @@ coaia --help
 
 Examples:
 ```bash
-olca -H -T
-fusewill list_traces -L 5
-oiv -I "quantum computing"
-coaia transcribe sample.wav
-coaia tash project::notes < README.md
+olca -H -T                       # interactive run with tracing
+fusewill list_traces -L 5        # show recent traces
+oiv -I "quantum computing"       # search arXiv
+coaia transcribe sample.wav      # audio transcription
+coaia tash project::notes < README.md  # stash notes to Redis
 fusewill --help            # detailed options for FuseWill
 coaia fuse --help          # discover extra Langfuse utilities
+oiv --help                 # view oiv arguments
 ```
 
 ## Environment Variables
@@ -73,6 +74,17 @@ system_instructions: |
   You are a helpful terminal agent.
 user_input: |
   Say hello then exit.
+```
+
+## Streaming modes
+`olca` will adopt LangGraph 0.4 streaming APIs. A forthcoming `--stream` flag
+lets you choose between output types:
+`updates`, `values`, `custom`, or `messages`. The default mirrors current
+behavior using `graph.stream` with updates written to STDOUT.
+
+Example:
+```bash
+olca --stream updates
 ```
 
 ## Integrations and roadmap

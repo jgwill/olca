@@ -1,25 +1,25 @@
 # Roadmap
 
-This document outlines upcoming improvements for oLCa.
+Upcoming improvements for `oLCa`.
 
-## LangGraph Upgrade
-- Update to `langgraph` 0.4.x to use new streaming modes such as `updates`, `values`, `custom`, and `messages`.
-- Explore subgraph support and checkpointing.
-- Document the expected migration path from the current graph usage.
-- Provide examples that showcase streaming output with `graph.stream`.
+## LangGraph 0.4 Migration
+- Upgrade dependency to `langgraph>=0.4.8`.
+- Refactor graph creation to use the `StateGraph` APIs.
+- Leverage streaming modes (`updates`, `values`, `custom`, `messages`).
+- Add examples for `graph.stream` with asynchronous iteration.
+- Investigate checkpointing and subgraph reuse for complex workflows.
 
-## FuseWill Integration
-- Replace local `fusewill_utils` with the implementation provided by the `coaiapy` package.
-- Leverage `coaia fuse` subcommands for managing Langfuse data.
-- Pull helper functions from `coaiapy.fusewill` to reduce maintenance.
-- Add compatibility shims to keep old commands working.
+## FuseWill from `coaiapy`
+- Remove local `fusewill_utils` in favour of `coaiapy.fusewill`.
+- Import `fusewill` CLI entry point from the package.
+- Ensure backward compatibility with existing commands.
+- Document new options provided by `coaia fuse`.
 
-## Additional Tools
-- Use `coaia tash` for stashing text into Redis.
-- Incorporate `coaia transcribe` and `coaia summarize` for audio processing pipelines.
-- Evaluate `coaia p` for custom process tags.
-- Document required Redis variables like `KV_REST_API_URL` and `KV_REST_API_TOKEN`.
+## Extra Utilities
+- Support `coaia tash` for storing text notes in Redis.
+- Expose `coaia transcribe` and `coaia summarize` via `olca` scripts.
+- Evaluate `coaia p` for process tagging and metrics.
 
-## Testing & CI
-- Add tests for each CLI command and enable continuous integration.
-
+## Testing and CI
+- Add unit tests for all CLI commands.
+- Configure CI to run `pytest` and style checks.

@@ -101,5 +101,6 @@ The project is migrating to LangGraph 0.4.x to support streaming via
 `StateGraph` and asynchronous `graph.stream` calls. Local `fusewill`
 helpers will be replaced by `coaiapy.fusewill` for a consistent Langfuse
 experience. Upcoming releases will introduce typed-state helpers so
-agents can declare structured inputs and outputs. See [`ROADMAP.md`](ROADMAP.md)
+agents can declare structured inputs and outputs (see
+[`olca/state_helpers.py`](olca/state_helpers.py)). See [`ROADMAP.md`](ROADMAP.md)
 for full details.

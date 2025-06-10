@@ -10,6 +10,8 @@ Upcoming improvements for `oLCa`.
 - Investigate checkpointing and subgraph reuse for complex workflows.
 - Update CLI to expose a `--stream` flag and document streaming modes.
 - Provide typed state helpers so handlers can declare input/output types.
+  A new module (`olca/state_helpers.py`) introduces a skeleton `ConversationState`
+  and `create_state_graph` function as a starting point.
 - Offer utilities for streaming output to STDOUT or websockets.
 - Prepare example notebooks demonstrating 0.4 features and typed states.
 - Integrate typed-state helpers into `olcacli.py` for safer graph transitions.

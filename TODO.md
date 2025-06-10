@@ -11,7 +11,7 @@
 - [x] Integrate `coaiapy` utilities and remove local `fusewill_utils`
 - [x] Replace local `fusewill_cli` with wrapper around `coaia fuse`
 - [x] Allow invoking `coaia` commands from `olca` (via `olca coaia`)
-- [ ] Provide typed-state helpers for `StateGraph`
+- [x] Provide typed-state helpers for `StateGraph` (see `olca/state_helpers.py`)
 - [x] Add dependency on `tlid` or drop its usage in `oiv`
 - [x] Review argument parsing for `oiv` and update `--help`
 - [x] Expose `coaia` audio helpers within the package

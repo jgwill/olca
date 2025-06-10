@@ -30,6 +30,15 @@ Use `-H` to activate human mode or `--help` to see full options.
 | `oiv`      | Query arXiv and generate summaries                          |
 | `coaia`    | (optional) audio utilities and Redis `tash` helper          |
 
+### Command references
+Run each command with `--help` to see full options:
+```bash
+olca --help
+fusewill --help
+oiv --help
+coaia --help
+```
+
 Examples:
 ```bash
 olca -H -T

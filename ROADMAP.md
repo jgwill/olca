@@ -10,6 +10,8 @@ Upcoming improvements for `oLCa`.
 - Investigate checkpointing and subgraph reuse for complex workflows.
 - Update CLI to expose a `--stream` flag and document streaming modes.
 - Explore typed state definitions for safer graphs.
+- Provide helper utilities for streaming output to STDOUT.
+- Plan example notebooks showing LangGraph 0.4 features.
 
 ## FuseWill from `coaiapy`
 - Remove local `fusewill_utils` in favour of `coaiapy.fusewill`.
@@ -18,6 +20,7 @@ Upcoming improvements for `oLCa`.
 - Document new options provided by `coaia fuse`.
 - Sync README examples with `coaiapy` fusewill usage.
 - Provide wrappers so `olca fuse` calls directly into `coaiapy`.
+- Outline dataset utilities available through `coaia fuse --help`.
 
 ## Extra Utilities
 - Support `coaia tash` for storing text notes in Redis.

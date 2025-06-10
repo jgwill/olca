@@ -8,9 +8,9 @@
 - [x] Document `oiv --help` usage
 
 ## Code Enhancements
-- [ ] Integrate `coaiapy` utilities and remove local `fusewill_utils`
+- [x] Integrate `coaiapy` utilities and remove local `fusewill_utils`
+- [x] Replace local `fusewill_cli` with wrapper around `coaia fuse`
 - [ ] Allow invoking `coaia` commands from `olca`
-- [ ] Replace local `fusewill_cli` with wrapper around `coaia fuse`
 - [ ] Provide typed-state helpers for `StateGraph`
 - [ ] Add dependency on `tlid` or drop its usage in `oiv`
 - [ ] Review argument parsing for `oiv` and update `--help`

@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 import argparse
-import fusewill_utils as fu
+from coaiapy import cofuse as fu
 
 langfuse=fu.langfuse
 

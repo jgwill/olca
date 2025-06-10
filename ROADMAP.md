@@ -14,11 +14,11 @@ Upcoming improvements for `oLCa`.
 - Prepare example notebooks demonstrating 0.4 features and typed states.
 
 ## FuseWill from `coaiapy`
-- Remove local `fusewill_utils` in favour of `coaiapy.fusewill`.
+- Replace local `fusewill_utils` with `coaiapy.fusewill`.
 - Import the `fusewill` CLI entry point from that package.
 - Keep backward compatibility with existing commands.
 - Document new options provided by `coaia fuse` and dataset helpers.
-- Replace `fusewill_cli.py` with thin wrappers around `coaiapy.cofuse`.
+- Replace `fusewill_cli.py` with thin wrappers around `coaiapy.cofuse` (done).
 - Sync README examples with `coaiapy` fusewill usage.
 - Add wrappers so `olca fuse` calls directly into `coaiapy` modules.
 - Outline dataset utilities available through `coaia fuse --help`.

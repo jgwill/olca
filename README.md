@@ -6,7 +6,7 @@
 - Chat-style CLI using OpenAI or Ollama models
 - Optional human-in-the-loop prompts
 - Tracing via LangSmith and Langfuse
-- `fusewill` wrapper for Langfuse traces, datasets and prompts
+- `olca fuse` wraps `coaiapy.fusewill` for Langfuse traces and datasets
 - `oiv` command for searching and summarizing arXiv papers
 - Optional `coaia` tools for transcription and `tash` Redis storage
 
@@ -26,15 +26,18 @@ Use `-H` to activate human mode or `--help` to see full options.
 | Command    | Purpose                                                     |
 |------------|-------------------------------------------------------------|
 | `olca`     | Interactive agent using LangChain/LangGraph                 |
-| `fusewill` | Manage Langfuse traces and datasets                         |
+| `olca fuse` | Manage Langfuse traces via `coaiapy`                       |
 | `oiv`      | Query arXiv and generate summaries                          |
 | `coaia`    | (optional) audio utilities and Redis `tash` helper          |
+
+`olca fuse` forwards all arguments to `coaia fuse`, so you can reuse existing
+FuseWill commands without changing your workflow.
 
 ### Command references
 Run each command with `--help` to see full options:
 ```bash
 olca --help
-fusewill --help
+olca fuse --help
 oiv --help
 coaia --help
 ```
@@ -42,11 +45,11 @@ coaia --help
 Examples:
 ```bash
 olca -H -T                       # interactive run with tracing
-fusewill list_traces -L 5        # show recent traces
+olca fuse list_traces -L 5       # show recent traces
 oiv -I "quantum computing"       # search arXiv
 coaia transcribe sample.wav      # audio transcription
 coaia tash project::notes < README.md  # stash notes to Redis
-fusewill --help            # detailed options for FuseWill
+olca fuse --help           # detailed options for FuseWill
 coaia fuse --help          # discover extra Langfuse utilities
 oiv --help                 # view oiv arguments
 ```

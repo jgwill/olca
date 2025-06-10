@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506101511",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Introduced CLI streaming flag and updated documentation. README examples now show dataset management and streaming modes. Refined roadmap and TODOs for LangGraph integration.",
+  "routing": {
+    "files": ["README.md", "TODO.md", "ROADMAP.md", "olca/olcacli.py"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "We are at the second iteration of :\n\"Go over the whole commands this package enables...\" etc.",
+  "scene": "Developers can choose streaming output modes directly from the CLI and manage datasets via coaiapy fuse commands, preparing for typed state upgrades."
+}

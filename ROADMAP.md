@@ -8,7 +8,7 @@ Upcoming improvements for `oLCa`.
 - Leverage streaming modes (`updates`, `values`, `custom`, `messages`).
 - Add examples for `graph.stream` with asynchronous iteration and callbacks.
 - Investigate checkpointing and subgraph reuse for complex workflows.
-- Update CLI to expose a `--stream` flag and document streaming modes.
+- CLI now exposes a `--stream` flag for custom streaming modes.
 - Provide typed state helpers so handlers can declare input/output types.
   A new module (`olca/state_helpers.py`) introduces a skeleton `ConversationState`
   and `create_state_graph` function as a starting point.

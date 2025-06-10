@@ -10,6 +10,7 @@
 - `oiv` command for searching and summarizing arXiv papers
 - `oiv` timestamps results with `tlid` for easy cataloging
 - Optional `coaia` tools for transcription and `tash` Redis storage
+- `--stream` flag enables multiple streaming output modes
 
 ## Installation
 ```bash
@@ -20,6 +21,7 @@ pip install olca
 ```bash
 olca init            # create olca.yml in the current directory
 olca -T              # run with tracing enabled
+olca --stream values # custom streaming output
 ```
 Use `-H` to activate human mode or `--help` to see full options.
 
@@ -48,6 +50,7 @@ Examples:
 ```bash
 olca -H -T                       # interactive run with tracing
 olca fuse list_traces -L 5       # show recent traces
+olca fuse datasets list          # list available datasets
 oiv -I "quantum computing"       # search arXiv
 oiv -I "ai" -P result-           # prefix results with 'result-' timestamp
 coaia transcribe sample.wav      # audio transcription
@@ -86,10 +89,10 @@ user_input: |
 ```
 
 ## Streaming modes
-`olca` will adopt LangGraph 0.4 streaming APIs. A forthcoming `--stream` flag
-lets you choose between output types:
-`updates`, `values`, `custom`, or `messages`. The default mirrors current
-behavior using `graph.stream` with updates written to STDOUT.
+`olca` supports LangGraph 0.4 streaming APIs. Use the `--stream` flag to select
+the output style: `updates`, `values`, `custom`, or `messages`. The default
+mirrors the traditional behavior using `graph.stream` with updates written to
+STDOUT.
 
 Example:
 ```bash

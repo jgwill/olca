@@ -130,7 +130,7 @@ def print_stream(stream):
 
 OLCA_DESCRIPTION = "OlCA (Orpheus Langchain CLI Assistant) (very Experimental and dangerous)"
 OLCA_EPILOG = "For more information: https://github.com/jgwill/orpheuspypractice/wiki/olca"
-OLCA_USAGE="olca [-D] [-H] [-M] [-T] [init] [-y]"
+OLCA_USAGE="olca [-D] [-H] [-M] [-T] [--stream MODE] [init] [-y]"
 def _parse_args():
     parser = argparse.ArgumentParser(description=OLCA_DESCRIPTION, epilog=OLCA_EPILOG,usage=OLCA_USAGE)
     parser.add_argument("-D", "--disable-system-append", action="store_true", help="Disable prompt appended to system instructions")
@@ -138,6 +138,12 @@ def _parse_args():
     parser.add_argument("-M", "--math", action="store_true", help="Enable math tool")
     parser.add_argument("-T", "--tracing", action="store_true", help="Enable tracing")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
+    parser.add_argument(
+        "--stream",
+        choices=["updates", "values", "messages", "custom"],
+        default="updates",
+        help="Streaming mode for LangGraph output",
+    )
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
     return parser.parse_args()
@@ -226,7 +232,7 @@ def main():
     user_input = config.get('user_input', '')
     default_model_id = "gpt-4o-mini"
     recursion_limit = config.get('recursion_limit', 15)
-    disable_system_append = _parse_args().disable_system_append
+    disable_system_append = args.disable_system_append
     # Use the system_instructions and user_input in your CLI logic
     model_name = config.get('model_name', default_model_id)
     provider, base_model, host = parse_model_uri(model_name)
@@ -261,7 +267,7 @@ def main():
     
     selected_tools = ["terminal"]
     
-    disable_system_append = _parse_args().disable_system_append
+    disable_system_append = args.disable_system_append
     
     human_switch = args.human
     #look in olca_config.yaml for human: true
@@ -304,7 +310,9 @@ def main():
         graph_config = {"callbacks": callbacks} if callbacks else {}
         if recursion_limit:
             graph_config["recursion_limit"] = recursion_limit
-        print_stream(graph.stream(inputs, config=graph_config))
+        print_stream(
+            graph.stream(inputs, config=graph_config, stream_mode=args.stream)
+        )
     except GraphRecursionError as e:
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")
         print("For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT")

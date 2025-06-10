@@ -19,8 +19,8 @@
 ## LangGraph Upgrade
 - [x] Upgrade to `langgraph>=0.4.8`
 - [ ] Refactor `olcacli.py` with `StateGraph`
-- [ ] Add examples for `graph.stream` usage
-- [ ] Implement `--stream` CLI option with typed state support
+- [x] Add examples for `graph.stream` usage
+- [x] Implement `--stream` CLI option with typed state support
 - [ ] Write tests for graph streaming
 
 ## Testing

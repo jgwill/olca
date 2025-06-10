@@ -12,6 +12,7 @@ Upcoming improvements for `oLCa`.
 - Provide typed state helpers so handlers can declare input/output types.
 - Offer utilities for streaming output to STDOUT or websockets.
 - Prepare example notebooks demonstrating 0.4 features and typed states.
+- Integrate typed-state helpers into `olcacli.py` for safer graph transitions.
 
 ## FuseWill from `coaiapy`
 - Replace local `fusewill_utils` with `coaiapy.fusewill`.
@@ -30,6 +31,7 @@ Upcoming improvements for `oLCa`.
 - Expose `coaia transcribe` and `coaia summarize` via `olca` scripts.
 - Evaluate `coaia p` for process tagging and metrics.
 - Document required Redis variables for `coaia` helpers.
+- Document how `oiv` uses `tlid` timestamps to organize output files.
 
 ## Testing and CI
 - Add unit tests for all CLI commands.

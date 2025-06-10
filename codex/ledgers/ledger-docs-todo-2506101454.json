@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506101454",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Refined documentation with tlid notes and clearer oiv examples. Updated ROADMAP with typed-state refactor bullet and tlid tracking. Marked tlid and audio helper tasks as complete in TODO. These changes prepare the CLI for deeper coaiapy and LangGraph integration.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "great, that is going well,\n\n## Code Enhancements\n\n[ ] Add dependency on `tlid` or drop its usage in `oiv`\n[ ] Review argument parsing for `oiv` and update `--help`\n[ ] Expose `coaia` audio helpers within the package\n\n----\ncomplete that above ensure all docs is upgraded.\n\nDocument and prepare for what is bellow:\n\n\u2001\t[ ] Provide typed-state helpers for `StateGraph`\n [ ] Refactor `olcacli.py` with `StateGraph`",
+  "scene": "Documentation now explains tlid-based timestamps and new CLI helpers, pointing developers toward typed-state integration while verifying coaiapy wrappers." 
+}

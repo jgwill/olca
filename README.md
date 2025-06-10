@@ -8,6 +8,7 @@
 - Tracing via LangSmith and Langfuse
 - `olca fuse` wraps `coaiapy.fusewill` for Langfuse traces and datasets
 - `oiv` command for searching and summarizing arXiv papers
+- `oiv` timestamps results with `tlid` for easy cataloging
 - Optional `coaia` tools for transcription and `tash` Redis storage
 
 ## Installation
@@ -48,6 +49,7 @@ Examples:
 olca -H -T                       # interactive run with tracing
 olca fuse list_traces -L 5       # show recent traces
 oiv -I "quantum computing"       # search arXiv
+oiv -I "ai" -P result-           # prefix results with 'result-' timestamp
 coaia transcribe sample.wav      # audio transcription
 coaia tash project::notes < README.md  # stash notes to Redis
 olca coaia transcribe sample.wav # same as above via olca wrapper
@@ -64,6 +66,8 @@ oiv --help                 # view oiv arguments
 Store them in a `.env` file or your shell profile. `coaia` commands rely on
 Redis variables (`KV_REST_API_URL` and `KV_REST_API_TOKEN`) to stash text
 snippets and metrics.
+`oiv` stores search results in `./output` with a `tlid` timestamp, so runs
+are easy to organize without extra configuration.
 
 ## Example `olca.yml`
 ```yaml
@@ -96,4 +100,6 @@ olca --stream updates
 The project is migrating to LangGraph 0.4.x to support streaming via
 `StateGraph` and asynchronous `graph.stream` calls. Local `fusewill`
 helpers will be replaced by `coaiapy.fusewill` for a consistent Langfuse
-experience. See [`ROADMAP.md`](ROADMAP.md) for full details.
+experience. Upcoming releases will introduce typed-state helpers so
+agents can declare structured inputs and outputs. See [`ROADMAP.md`](ROADMAP.md)
+for full details.

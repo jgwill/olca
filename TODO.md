@@ -12,9 +12,9 @@
 - [x] Replace local `fusewill_cli` with wrapper around `coaia fuse`
 - [x] Allow invoking `coaia` commands from `olca` (via `olca coaia`)
 - [ ] Provide typed-state helpers for `StateGraph`
-- [ ] Add dependency on `tlid` or drop its usage in `oiv`
-- [ ] Review argument parsing for `oiv` and update `--help`
-- [ ] Expose `coaia` audio helpers within the package
+- [x] Add dependency on `tlid` or drop its usage in `oiv`
+- [x] Review argument parsing for `oiv` and update `--help`
+- [x] Expose `coaia` audio helpers within the package
 
 ## LangGraph Upgrade
 - [x] Upgrade to `langgraph>=0.4.8`

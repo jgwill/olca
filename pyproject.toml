@@ -30,12 +30,13 @@ dependencies = [
     "langchain-ollama",
     "langchain-experimental",
     "click",
-    "langgraph",
+    "langgraph>=0.4.8",
     "langfuse",
     "pytz",
     "google.generativeai",
     "arxiv",
     "tlid",
+    "coaiapy",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -48,4 +49,5 @@ olca2 = "olca.olcacli:main"
 olca = "olca.olcacli:main"
 fusewill = "olca.fusewill_cli:main"
 oiv = "olca.oiv:main"
+coaia = "olca.coaia_cli:main"
 

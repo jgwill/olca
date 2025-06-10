@@ -49,4 +49,5 @@ olca2 = "olca.olcacli:main"
 olca = "olca.olcacli:main"
 fusewill = "olca.fusewill_cli:main"
 oiv = "olca.oiv:main"
+coaia = "olca.coaia_cli:main"
 

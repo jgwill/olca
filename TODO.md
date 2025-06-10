@@ -10,7 +10,7 @@
 ## Code Enhancements
 - [x] Integrate `coaiapy` utilities and remove local `fusewill_utils`
 - [x] Replace local `fusewill_cli` with wrapper around `coaia fuse`
-- [ ] Allow invoking `coaia` commands from `olca`
+- [x] Allow invoking `coaia` commands from `olca` (via `olca coaia`)
 - [ ] Provide typed-state helpers for `StateGraph`
 - [ ] Add dependency on `tlid` or drop its usage in `oiv`
 - [ ] Review argument parsing for `oiv` and update `--help`

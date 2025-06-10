@@ -155,6 +155,10 @@ def parse_model_uri(uri: str):
     return provider, base_model, host
 
 def main():
+    # Delegate 'coaia' subcommand to coaiapy if present
+    if len(sys.argv) > 1 and sys.argv[1] == "coaia":
+        from coaiapy.coaiacli import main as coaia_main
+        return coaia_main(sys.argv[2:])
     args = _parse_args()
     olca_config_file = 'olca.yml'
     

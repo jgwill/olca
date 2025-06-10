@@ -29,6 +29,7 @@ Use `-H` to activate human mode or `--help` to see full options.
 | `olca fuse` | Manage Langfuse traces via `coaiapy`                       |
 | `oiv`      | Query arXiv and generate summaries                          |
 | `coaia`    | (optional) audio utilities and Redis `tash` helper          |
+| `olca coaia` | Run `coaiapy` commands through the `olca` wrapper         |
 
 `olca fuse` forwards all arguments to `coaia fuse`, so you can reuse existing
 FuseWill commands without changing your workflow.
@@ -49,6 +50,7 @@ olca fuse list_traces -L 5       # show recent traces
 oiv -I "quantum computing"       # search arXiv
 coaia transcribe sample.wav      # audio transcription
 coaia tash project::notes < README.md  # stash notes to Redis
+olca coaia transcribe sample.wav # same as above via olca wrapper
 olca fuse --help           # detailed options for FuseWill
 coaia fuse --help          # discover extra Langfuse utilities
 oiv --help                 # view oiv arguments

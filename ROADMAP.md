@@ -21,6 +21,7 @@ Upcoming improvements for `oLCa`.
 - Replace `fusewill_cli.py` with thin wrappers around `coaiapy.cofuse` (done).
 - Sync README examples with `coaiapy` fusewill usage.
 - Add wrappers so `olca fuse` calls directly into `coaiapy` modules.
+- Provide an `olca coaia` subcommand to invoke any `coaiapy` CLI action.
 - Outline dataset utilities available through `coaia fuse --help`.
 - Consider additional helpers like `coaia p` for tagging traces.
 

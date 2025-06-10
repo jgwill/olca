@@ -1,120 +1,73 @@
 # oLCa
 
-oLCa is a Python package that provides a CLI tool for Experimenting Langchain with OpenAI wrapper around interacting thru the human-in-the-loop tool.
+`oLCa` is an experimental CLI assistant built with LangChain and LangGraph. It focuses on command line interactions, tracing, and human in the loop support. The project also ships utilities for managing Langfuse data and working with arXiv papers. Additional helpers from the `coaiapy` package can be used for audio tasks and storing snippets in Redis.
 
 ## Features
+- Chat-style CLI using OpenAI or Ollama models
+- Optional human-in-the-loop prompts
+- Tracing via LangSmith and Langfuse
+- `fusewill` wrapper for Langfuse traces, datasets and prompts
+- `oiv` command for searching and summarizing arXiv papers
+- Optional `coaia` tools for transcription and `tash` Redis storage
 
 ## Installation
-
-To install the package, you can use pip:
-
 ```bash
 pip install olca
 ```
 
 ## Quick Start
+```bash
+olca init            # create olca.yml in the current directory
+olca -T              # run with tracing enabled
+```
+Use `-H` to activate human mode or `--help` to see full options.
 
-1. Install the package:
-   ```bash
-   pip install olca
-   ```
-2. Initialize configuration:
-   ```bash
-   olca init
-   ```
-3. Run the CLI with tracing:
-   ```bash
-   olca -T
-   ```
+## CLI commands
+| Command    | Purpose                                                     |
+|------------|-------------------------------------------------------------|
+| `olca`     | Interactive agent using LangChain/LangGraph                 |
+| `fusewill` | Manage Langfuse traces and datasets                         |
+| `oiv`      | Query arXiv and generate summaries                          |
+| `coaia`    | (optional) audio utilities and Redis `tash` helper          |
 
-## Available Commands
-
-| Command | Description |
-|---------|-------------|
-| `olca`  | Main CLI agent for interacting with models and tools. |
-| `fusewill` | Langfuse helper CLI for traces, datasets and prompts. |
-| `oiv` | Prototype CLI for retrieving and summarizing papers. |
-
-Use `--help` with any command to see its options.
-
+Examples:
+```bash
+olca -H -T
+fusewill list_traces -L 5
+oiv -I "quantum computing"
+coaia transcribe sample.wav
+coaia tash project::notes < README.md
+fusewill --help            # detailed options for FuseWill
+coaia fuse --help          # discover extra Langfuse utilities
+```
 
 ## Environment Variables
+- `OPENAI_API_KEY` for OpenAI models
+- `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` for Langfuse
+- `LANGCHAIN_API_KEY` for LangSmith tracing
+- `KV_REST_API_URL`, `KV_REST_API_TOKEN` for `coaia tash`
+Store them in a `.env` file or your shell profile. `coaia` commands rely on
+Redis variables (`KV_REST_API_URL` and `KV_REST_API_TOKEN`) to stash text
+snippets and metrics.
 
-Set LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY, and LANGFUSE_HOST for tracing with Langfuse.  
-Set LANGCHAIN_API_KEY for LangSmith tracing.  
-Optionally, set OPENAI_API_KEY for OpenAI usage.  
-
-## Usage
-
-### CLI Tool
-
-#### Help
-
-To see the available commands and options, use the `--help` flag:
-
-```bash
-olca2 --help
-```
-
-## fusewill
-
-The `fusewill` command is a CLI tool that provides functionalities for interacting with Langfuse, including tracing, dataset management, and prompt operations.
-
-### Help
-
-To see the available commands and options for `fusewill`, use the `--help` flag:
-
-----
-
-IMPORTED README from olca1
-----
-
-### Olca
-
-The olca.py script is designed to function as a command-line interface (CLI) agent. It performs various tasks based on given inputs and files present in the directory. The agent is capable of creating directories, producing reports, and writing instructions for self-learning. It operates within a GitHub repository environment and can commit and push changes if provided with an issue ID. The script ensures that it logs its internal actions and follows specific guidelines for handling tasks and reporting, without modifying certain configuration files or checking out branches unless explicitly instructed.
-
-#### Tracing
-
-Olca now supports tracing functionality to help monitor and debug its operations. You can enable tracing by using the `-T` or `--tracing` flag when running the script. Ensure that the `LANGCHAIN_API_KEY` environment variable is set for tracing to work.
-
-#### Initialization
-
-To initialize `olca`, you need to create a configuration file named `olca.yml`. This file contains various settings that `olca` will use to perform its tasks. Below is an example of the `olca.yml` file:
-
+## Example `olca.yml`
 ```yaml
-api_keyname: OPENAI_API_KEY__o450olca241128
+api_keyname: OPENAI_API_KEY
 human: true
-model_name: gpt-4o-mini #or bellow:
-model_name: ollama://llama3.1:latest #or with host
-model_name: ollama://llama3.1:latest@mymachine.mydomain.com:11434
-recursion_limit: 300
-system_instructions: You focus on interacting with human and do what they ask.  Make sure you dont quit the program.
-temperature: 0.0
+model_name: gpt-4o-mini
+recursion_limit: 50
 tracing: true
 tracing_providers:
-- langsmith
-- langfuse
-user_input: Look in the file 3act.md and in ./story, we have created a story point by point and we need you to generate the next iteration of the book in the folder ./book.  You use what you find in ./story to start the work.  Give me your plan to correct or accept.
+  - langsmith
+  - langfuse
+system_instructions: |
+  You are a helpful terminal agent.
+user_input: |
+  Say hello then exit.
 ```
 
-#### Usage
-
-To run `olca`, use the following command:
-
-```shell
-olca -T
-```
-
-This command will enable tracing and start the agent. You can also use the `--trace` flag to achieve the same result.
-
-#### Configuration
-
-The `olca.yml` file allows you to configure various aspects of `olca`, such as the API key (so you can know how much your experimetation cost you), model name, recursion limit, system instructions, temperature, and user input. You can customize these settings to suit your needs and preferences.
-
-#### Command-Line Interface (CLI)
-
-The `olca` script provides a user-friendly CLI that allows you to interact with the agent and perform various tasks. You can use flags and options to control the agent's behavior and provide input for its operations. The CLI also includes error handling mechanisms to notify you of any issues or missing configuration settings.
-
-#### GitHub Integration
-
-`olca` is designed to integrate seamlessly with GitHub workflows and issue management. You can provide an issue ID to the agent, and it will commit and push changes directly to the specified issue. This feature streamlines the development process and reduces the need for manual intervention. Additionally, `olca` maintains detailed logs of its actions and updates, ensuring transparency and traceability in its operations.
+## Integrations and roadmap
+The project is migrating to LangGraph 0.4.x to support streaming via
+`StateGraph` and asynchronous `graph.stream` calls. Local `fusewill`
+helpers will be replaced by `coaiapy.fusewill` for a consistent Langfuse
+experience. See [`ROADMAP.md`](ROADMAP.md) for full details.

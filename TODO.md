@@ -1,21 +1,26 @@
 # TODO
 
 ## Documentation Improvements
-- [ ] Expand README with command summaries (done in this PR).
-- [ ] Provide usage examples for each CLI tool (`olca`, `fusewill`, `oiv`).
-- [ ] Document required environment variables in more detail.
+- [x] Expand README with command summaries and examples
+- [x] Document required environment variables
+- [ ] Describe LangGraph streaming modes
+- [ ] Include `fusewill --help` and `coaia fuse` examples in docs
 
 ## Code Enhancements
-- [ ] Add package dependency for `tlid` or remove requirement from `oiv` to avoid import errors.
-- [ ] Review CLI argument parsing for `oiv` and provide `--help` output.
-- [ ] Implement missing TODO functions in `fusewill_utils.py` (upload_url, get_media, get_daily_metrics).
+- [ ] Integrate `coaiapy` utilities and remove local `fusewill_utils`
+- [ ] Allow invoking `coaia` commands from `olca`
+- [ ] Replace local `fusewill_cli` with wrapper around `coaia fuse`
+- [ ] Add dependency on `tlid` or drop its usage in `oiv`
+- [ ] Review argument parsing for `oiv` and update `--help`
+- [ ] Expose `coaia` audio helpers within the package
 
 ## LangGraph Upgrade
-- [ ] Verify compatibility with LangGraph `0.4.8` which introduces streaming modes (`updates`, `values`, `custom`, `messages`).
-- [ ] Refactor `olcacli.py` to leverage newer `StateGraph` APIs if beneficial.
-- [ ] Add tests covering graph execution and streaming behaviors.
+- [ ] Upgrade to `langgraph>=0.4.8`
+- [ ] Refactor `olcacli.py` with `StateGraph`
+- [ ] Add examples for `graph.stream` usage
+- [ ] Implement `--stream` CLI option with typed state support
+- [ ] Write tests for graph streaming
 
 ## Testing
-- [ ] Integrate automated tests under `tests/` to exercise CLI commands.
-- [ ] Set up CI workflow for linting and pytest.
-
+- [ ] Add unit tests under `tests/`
+- [ ] Set up CI workflow for linting and `pytest`

@@ -64,6 +64,14 @@ coaia fuse --help          # discover extra Langfuse utilities
 oiv --help                 # view oiv arguments
 ```
 
+More scenarios are available in the [`examples/`](examples/) directory.
+
+Example folders:
+- `examples/quickstart` – minimal config for a first run
+- `examples/dataset` – using `olca fuse` dataset helpers
+- `examples/oiv_demo` – summarizing arXiv results
+- `examples/typed_state` – work-in-progress typed state graph
+
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models
 - `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` for Langfuse

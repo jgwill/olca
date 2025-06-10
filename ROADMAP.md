@@ -14,6 +14,7 @@ Upcoming improvements for `oLCa`.
   and `create_state_graph` function as a starting point.
 - [ ] Offer utilities for streaming output to STDOUT or websockets.
 - [ ] Prepare example notebooks demonstrating 0.4 features and typed states.
+- [ ] Provide sample configs under `examples/` for streaming with `StateGraph`.
 - [ ] Integrate typed-state helpers into `olcacli.py` for safer graph transitions.
 
 ## FuseWill from `coaiapy`
@@ -26,6 +27,7 @@ Upcoming improvements for `oLCa`.
 - [x] Add wrappers so `olca fuse` calls directly into `coaiapy` modules.
 - [x] Provide an `olca coaia` subcommand to invoke any `coaiapy` CLI action.
 - [x] Outline dataset utilities available through `coaia fuse --help`.
+- [x] Provide example scripts in `examples/` showing `olca fuse` with datasets.
 - [ ] Consider additional helpers like `coaia p` for tagging traces.
 
 ## Extra Utilities

@@ -7,6 +7,7 @@
 - [x] Include `fusewill --help` and `coaia fuse` examples in docs
 - [x] Document `oiv --help` usage
 - [x] Document dataset commands via `olca fuse`
+- [x] Expand README with example folders under `examples/`
 
 ## Code Enhancements
 - [x] Integrate `coaiapy` utilities and remove local `fusewill_utils`

@@ -10,6 +10,7 @@
 - `oiv` command for searching and summarizing arXiv papers
 - `oiv` timestamps results with `tlid` for easy cataloging
 - Optional `coaia` tools for transcription and `tash` Redis storage
+- Optional `coaia p` helper for tagging traces and metrics
 - `--stream` flag enables multiple streaming output modes
 
 ## Installation
@@ -51,6 +52,8 @@ Examples:
 olca -H -T                       # interactive run with tracing
 olca fuse list_traces -L 5       # show recent traces
 olca fuse datasets list          # list available datasets
+olca fuse datasets create demo   # create a dataset for traces
+olca fuse datasets add-run demo 1234  # attach run ID 1234
 oiv -I "quantum computing"       # search arXiv
 oiv -I "ai" -P result-           # prefix results with 'result-' timestamp
 coaia transcribe sample.wav      # audio transcription
@@ -106,4 +109,5 @@ helpers will be replaced by `coaiapy.fusewill` for a consistent Langfuse
 experience. Upcoming releases will introduce typed-state helpers so
 agents can declare structured inputs and outputs (see
 [`olca/state_helpers.py`](olca/state_helpers.py)). See [`ROADMAP.md`](ROADMAP.md)
-for full details.
+for full details. Dataset utilities for tagging or grouping traces are
+available via `olca fuse datasets`, mirroring `coaia fuse`.

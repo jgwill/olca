@@ -6,6 +6,7 @@
 - [x] Describe LangGraph streaming modes
 - [x] Include `fusewill --help` and `coaia fuse` examples in docs
 - [x] Document `oiv --help` usage
+- [x] Document dataset commands via `olca fuse`
 
 ## Code Enhancements
 - [x] Integrate `coaiapy` utilities and remove local `fusewill_utils`
@@ -22,6 +23,7 @@
 - [x] Add examples for `graph.stream` usage
 - [x] Implement `--stream` CLI option with typed state support
 - [ ] Write tests for graph streaming
+- [ ] Integrate typed-state helpers into `olcacli.py`
 
 ## Testing
 - [ ] Add unit tests under `tests/`

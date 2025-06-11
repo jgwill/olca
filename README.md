@@ -13,7 +13,8 @@
 - Optional `coaia p` helper for tagging traces and metrics
 - `olca coaia` exposes all `coaiapy` commands
 - `--stream` flag enables multiple streaming output modes
-- Experimental typed-state helpers for future StateGraph integration
+- Experimental typed-state helpers for future `StateGraph` integration (see
+  [`examples/typed_state`](examples/typed_state))
 
 ## Installation
 ```bash
@@ -26,7 +27,9 @@ olca init            # create olca.yml in the current directory
 olca -T              # run with tracing enabled
 olca --stream values # custom streaming output
 ```
-Use `-H` to activate human mode or `--help` to see full options.
+Use `-H` to activate human mode or `--help` to see full options. When running
+from a clone without installing, invoke the script with
+`python olca/olcacli.py`.
 
 ## CLI commands
 | Command    | Purpose                                                     |

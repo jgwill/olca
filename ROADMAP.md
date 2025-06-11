@@ -36,6 +36,7 @@ Upcoming improvements for `oLCa`.
 - [x] Evaluate `coaia p` for process tagging and metrics.
 - [x] Document required Redis variables for `coaia` helpers.
 - [x] Document how `oiv` uses `tlid` timestamps to organize output files.
+- [x] Ensure `olcacli.py` imports work when run directly from source.
 
 ## Testing and CI
 - [ ] Add unit tests for all CLI commands.

@@ -16,6 +16,7 @@ Upcoming improvements for `oLCa`.
 - [*] Prepare example notebooks demonstrating 0.4 features and typed states.
 - [*] Provide sample configs under `examples/` for streaming with `StateGraph`.
 - [*] Integrate typed-state helpers into `olcacli.py` for safer graph transitions.
+- [ ] Document websocket streaming utilities once LangGraph 0.4 features stabilize.
 
 ## FuseWill from `coaiapy`
 - [x] Replace local `fusewill_utils` with `coaiapy.fusewill`.
@@ -29,6 +30,7 @@ Upcoming improvements for `oLCa`.
 - [x] Outline dataset utilities available through `coaia fuse --help`.
 - [x] Provide example scripts in `examples/` showing `olca fuse` with datasets.
 - [x] Consider additional helpers like `coaia p` for tagging traces.
+- [x] Remove legacy build steps that copied FuseWill sources.
 
 ## Extra Utilities
 - [x] Support `coaia tash` for storing text notes in Redis.

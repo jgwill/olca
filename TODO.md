@@ -20,6 +20,7 @@
 - [x] Document usage of `coaia p` for tagging traces
 - [x] Document `coaia summarize` and `transcribe` usage
 - [x] Fix `olca` CLI imports so the script runs directly from the repo
+- [x] Remove legacy FuseWill build steps
 
 ## LangGraph Upgrade
 - [x] Upgrade to `langgraph>=0.4.8`

@@ -1,6 +1,11 @@
 # oLCa
 
-`oLCa` is an experimental CLI assistant built with LangChain and LangGraph. It focuses on command line interactions, tracing, and human in the loop support. The project also ships utilities for managing Langfuse data and working with arXiv papers. Additional helpers from the `coaiapy` package can be used for audio tasks and storing snippets in Redis.
+`oLCa` is an experimental CLI assistant built with LangChain and LangGraph. It focuses on command line interactions, tracing, and human‑in‑the‑loop support. Utilities are provided for managing Langfuse data and summarising arXiv papers. Optional helpers from the `coaiapy` package handle audio transcription and note storage via Redis.
+
+The `coaiapy` dependency is installed automatically with `olca`, but you can also install it manually:
+```bash
+pip install coaiapy
+```
 
 ## Features
 - Chat-style CLI using OpenAI or Ollama models
@@ -9,11 +14,11 @@
 - `olca fuse` wraps `coaiapy.fusewill` for Langfuse traces and datasets
 - `oiv` command for searching and summarizing arXiv papers
 - `oiv` timestamps results with `tlid` for easy cataloging
-- Optional `coaia` tools for transcription and `tash` Redis storage; optional `coaia summarize` helper
-- Optional `coaia p` helper for tagging traces and metrics
+- Optional `coaia` tools for transcription and `tash` Redis storage
+- Optional `coaia summarize` and `coaia p` helpers for quick summaries and tagging
 - `olca coaia` exposes all `coaiapy` commands
 - `--stream` flag enables multiple streaming output modes
-- Experimental typed-state helpers for future `StateGraph` integration (see
+- Experimental typed-state helpers for upcoming `StateGraph` integration (see
   [`examples/typed_state`](examples/typed_state))
 
 ## Installation
@@ -134,3 +139,4 @@ for full details. Dataset utilities for tagging or grouping traces are
 available via `olca fuse datasets`, mirroring `coaia fuse`.
 Websocket streaming and typed-state examples are a work in progress and
 will land in future releases.
+

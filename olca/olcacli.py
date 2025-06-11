@@ -10,6 +10,7 @@ from olca.utils import load_environment, initialize_langfuse
 from olca.tracing import TracingManager
 from olca.olcahelper import setup_required_directories, initialize_config_file, prepare_input
 from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
+from olca.state_helpers import create_state_graph
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -144,6 +145,11 @@ def _parse_args():
         default="updates",
         help="Streaming mode for LangGraph output",
     )
+    parser.add_argument(
+        "--stategraph",
+        action="store_true",
+        help="Use typed StateGraph instead of React agent (experimental)",
+    )
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
     return parser.parse_args()
@@ -166,6 +172,8 @@ def main():
         from coaiapy.coaiacli import main as coaia_main
         return coaia_main(sys.argv[2:])
     args = _parse_args()
+    if args.stategraph:
+        print("StateGraph mode enabled (experimental)")
     olca_config_file = 'olca.yml'
     
     # Load environment variables first
@@ -296,7 +304,15 @@ def main():
         system_instructions = system_instructions + ". Use the human-in-the-loop tool"
     
     # Define the graph
-    graph = create_react_agent(model, tools=tools)
+    if args.stategraph:
+        sg = create_state_graph()
+        try:
+            graph = sg.compile()
+        except Exception:
+            print("StateGraph not fully implemented; falling back to React agent")
+            graph = create_react_agent(model, tools=tools)
+    else:
+        graph = create_react_agent(model, tools=tools)
     
     if graph.config is None:
         graph.config = {}

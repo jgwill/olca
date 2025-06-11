@@ -29,8 +29,8 @@
 - [x] Implement `--stream` CLI option with typed state support
 - [ ] Write tests for graph streaming
 - [ ] Document websocket streaming examples
-- [*] Integrate typed-state helpers into `olcacli.py`
-- [ ] Provide sample configs for typed-state streaming
+- [x] Integrate typed-state helpers into `olcacli.py`
+- [x] Provide sample configs for typed-state streaming
 
 ## Testing
 - [ ] Add unit tests under `tests/`

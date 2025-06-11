@@ -18,6 +18,7 @@ pip install coaiapy
 - Optional `coaia summarize` and `coaia p` helpers for quick summaries and tagging
 - `olca coaia` exposes all `coaiapy` commands
 - `--stream` flag enables multiple streaming output modes
+- `--stategraph` flag experiments with typed-state graphs
 - Experimental typed-state helpers for upcoming `StateGraph` integration (see
   [`examples/typed_state`](examples/typed_state))
 
@@ -75,6 +76,7 @@ olca coaia p summarizer::demo < README.md
 olca fuse --help           # detailed options for FuseWill
 coaia fuse --help          # discover extra Langfuse utilities
 oiv --help                 # view oiv arguments
+olca --stategraph -T       # try the experimental typed StateGraph
 ```
 
 `coaia transcribe` converts audio files to text, while `coaia summarize` can
@@ -89,6 +91,7 @@ Example folders:
 - `examples/dataset` – using `olca fuse` dataset helpers
 - `examples/oiv_demo` – summarizing arXiv results
 - `examples/typed_state` – work-in-progress typed state graph
+  (see `examples/typed_state/olca.yml` for a sample config)
 
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models
@@ -123,10 +126,17 @@ the output style: `updates`, `values`, `custom`, or `messages`. The default
 mirrors the traditional behavior using `graph.stream` with updates written to
 STDOUT.
 
+An additional `--stategraph` flag enables an experimental typed-state graph
+implementation. When this flag is provided, `olca` attempts to compile a
+`StateGraph` from `olca.state_helpers` and falls back to the classic agent if
+the graph isn't fully defined.
+
 Example:
 ```bash
 olca --stream updates
 ```
+For a sample typed-state configuration, see
+`examples/typed_state/olca.yml`.
 
 ## Integrations and roadmap
 The project is migrating to LangGraph 0.4.x to support streaming via

@@ -17,8 +17,8 @@
 - [x] Add dependency on `tlid` or drop its usage in `oiv`
 - [x] Review argument parsing for `oiv` and update `--help`
 - [x] Expose `coaia` audio helpers within the package
-- [ ] Document usage of `coaia p` for tagging traces
-- [ ] Document `coaia summarize` and `transcribe` usage
+- [x] Document usage of `coaia p` for tagging traces
+- [x] Document `coaia summarize` and `transcribe` usage
 
 ## LangGraph Upgrade
 - [x] Upgrade to `langgraph>=0.4.8`

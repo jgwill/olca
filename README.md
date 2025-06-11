@@ -69,6 +69,11 @@ coaia fuse --help          # discover extra Langfuse utilities
 oiv --help                 # view oiv arguments
 ```
 
+`coaia transcribe` converts audio files to text, while `coaia summarize` can
+quickly produce a condensed version of any document. The `coaia p` command lets
+you tag an input message with a custom label—useful for tracking metrics or
+annotating traces. All these commands are also accessible via `olca coaia`.
+
 More scenarios are available in the [`examples/`](examples/) directory.
 
 Example folders:
@@ -124,3 +129,5 @@ agents can declare structured inputs and outputs (see
 [`olca/state_helpers.py`](olca/state_helpers.py)). See [`ROADMAP.md`](ROADMAP.md)
 for full details. Dataset utilities for tagging or grouping traces are
 available via `olca fuse datasets`, mirroring `coaia fuse`.
+Websocket streaming and typed-state examples are a work in progress and
+will land in future releases.

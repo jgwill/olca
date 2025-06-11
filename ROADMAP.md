@@ -28,12 +28,12 @@ Upcoming improvements for `oLCa`.
 - [x] Provide an `olca coaia` subcommand to invoke any `coaiapy` CLI action.
 - [x] Outline dataset utilities available through `coaia fuse --help`.
 - [x] Provide example scripts in `examples/` showing `olca fuse` with datasets.
-- [*] Consider additional helpers like `coaia p` for tagging traces.
+- [x] Consider additional helpers like `coaia p` for tagging traces.
 
 ## Extra Utilities
 - [x] Support `coaia tash` for storing text notes in Redis.
 - [x] Expose `coaia transcribe` and `coaia summarize` via `olca` scripts.
-- [*] Evaluate `coaia p` for process tagging and metrics.
+- [x] Evaluate `coaia p` for process tagging and metrics.
 - [x] Document required Redis variables for `coaia` helpers.
 - [x] Document how `oiv` uses `tlid` timestamps to organize output files.
 

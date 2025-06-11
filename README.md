@@ -19,7 +19,8 @@ pip install coaiapy
 - `olca coaia` exposes all `coaiapy` commands
 - `--stream` flag enables multiple streaming output modes
 - `--stategraph` flag experiments with typed-state graphs
-- Experimental typed-state helpers for upcoming `StateGraph` integration (see
+Experimental typed-state helpers for upcoming `StateGraph` integration. The
+starter graph simply echoes its input (see
   [`examples/typed_state`](examples/typed_state))
 
 ## Installation
@@ -137,6 +138,8 @@ olca --stream updates
 ```
 For a sample typed-state configuration, see
 `examples/typed_state/olca.yml`.
+The current demo graph simply echoes the conversation state and will be
+expanded as LangGraph support matures.
 
 ## Integrations and roadmap
 The project is migrating to LangGraph 0.4.x to support streaming via

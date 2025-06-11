@@ -4,12 +4,11 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
-from langgraph.graph import StateGraph
-from langgraph.graph.state import State
+from langgraph.graph import StateGraph, END
 
 
 @dataclass
-class ConversationState(State):
+class ConversationState:
     """Example typed state for streaming conversations."""
 
     messages: List[str] = field(default_factory=list)
@@ -18,6 +17,8 @@ class ConversationState(State):
 
 def create_state_graph() -> StateGraph[ConversationState]:
     """Return a minimal StateGraph configured for conversation states."""
-    sg: StateGraph[ConversationState] = StateGraph()
-    # Implementation will be expanded during the LangGraph 0.4 migration.
+    sg: StateGraph[ConversationState] = StateGraph(ConversationState)
+    sg.add_node("echo", lambda state: state)
+    sg.set_entry_point("echo")
+    sg.add_edge("echo", END)
     return sg

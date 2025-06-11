@@ -12,10 +12,10 @@ Upcoming improvements for `oLCa`.
 - [x] Provide typed state helpers so handlers can declare input/output types.
   A new module (`olca/state_helpers.py`) introduces a skeleton `ConversationState`
   and `create_state_graph` function as a starting point.
-- [ ] Offer utilities for streaming output to STDOUT or websockets.
-- [ ] Prepare example notebooks demonstrating 0.4 features and typed states.
-- [ ] Provide sample configs under `examples/` for streaming with `StateGraph`.
-- [ ] Integrate typed-state helpers into `olcacli.py` for safer graph transitions.
+- [*] Offer utilities for streaming output to STDOUT or websockets.
+- [*] Prepare example notebooks demonstrating 0.4 features and typed states.
+- [*] Provide sample configs under `examples/` for streaming with `StateGraph`.
+- [*] Integrate typed-state helpers into `olcacli.py` for safer graph transitions.
 
 ## FuseWill from `coaiapy`
 - [x] Replace local `fusewill_utils` with `coaiapy.fusewill`.
@@ -33,7 +33,7 @@ Upcoming improvements for `oLCa`.
 ## Extra Utilities
 - [x] Support `coaia tash` for storing text notes in Redis.
 - [x] Expose `coaia transcribe` and `coaia summarize` via `olca` scripts.
-- [ ] Evaluate `coaia p` for process tagging and metrics.
+- [*] Evaluate `coaia p` for process tagging and metrics.
 - [x] Document required Redis variables for `coaia` helpers.
 - [x] Document how `oiv` uses `tlid` timestamps to organize output files.
 

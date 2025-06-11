@@ -18,14 +18,17 @@
 - [x] Review argument parsing for `oiv` and update `--help`
 - [x] Expose `coaia` audio helpers within the package
 - [ ] Document usage of `coaia p` for tagging traces
+- [ ] Document `coaia summarize` and `transcribe` usage
 
 ## LangGraph Upgrade
 - [x] Upgrade to `langgraph>=0.4.8`
- - [*] Refactor `olcacli.py` with `StateGraph`
+- [*] Refactor `olcacli.py` with `StateGraph`
 - [x] Add examples for `graph.stream` usage
 - [x] Implement `--stream` CLI option with typed state support
 - [ ] Write tests for graph streaming
- - [*] Integrate typed-state helpers into `olcacli.py`
+- [ ] Document websocket streaming examples
+- [*] Integrate typed-state helpers into `olcacli.py`
+- [ ] Provide sample configs for typed-state streaming
 
 ## Testing
 - [ ] Add unit tests under `tests/`

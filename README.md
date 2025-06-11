@@ -9,10 +9,11 @@
 - `olca fuse` wraps `coaiapy.fusewill` for Langfuse traces and datasets
 - `oiv` command for searching and summarizing arXiv papers
 - `oiv` timestamps results with `tlid` for easy cataloging
-- Optional `coaia` tools for transcription and `tash` Redis storage
+- Optional `coaia` tools for transcription and `tash` Redis storage; optional `coaia summarize` helper
 - Optional `coaia p` helper for tagging traces and metrics
 - `olca coaia` exposes all `coaiapy` commands
 - `--stream` flag enables multiple streaming output modes
+- Experimental typed-state helpers for future StateGraph integration
 
 ## Installation
 ```bash
@@ -61,6 +62,7 @@ coaia transcribe sample.wav      # audio transcription
 coaia tash project::notes < README.md  # stash notes to Redis
 olca coaia transcribe sample.wav # same as above via olca wrapper
 coaia p summarizer::demo < README.md   # tag process with custom label
+coaia summarize README.md          # quick document summary
 olca coaia p summarizer::demo < README.md
 olca fuse --help           # detailed options for FuseWill
 coaia fuse --help          # discover extra Langfuse utilities

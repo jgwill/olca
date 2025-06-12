@@ -21,3 +21,4 @@ websocket or custom handlers. Example notebooks and sample configs will help
 users adopt these features. Testing coverage and a minimal CI pipeline are still
 pending.
 
+- **llms.txt**: index file guiding LLMs to key docs for retrieval.

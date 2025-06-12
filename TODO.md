@@ -8,6 +8,8 @@
 - [x] Document `oiv --help` usage
 - [x] Document dataset commands via `olca fuse`
 - [x] Expand README with example folders under `examples/`
+- [x] Add websocket usage example in README
+- [x] Publish llms.txt index for documentation
 
 ## Code Enhancements
 - [x] Integrate `coaiapy` utilities and remove local `fusewill_utils`

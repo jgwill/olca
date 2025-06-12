@@ -79,6 +79,7 @@ olca fuse --help           # detailed options for FuseWill
 coaia fuse --help          # discover extra Langfuse utilities
 oiv --help                 # view oiv arguments
 olca --stategraph -T       # try the experimental typed StateGraph
+olca --stream updates --ws ws://localhost:8000 # stream to websocket
 ```
 
 `coaia transcribe` converts audio files to text, while `coaia summarize` can
@@ -148,11 +149,12 @@ expanded as LangGraph support matures.
 ## Integrations and roadmap
 The project is migrating to LangGraph 0.4.x to support streaming via
 `StateGraph` and asynchronous `graph.stream` calls. Local `fusewill`
-helpers will be replaced by `coaiapy.fusewill` for a consistent Langfuse
+helpers have been replaced by `coaiapy.fusewill` for a consistent Langfuse
 experience. Upcoming releases will introduce typed-state helpers so
 agents can declare structured inputs and outputs (see
 [`olca/state_helpers.py`](olca/state_helpers.py)). See [`ROADMAP.md`](ROADMAP.md)
 for full details. Dataset utilities for tagging or grouping traces are
 available via `olca fuse datasets`, mirroring `coaia fuse`.
 Typed-state examples and websocket helpers continue to evolve.
+
 

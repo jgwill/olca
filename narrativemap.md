@@ -21,4 +21,8 @@ websocket or custom handlers. Example notebooks and sample configs will help
 users adopt these features. Testing coverage and a minimal CI pipeline are still
 pending.
 
+- 2025-06-12: Added `examples/langgraph_agent` demonstrating a minimal
+  `StateGraph` chat. Updated the fusewill wrapper to load `coaiamodule`
+  automatically and clarified this behavior in the README.
+
 - **llms.txt**: index file guiding LLMs to key docs for retrieval.

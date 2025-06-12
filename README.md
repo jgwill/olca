@@ -12,6 +12,8 @@ pip install coaiapy
 - Optional human-in-the-loop prompts
 - Tracing via LangSmith and Langfuse
 - `olca fuse` wraps `coaiapy.fusewill` for Langfuse traces and datasets
+- The wrapper adds the `coaiapy` package directory to `sys.path` to avoid
+  `coaiamodule` import errors
 - `oiv` command for searching and summarizing arXiv papers
 - `oiv` timestamps results with `tlid` for easy cataloging
 - Optional `coaia` tools for transcription and `tash` Redis storage
@@ -95,6 +97,7 @@ Example folders:
 - `examples/oiv_demo` – summarizing arXiv results
 - `examples/typed_state` – work-in-progress typed state graph
   (see `examples/typed_state/olca.yml` for a sample config)
+- `examples/langgraph_agent` – prototype fused LangGraph chat
 
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models

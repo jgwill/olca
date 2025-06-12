@@ -3,5 +3,6 @@ ROADMAP: Workspace.jgwill.olca:35.ROADMAP
 TODO: Workspace.jgwill.olca:35.TODO
 Quickstart Example: Workspace.jgwill.olca:35.quickstart
 Dataset Example: Workspace.jgwill.olca:35.dataset
+LangGraph Agent: Workspace.jgwill.olca:35.langgraph-agent
 Narrative Map: Workspace.jgwill.olca:35.narrative-map
 LLMS: Workspace.jgwill.olca:35.llms

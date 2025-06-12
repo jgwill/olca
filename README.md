@@ -29,10 +29,10 @@ It appears in CLI output and documentation as a reminder of this evolving archit
 - `--stream` flag enables multiple streaming output modes
 - `--stategraph` flag experiments with typed-state graphs
 - `--ws` to stream updates to a websocket URL
-- Automated tests run via GitHub Actions CI
-Experimental typed-state helpers for upcoming `StateGraph` integration. The
-starter graph simply echoes its input (see
-  [`examples/typed_state`](examples/typed_state))
+- Automated tests run via GitHub Actions CI (triggered on pull requests)
+- Experimental typed-state helpers for upcoming `StateGraph` integration. The
+  starter graph simply echoes its input (see
+    [`examples/typed_state`](examples/typed_state))
 
 ## Installation
 ```bash

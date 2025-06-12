@@ -43,5 +43,6 @@ Upcoming improvements for `oLCa`.
 - [x] Publish `llms.txt` index for LLM document retrieval.
 
 ## Testing and CI
-- [*] Add unit tests for all CLI commands.
+- [x] Add unit tests for all CLI commands.
 - [x] Configure CI to run `pytest` and style checks.
+- CI only triggers on pull requests

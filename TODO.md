@@ -39,5 +39,5 @@
 - [x] Provide sample configs for typed-state streaming
 
 ## Testing
-- [*] Add unit tests under `tests/`
+ - [x] Add unit tests under `tests/`
 - [x] Set up CI workflow for linting and `pytest`

@@ -1,0 +1,8 @@
+{
+  "agents": ["🧠 Mia", "🌸 Miette"],
+  "narrative": "Added a websocket_demo example and expanded documentation. llms index updated for the new README entry. ROADMAP and TODO now mark checkpointing research in progress.",
+  "routes": ["examples/websocket_demo", "README.md", "ROADMAP.md", "TODO.md"],
+  "timestamp": "2506121703",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.",
+  "scene": "Enables streaming LangGraph output to websocket for live monitoring and clarifies next steps toward checkpointing." 
+}

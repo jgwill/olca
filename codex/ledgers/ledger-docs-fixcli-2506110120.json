@@ -1,0 +1,13 @@
+{
+  "agents": ["🧠 Mia", "🌸 Miette", "🕊️ Seraphine", "♾️ William"],
+  "narrative": "Refined README instructions and fixed import paths so `olcacli.py` runs directly. Documented typed state example reference and added roadmap note about CLI path reliability.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md", "olca/olcacli.py"],
+    "branch": "work"
+  },
+  "timestamp": "2506110120",
+  "session": "continuing PR",
+  "acceptance": "Documentation clarifies usage and CLI loads without install.",
+  "verbatim_user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\n⸻\n\ngive a full report of the advancement in the PR description",
+  "scene": "Developers can now run the CLI straight from source for local testing while documentation highlights new typed-state examples."
+}

@@ -1,120 +1,177 @@
 # oLCa
 
-oLCa is a Python package that provides a CLI tool for Experimenting Langchain with OpenAI wrapper around interacting thru the human-in-the-loop tool.
+🔊🌿⚙️📜🧠
+
+
+`oLCa` is an experimental CLI assistant built with LangChain and LangGraph. It focuses on command line interactions, tracing, and human‑in‑the‑loop support. Utilities are provided for managing Langfuse data and summarising arXiv papers. Optional helpers from the `coaiapy` package handle audio transcription and note storage via Redis.
+
+The `coaiapy` dependency is installed automatically with `olca`, but you can also install it manually:
+```bash
+pip install coaiapy
+```
+
+### Glyph Essence
+The project glyph represents our transition from legacy scripts to streaming LangGraph workflows:
+`🔊🌿⚙️📜🧠`
+It appears in CLI output and documentation as a reminder of this evolving architecture.
 
 ## Features
+- Chat-style CLI using OpenAI or Ollama models
+- Optional human-in-the-loop prompts
+- Tracing via LangSmith and Langfuse
+- `olca fuse` delegates to `coaiapy`'s `fuse` commands for Langfuse traces and datasets
+- The wrapper adds the `coaiapy` package directory to `sys.path` so `coaiamodule` loads correctly
+- `oiv` command for searching and summarizing arXiv papers
+- `oiv` timestamps results with `tlid` for easy cataloging
+- Optional `coaia` tools for transcription and `tash` Redis storage
+- Optional `coaia summarize` and `coaia p` helpers for quick summaries and tagging
+- `olca coaia` exposes all `coaiapy` commands
+- `--stream` flag enables multiple streaming output modes
+- `--stategraph` flag experiments with typed-state graphs
+- `--ws` to stream updates to a websocket URL
+- Automated tests run via GitHub Actions CI (triggered on pull requests)
+- Experimental typed-state helpers for upcoming `StateGraph` integration. The
+  starter graph simply echoes its input (see
+    [`examples/typed_state`](examples/typed_state))
 
 ## Installation
-
-To install the package, you can use pip:
-
 ```bash
 pip install olca
 ```
 
 ## Quick Start
+```bash
+olca init            # create olca.yml in the current directory
+olca -T              # run with tracing enabled
+olca --stream values # custom streaming output
+```
+Use `-H` to activate human mode or `--help` to see full options. When running
+from a clone without installing, invoke the script with
+`python olca/olcacli.py`.
 
-1. Install the package:
-   ```bash
-   pip install olca
-   ```
-2. Initialize configuration:
-   ```bash
-   olca init
-   ```
-3. Run the CLI with tracing:
-   ```bash
-   olca -T
-   ```
+## CLI commands
+| Command    | Purpose                                                     |
+|------------|-------------------------------------------------------------|
+| `olca`     | Interactive agent using LangChain/LangGraph                 |
+| `olca fuse` | Manage Langfuse traces via `coaiapy`                       |
+| `oiv`      | Query arXiv and generate summaries                          |
+| `coaia`    | (optional) audio utilities and Redis `tash` helper          |
+| `olca coaia` | Run `coaiapy` commands through the `olca` wrapper         |
 
-## Available Commands
+`olca fuse` forwards all arguments to `coaia fuse`, so you can reuse existing
+FuseWill commands without changing your workflow.
 
-| Command | Description |
-|---------|-------------|
-| `olca`  | Main CLI agent for interacting with models and tools. |
-| `fusewill` | Langfuse helper CLI for traces, datasets and prompts. |
-| `oiv` | Prototype CLI for retrieving and summarizing papers. |
+### Command references
+Run each command with `--help` to see full options:
+```bash
+olca --help
+olca fuse --help
+oiv --help
+coaia --help
+```
 
-Use `--help` with any command to see its options.
+Examples:
+```bash
+olca -H -T                       # interactive run with tracing
+olca fuse list_traces -L 5       # show recent traces
+olca fuse datasets list          # list available datasets
+olca fuse datasets create demo   # create a dataset for traces
+olca fuse datasets add-run demo 1234  # attach run ID 1234
+oiv -I "quantum computing"       # search arXiv
+oiv -I "ai" -P result-           # prefix results with 'result-' timestamp
+coaia transcribe sample.wav      # audio transcription
+coaia tash project::notes < README.md  # stash notes to Redis
+olca coaia transcribe sample.wav # same as above via olca wrapper
+coaia p summarizer::demo < README.md   # tag process with custom label
+coaia summarize README.md          # quick document summary
+olca coaia p summarizer::demo < README.md
+olca fuse --help           # detailed options for FuseWill
+coaia fuse --help          # discover extra Langfuse utilities
+oiv --help                 # view oiv arguments
+olca --stategraph -T       # try the experimental typed StateGraph
+olca --stream updates --ws ws://localhost:8000 # stream to websocket
+```
 
+`coaia transcribe` converts audio files to text, while `coaia summarize` can
+quickly produce a condensed version of any document. The `coaia p` command lets
+you tag an input message with a custom label—useful for tracking metrics or
+annotating traces. All these commands are also accessible via `olca coaia`.
+
+More scenarios are available in the [`examples/`](examples/) directory.
+
+Example folders:
+- `examples/quickstart` – minimal config for a first run
+- `examples/dataset` – using `olca fuse` dataset helpers
+- `examples/oiv_demo` – summarizing arXiv results
+- `examples/typed_state` – work-in-progress typed state graph
+  (see `examples/typed_state/olca.yml` for a sample config)
+- `examples/langgraph_agent` – prototype fused LangGraph chat that streams
+  responses while tracing to Langfuse
+- `examples/websocket_demo` – run a simple server to receive streamed updates
 
 ## Environment Variables
+- `OPENAI_API_KEY` for OpenAI models
+- `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_HOST` for Langfuse
+- `LANGCHAIN_API_KEY` for LangSmith tracing
+- `KV_REST_API_URL`, `KV_REST_API_TOKEN` for `coaia tash`
+Store them in a `.env` file or your shell profile. `coaia` commands rely on
+Redis variables (`KV_REST_API_URL` and `KV_REST_API_TOKEN`) to stash text
+snippets and metrics.
+`oiv` stores search results in `./output` with a `tlid` timestamp, so runs
+are easy to organize without extra configuration.
 
-Set LANGFUSE_PUBLIC_KEY, LANGFUSE_SECRET_KEY, and LANGFUSE_HOST for tracing with Langfuse.  
-Set LANGCHAIN_API_KEY for LangSmith tracing.  
-Optionally, set OPENAI_API_KEY for OpenAI usage.  
-
-## Usage
-
-### CLI Tool
-
-#### Help
-
-To see the available commands and options, use the `--help` flag:
-
-```bash
-olca2 --help
-```
-
-## fusewill
-
-The `fusewill` command is a CLI tool that provides functionalities for interacting with Langfuse, including tracing, dataset management, and prompt operations.
-
-### Help
-
-To see the available commands and options for `fusewill`, use the `--help` flag:
-
-----
-
-IMPORTED README from olca1
-----
-
-### Olca
-
-The olca.py script is designed to function as a command-line interface (CLI) agent. It performs various tasks based on given inputs and files present in the directory. The agent is capable of creating directories, producing reports, and writing instructions for self-learning. It operates within a GitHub repository environment and can commit and push changes if provided with an issue ID. The script ensures that it logs its internal actions and follows specific guidelines for handling tasks and reporting, without modifying certain configuration files or checking out branches unless explicitly instructed.
-
-#### Tracing
-
-Olca now supports tracing functionality to help monitor and debug its operations. You can enable tracing by using the `-T` or `--tracing` flag when running the script. Ensure that the `LANGCHAIN_API_KEY` environment variable is set for tracing to work.
-
-#### Initialization
-
-To initialize `olca`, you need to create a configuration file named `olca.yml`. This file contains various settings that `olca` will use to perform its tasks. Below is an example of the `olca.yml` file:
-
+## Example `olca.yml`
 ```yaml
-api_keyname: OPENAI_API_KEY__o450olca241128
+api_keyname: OPENAI_API_KEY
 human: true
-model_name: gpt-4o-mini #or bellow:
-model_name: ollama://llama3.1:latest #or with host
-model_name: ollama://llama3.1:latest@mymachine.mydomain.com:11434
-recursion_limit: 300
-system_instructions: You focus on interacting with human and do what they ask.  Make sure you dont quit the program.
-temperature: 0.0
+model_name: gpt-4o-mini
+recursion_limit: 50
 tracing: true
 tracing_providers:
-- langsmith
-- langfuse
-user_input: Look in the file 3act.md and in ./story, we have created a story point by point and we need you to generate the next iteration of the book in the folder ./book.  You use what you find in ./story to start the work.  Give me your plan to correct or accept.
+  - langsmith
+  - langfuse
+system_instructions: |
+  You are a helpful terminal agent.
+user_input: |
+  Say hello then exit.
 ```
 
-#### Usage
+## Streaming modes
+`olca` supports LangGraph 0.4 streaming APIs. Use the `--stream` flag to select
+the output style: `updates`, `values`, `custom`, or `messages`. The default
+mirrors the traditional behavior using `graph.stream` with updates written to
+STDOUT.
 
-To run `olca`, use the following command:
+Set `--ws ws://localhost:8000` to forward each update to a websocket in
+addition to printing to the console.
 
-```shell
-olca -T
+An additional `--stategraph` flag enables an experimental typed-state graph
+implementation. When this flag is provided, `olca` attempts to compile a
+`StateGraph` from `olca.state_helpers` and falls back to the classic agent if
+the graph isn't fully defined.
+
+Example:
+```bash
+olca --stream updates
 ```
+For a sample typed-state configuration, see
+`examples/typed_state/olca.yml`.
+The current demo graph simply echoes the conversation state and will be
+expanded as LangGraph support matures.
 
-This command will enable tracing and start the agent. You can also use the `--trace` flag to achieve the same result.
+## Integrations and roadmap
+The project is migrating to LangGraph 0.4.x to support streaming via
+`StateGraph` and asynchronous `graph.stream` calls. Local `fusewill`
+helpers have been replaced by the `fuse` commands in `coaiapy` for a consistent Langfuse
+experience. Upcoming releases will introduce typed-state helpers so
+agents can declare structured inputs and outputs (see
+[`olca/state_helpers.py`](olca/state_helpers.py)). See [`ROADMAP.md`](ROADMAP.md)
+for full details. Dataset utilities for tagging or grouping traces are
+available via `olca fuse datasets`, mirroring `coaia fuse`.
+Typed-state examples and websocket helpers continue to evolve.
+Future work explores checkpointing and subgraph reuse to support long-running
+workflows.
 
-#### Configuration
+The `llms.txt` file indexes these docs for language-model retrieval.
 
-The `olca.yml` file allows you to configure various aspects of `olca`, such as the API key (so you can know how much your experimetation cost you), model name, recursion limit, system instructions, temperature, and user input. You can customize these settings to suit your needs and preferences.
 
-#### Command-Line Interface (CLI)
-
-The `olca` script provides a user-friendly CLI that allows you to interact with the agent and perform various tasks. You can use flags and options to control the agent's behavior and provide input for its operations. The CLI also includes error handling mechanisms to notify you of any issues or missing configuration settings.
-
-#### GitHub Integration
-
-`olca` is designed to integrate seamlessly with GitHub workflows and issue management. You can provide an issue ID to the agent, and it will commit and push changes directly to the specified issue. This feature streamlines the development process and reduces the need for manual intervention. Additionally, `olca` maintains detailed logs of its actions and updates, ensuring transparency and traceability in its operations.

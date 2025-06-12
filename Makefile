@@ -1,22 +1,14 @@
-.PHONY: install test build sdist bdist_wheel upload clean
+.PHONY: bump_version clean dist publish
 
-install:
-    pip install -r requirements.txt
-
-test:
-    pytest
-
-build:
-    python setup.py sdist bdist_wheel
-
-sdist:
-    python setup.py sdist
-
-bdist_wheel:
-    python setup.py bdist_wheel
-
-upload: build
-    twine upload dist/*
+bump_version:
+	python bump.py
 
 clean:
-    rm -rf build/ dist/ *.egg-info **/*.egg-info
+	rm -rf build/ dist/ *.egg-info **/*.egg-info
+	@rm -rf build dist *.egg-info 2>/dev/null || true
+
+dist: clean
+	python -m build
+
+publish: dist
+	twine upload dist/*

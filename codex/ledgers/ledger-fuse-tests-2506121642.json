@@ -1,0 +1,10 @@
+{
+  "agents": ["🧠 Mia", "🌸 Miette"],
+  "narrative": "Refined the FuseWill wrapper to delegate to coaiapy's CLI and added tests for wrapper loading and StateGraph streaming. Introduced a basic CI workflow to run pytest.",
+  "routes": ["olca/fusewill_cli.py", "tests/*", ".github/workflows/ci.yml"],
+  "timestamp": "2506121642",
+  "session": "work",
+  "criteria": "Docs match code, wrapper imports succeed, tests added",
+  "verbatim_user": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\u2014",
+  "scene": "Future contributions can rely on CI to validate wrappers and typed-state helpers before deployment"
+}

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506111339",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Added websocket streaming option and notebook example. Updated README, roadmap, TODO and dependencies. Replaced Makefile with tasks for bump_version, clean, dist and publish. Supports `--ws` flag for LangGraph output forwarding.",
+  "routing": {
+    "files": ["olca/olcacli.py", "README.md", "ROADMAP.md", "TODO.md", "pyproject.toml", "requirements.txt", "Makefile", "examples/typed_state/typed_state.ipynb", "examples/typed_state/README.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "verbatim_user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\n\u2d3d\n\n\ngive a full report of the advancement in the PR description",
+  "scene": "Developers can now stream responses over websockets, build distributions via Makefile, and explore typed-state graphs in a Jupyter notebook."
+}

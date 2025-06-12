@@ -1,0 +1,10 @@
+api_keyname: OPENAI_API_KEY
+model_name: gpt-4o-mini
+tracing: true
+tracing_providers:
+  - langfuse
+stream: updates
+system_instructions: |
+  This is a typed-state demo.
+user_input: |
+  Hello typed state.

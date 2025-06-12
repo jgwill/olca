@@ -1,0 +1,8 @@
+{
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Refined documentation and scripts for coaiapy integration. README clarifies optional audio helpers and streaming modes, ROADMAP notes websocket tasks and removal of old build steps, TODO reflects completed work. Build script simplified without remote FuseWill copy.",
+  "routing": {"files": ["README.md", "ROADMAP.md", "TODO.md", "_build_n_dist.sh"], "branch": "work"},
+  "timestamp": "2506110133",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\n⸻\n\ngive a full report of the advancement in the PR description",
+  "scene": "With updated docs and cleaner build process, future releases can rely solely on coaiapy utilities while preparing for LangGraph streaming."
+}

@@ -4,7 +4,7 @@ Upcoming improvements for `oLCa`.
 
 ## LangGraph 0.4 Migration
 - [x] Upgrade dependency to `langgraph>=0.4.8` and audit breaking changes.
- - [*] Refactor graph creation to use the `StateGraph` APIs.
+ - [x] Refactor graph creation to use the `StateGraph` APIs.
 - [x] Leverage streaming modes (`updates`, `values`, `custom`, `messages`).
 - [x] Add examples for `graph.stream` with asynchronous iteration and callbacks.
 - [ ] Investigate checkpointing and subgraph reuse for complex workflows.
@@ -12,11 +12,11 @@ Upcoming improvements for `oLCa`.
 - [x] Provide typed state helpers so handlers can declare input/output types.
   A new module (`olca/state_helpers.py`) introduces a skeleton `ConversationState`
   and `create_state_graph` function as a starting point.
-- [*] Offer utilities for streaming output to STDOUT or websockets.
-- [*] Prepare example notebooks demonstrating 0.4 features and typed states.
+ - [x] Offer utilities for streaming output to STDOUT or websockets.
+ - [x] Prepare example notebooks demonstrating 0.4 features and typed states.
  - [x] Provide sample configs under `examples/` for streaming with `StateGraph`.
  - [x] Integrate typed-state helpers into `olcacli.py` for safer graph transitions.
-- [ ] Document websocket streaming utilities once LangGraph 0.4 features stabilize.
+ - [x] Document websocket streaming utilities once LangGraph 0.4 features stabilize.
 
 ## FuseWill from `coaiapy`
 - [x] Replace local `fusewill_utils` with `coaiapy.fusewill`.

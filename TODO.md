@@ -24,11 +24,11 @@
 
 ## LangGraph Upgrade
 - [x] Upgrade to `langgraph>=0.4.8`
-- [*] Refactor `olcacli.py` with `StateGraph`
+ - [x] Refactor `olcacli.py` with `StateGraph`
 - [x] Add examples for `graph.stream` usage
 - [x] Implement `--stream` CLI option with typed state support
 - [ ] Write tests for graph streaming
-- [ ] Document websocket streaming examples
+ - [x] Document websocket streaming examples
 - [x] Integrate typed-state helpers into `olcacli.py`
 - [x] Provide sample configs for typed-state streaming
 

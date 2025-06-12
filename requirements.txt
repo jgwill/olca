@@ -20,3 +20,4 @@ google.generativeai
 arxiv
 tlid
 coaiapy
+websockets

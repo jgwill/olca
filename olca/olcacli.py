@@ -105,7 +105,15 @@ def extract_extra_directories_from_olca_config_system_and_user_input(system_inst
     return extra_directories
 
 
-def print_stream(stream):
+def print_stream(stream, ws_url: str | None = None):
+    ws = None
+    if ws_url:
+        try:
+            from websockets.sync.client import connect as ws_connect
+            ws = ws_connect(ws_url)
+        except Exception as exc:
+            print(f"Failed to connect websocket: {exc}")
+            ws = None
     for s in stream:
         try:
             # Skip Langfuse internal state messages and size limit warnings
@@ -113,21 +121,27 @@ def print_stream(stream):
                 continue
             if isinstance(s, str) and ('Item exceeds size limit' in s or 'pending_switch_proposals' in s):
                 continue
-                
+
             # Handle different response formats
             if isinstance(s, dict) and "messages" in s:
                 message = s["messages"][-1]
             else:
                 message = s
-                
-            if isinstance(message, tuple):
-                print(message)
-            elif hasattr(message, 'content'):
-                print(message.content)
+
+            output = message.content if hasattr(message, 'content') else message
+            if isinstance(output, tuple):
+                print(output)
             else:
-                print(s)
-        except Exception as e:
+                print(output)
+            if ws:
+                try:
+                    ws.send(str(output))
+                except Exception:
+                    pass
+        except Exception:
             print(s)
+    if ws:
+        ws.close()
 
 OLCA_DESCRIPTION = "OlCA (Orpheus Langchain CLI Assistant) (very Experimental and dangerous)"
 OLCA_EPILOG = "For more information: https://github.com/jgwill/orpheuspypractice/wiki/olca"
@@ -149,6 +163,11 @@ def _parse_args():
         "--stategraph",
         action="store_true",
         help="Use typed StateGraph instead of React agent (experimental)",
+    )
+    parser.add_argument(
+        "--ws",
+        metavar="URL",
+        help="Optional websocket URL to stream responses",
     )
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
@@ -327,7 +346,8 @@ def main():
         if recursion_limit:
             graph_config["recursion_limit"] = recursion_limit
         print_stream(
-            graph.stream(inputs, config=graph_config, stream_mode=args.stream)
+            graph.stream(inputs, config=graph_config, stream_mode=args.stream),
+            ws_url=args.ws,
         )
     except GraphRecursionError as e:
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")

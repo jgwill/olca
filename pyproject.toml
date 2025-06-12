@@ -37,6 +37,7 @@ dependencies = [
     "arxiv",
     "tlid",
     "coaiapy",
+    "websockets",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",

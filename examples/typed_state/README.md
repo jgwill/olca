@@ -10,3 +10,4 @@ sg = create_state_graph()
 ```
 
 The example currently does nothing, but serves as a starting point for the migration to LangGraph 0.4.
+\nSee `typed_state.ipynb` for a Jupyter demonstration.

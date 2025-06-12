@@ -19,6 +19,7 @@ pip install coaiapy
 - `olca coaia` exposes all `coaiapy` commands
 - `--stream` flag enables multiple streaming output modes
 - `--stategraph` flag experiments with typed-state graphs
+- `--ws` to stream updates to a websocket URL
 Experimental typed-state helpers for upcoming `StateGraph` integration. The
 starter graph simply echoes its input (see
   [`examples/typed_state`](examples/typed_state))
@@ -127,6 +128,9 @@ the output style: `updates`, `values`, `custom`, or `messages`. The default
 mirrors the traditional behavior using `graph.stream` with updates written to
 STDOUT.
 
+Set `--ws ws://localhost:8000` to forward each update to a websocket in
+addition to printing to the console.
+
 An additional `--stategraph` flag enables an experimental typed-state graph
 implementation. When this flag is provided, `olca` attempts to compile a
 `StateGraph` from `olca.state_helpers` and falls back to the classic agent if
@@ -150,6 +154,5 @@ agents can declare structured inputs and outputs (see
 [`olca/state_helpers.py`](olca/state_helpers.py)). See [`ROADMAP.md`](ROADMAP.md)
 for full details. Dataset utilities for tagging or grouping traces are
 available via `olca fuse datasets`, mirroring `coaia fuse`.
-Websocket streaming and typed-state examples are a work in progress and
-will land in future releases.
+Typed-state examples and websocket helpers continue to evolve.
 

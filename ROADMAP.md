@@ -24,7 +24,7 @@ Upcoming improvements for `oLCa`.
 - [x] Import the `fusewill` CLI entry point from that package.
 - [x] Keep backward compatibility with existing commands.
 - [x] Document new options provided by `coaia fuse` and dataset helpers.
-- [x] Replace `fusewill_cli.py` with thin wrappers around `coaiapy.cofuse`.
+ - [x] Replace `fusewill_cli.py` with a thin wrapper around `coaiapy.coaiacli`.
 - [x] Sync README examples with `coaiapy` fusewill usage.
 - [x] Add wrappers so `olca fuse` calls directly into `coaiapy` modules.
 - [x] Provide an `olca coaia` subcommand to invoke any `coaiapy` CLI action.
@@ -43,5 +43,5 @@ Upcoming improvements for `oLCa`.
 - [x] Publish `llms.txt` index for LLM document retrieval.
 
 ## Testing and CI
-- [ ] Add unit tests for all CLI commands.
-- [ ] Configure CI to run `pytest` and style checks.
+- [*] Add unit tests for all CLI commands.
+- [x] Configure CI to run `pytest` and style checks.

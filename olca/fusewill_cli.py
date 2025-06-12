@@ -1,8 +1,8 @@
-"""Wrapper for FuseWill CLI using ``coaiapy.cofuse``.
+"""Wrapper for FuseWill CLI using ``coaiapy`` utilities.
 
-This adds the ``coaiapy`` package directory to ``sys.path`` so that
-``coaiamodule`` (a sibling module required by ``cofuse``) can be imported
-correctly.
+The ``coaiapy`` package provides ``coaiacli`` with a ``fuse`` command.
+This wrapper delegates to that implementation while ensuring the
+``coaiamodule`` helper can be imported alongside ``coaiacli``.
 """
 import sys
 import os
@@ -12,10 +12,11 @@ def main(argv=None):
     try:
         from coaiapy import __file__ as coaiapy_path
         sys.path.append(os.path.dirname(coaiapy_path))
-        from coaiapy.cofuse import main as coaia_main
+        from coaiapy import coaiacli
     except Exception as exc:
         raise SystemExit(f"Failed to load coaiapy fusewill: {exc}")
-    coaia_main(argv)
+    sys.argv = ["coaia", "fuse", *argv]
+    return coaiacli.main()
 
 if __name__ == "__main__":
     main()

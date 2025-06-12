@@ -19,9 +19,8 @@ It appears in CLI output and documentation as a reminder of this evolving archit
 - Chat-style CLI using OpenAI or Ollama models
 - Optional human-in-the-loop prompts
 - Tracing via LangSmith and Langfuse
-- `olca fuse` wraps `coaiapy.fusewill` for Langfuse traces and datasets
-- The wrapper adds the `coaiapy` package directory to `sys.path` to avoid
-  `coaiamodule` import errors
+- `olca fuse` delegates to `coaiapy`'s `fuse` commands for Langfuse traces and datasets
+- The wrapper adds the `coaiapy` package directory to `sys.path` so `coaiamodule` loads correctly
 - `oiv` command for searching and summarizing arXiv papers
 - `oiv` timestamps results with `tlid` for easy cataloging
 - Optional `coaia` tools for transcription and `tash` Redis storage
@@ -30,6 +29,7 @@ It appears in CLI output and documentation as a reminder of this evolving archit
 - `--stream` flag enables multiple streaming output modes
 - `--stategraph` flag experiments with typed-state graphs
 - `--ws` to stream updates to a websocket URL
+- Automated tests run via GitHub Actions CI
 Experimental typed-state helpers for upcoming `StateGraph` integration. The
 starter graph simply echoes its input (see
   [`examples/typed_state`](examples/typed_state))
@@ -161,7 +161,7 @@ expanded as LangGraph support matures.
 ## Integrations and roadmap
 The project is migrating to LangGraph 0.4.x to support streaming via
 `StateGraph` and asynchronous `graph.stream` calls. Local `fusewill`
-helpers have been replaced by `coaiapy.fusewill` for a consistent Langfuse
+helpers have been replaced by the `fuse` commands in `coaiapy` for a consistent Langfuse
 experience. Upcoming releases will introduce typed-state helpers so
 agents can declare structured inputs and outputs (see
 [`olca/state_helpers.py`](olca/state_helpers.py)). See [`ROADMAP.md`](ROADMAP.md)

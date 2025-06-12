@@ -12,6 +12,7 @@ GET /examples/dataset/README.md
 GET /examples/oiv_demo/README.md
 GET /examples/typed_state/README.md
 GET /examples/langgraph_agent/README.md
+GET /examples/websocket_demo/README.md
 
 # New Features
 GET /narrativemap.md

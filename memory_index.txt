@@ -6,3 +6,4 @@ Dataset Example: Workspace.jgwill.olca:35.dataset
 LangGraph Agent: Workspace.jgwill.olca:35.langgraph-agent
 Narrative Map: Workspace.jgwill.olca:35.narrative-map
 LLMS: Workspace.jgwill.olca:35.llms
+WebSocket Demo: Workspace.jgwill.olca:35.websocket-demo

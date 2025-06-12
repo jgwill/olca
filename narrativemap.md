@@ -6,4 +6,5 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - e2dc954: consolidated docs, introduced coaiapy wrappers, and added example folders
 - bce8540: clarified LangGraph example references, introduced the project glyph, and recorded docs index
 - 7b50f1e: refactored fusewill wrapper, improved README, and added typed-state helpers
-- upcoming: tests and CI workflow to ensure wrappers load and StateGraph streams
+- 7646734: added websocket streaming docs, CI workflow, and llms index
+- 1563243: websocket demo example and checkpointing notes

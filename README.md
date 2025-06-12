@@ -107,6 +107,7 @@ Example folders:
   (see `examples/typed_state/olca.yml` for a sample config)
 - `examples/langgraph_agent` – prototype fused LangGraph chat that streams
   responses while tracing to Langfuse
+- `examples/websocket_demo` – run a simple server to receive streamed updates
 
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models
@@ -168,6 +169,8 @@ agents can declare structured inputs and outputs (see
 for full details. Dataset utilities for tagging or grouping traces are
 available via `olca fuse datasets`, mirroring `coaia fuse`.
 Typed-state examples and websocket helpers continue to evolve.
+Future work explores checkpointing and subgraph reuse to support long-running
+workflows.
 
 The `llms.txt` file indexes these docs for language-model retrieval.
 

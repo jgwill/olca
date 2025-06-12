@@ -1,11 +1,19 @@
 # oLCa
 
+🔊🌿⚙️📜🧠
+
+
 `oLCa` is an experimental CLI assistant built with LangChain and LangGraph. It focuses on command line interactions, tracing, and human‑in‑the‑loop support. Utilities are provided for managing Langfuse data and summarising arXiv papers. Optional helpers from the `coaiapy` package handle audio transcription and note storage via Redis.
 
 The `coaiapy` dependency is installed automatically with `olca`, but you can also install it manually:
 ```bash
 pip install coaiapy
 ```
+
+### Glyph Essence
+The project glyph represents our transition from legacy scripts to streaming LangGraph workflows:
+`🔊🌿⚙️📜🧠`
+It appears in CLI output and documentation as a reminder of this evolving architecture.
 
 ## Features
 - Chat-style CLI using OpenAI or Ollama models
@@ -97,7 +105,8 @@ Example folders:
 - `examples/oiv_demo` – summarizing arXiv results
 - `examples/typed_state` – work-in-progress typed state graph
   (see `examples/typed_state/olca.yml` for a sample config)
-- `examples/langgraph_agent` – prototype fused LangGraph chat
+- `examples/langgraph_agent` – prototype fused LangGraph chat that streams
+  responses while tracing to Langfuse
 
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models
@@ -159,5 +168,7 @@ agents can declare structured inputs and outputs (see
 for full details. Dataset utilities for tagging or grouping traces are
 available via `olca fuse datasets`, mirroring `coaia fuse`.
 Typed-state examples and websocket helpers continue to evolve.
+
+The `llms.txt` file indexes these docs for language-model retrieval.
 
 

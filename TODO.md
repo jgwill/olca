@@ -10,7 +10,7 @@
 - [x] Expand README with example folders under `examples/`
 - [x] Add websocket usage example in README
 - [x] Publish llms.txt index for documentation
-- [ ] Document `examples/langgraph_agent` demo
+- [x] Document `examples/langgraph_agent` demo
 
 ## Code Enhancements
 - [x] Integrate `coaiapy` utilities and remove local `fusewill_utils`
@@ -25,6 +25,7 @@
 - [x] Fix `olca` CLI imports so the script runs directly from the repo
 - [x] Remove legacy FuseWill build steps
 - [ ] Add test ensuring `coaiamodule` loads via wrapper
+- [ ] Investigate checkpointing and subgraph reuse for complex workflows
 
 ## LangGraph Upgrade
 - [x] Upgrade to `langgraph>=0.4.8`

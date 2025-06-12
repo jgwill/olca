@@ -40,6 +40,7 @@ Upcoming improvements for `oLCa`.
 - [x] Document required Redis variables for `coaia` helpers.
 - [x] Document how `oiv` uses `tlid` timestamps to organize output files.
 - [x] Ensure `olcacli.py` imports work when run directly from source.
+- [x] Publish `llms.txt` index for LLM document retrieval.
 
 ## Testing and CI
 - [ ] Add unit tests for all CLI commands.

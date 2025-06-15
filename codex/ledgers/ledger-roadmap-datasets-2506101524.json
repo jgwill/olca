@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506101524",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Refined README with dataset commands and coaia tagging option. Roadmap now marks completed fusewill integration steps and highlights remaining LangGraph tasks. TODO updated with dataset docs and upcoming typed-state refactor.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\n⸻\n\ngive a full report of the advancement in the PR description",
+  "scene": "Documentation now orients developers on dataset utilities via coaiapy fuse, while the roadmap clearly tracks progress toward LangGraph 0.4 and fused CLI usage."
+}

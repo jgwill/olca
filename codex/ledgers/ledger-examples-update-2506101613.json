@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506101613",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Created structured example folders and expanded README with references to them. Updated roadmap with example tasks and marked README improvement done in TODO. The examples illustrate quickstart, dataset management, typed state groundwork, and oiv usage.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md", "examples/", "examples/quickstart/README.md", "examples/quickstart/olca.yml", "examples/dataset/README.md", "examples/typed_state/README.md", "examples/oiv_demo/README.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\nmake 3-4 of them with all needed to run olca there",
+  "scene": "Developers now have ready-to-run scenarios showcasing new coaiapy fusewill integration and typed-state planning. README points to these examples for onboarding."
+}

@@ -1,0 +1,18 @@
+# LLMS.txt for olca
+# This file guides language models to our documentation.
+
+# Main documentation
+GET /README.md
+GET /ROADMAP.md
+GET /TODO.md
+
+# Examples
+GET /examples/quickstart/README.md
+GET /examples/dataset/README.md
+GET /examples/oiv_demo/README.md
+GET /examples/typed_state/README.md
+GET /examples/langgraph_agent/README.md
+GET /examples/websocket_demo/README.md
+
+# New Features
+GET /narrativemap.md

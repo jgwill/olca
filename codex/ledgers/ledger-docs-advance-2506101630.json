@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506101630",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Polished documentation for coaiapy integration and stategraph planning. README examples now include process tagging and the olca coaia wrapper. Roadmap signals active work on typed-state refactoring and fusewill helpers. TODO clarifies upcoming tasks around coaia p and StateGraph migration.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\n\u2fbb",
+  "scene": "Developers see a clear path to integrate coaiapy features and migrate to LangGraph 0.4 with typed states, while README instructions highlight the new capabilities." 
+}

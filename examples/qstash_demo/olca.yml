@@ -1,0 +1,13 @@
+api_keyname: OPENAI_API_KEY
+model_name: gpt-4o-mini
+recursion_limit: 12
+temperature: 0
+system_instructions: You are a helpful assistant.
+user_input: Await QStash session trigger.
+qstash:
+  enabled: true
+  topic: YOUR_TOPIC_NAME
+redis_upstash:
+  enabled: true
+  url: redis://localhost:6379
+

@@ -49,19 +49,24 @@ def get_shared_scratchpad(scratchpad_key, redis_url):
         return json.loads(content)
     return None
 
-def handle_qstash_messages(qstash_topic, qstash_token):
+def handle_qstash_messages(qstash_topic, qstash_token, redis_url="redis://localhost:6379"):
+    """Fetch QStash messages and load any referenced sessions."""
     headers = {
         "Authorization": f"Bearer {qstash_token}"
     }
-    response = requests.get(f"https://qstash.upstash.io/v1/topics/{qstash_topic}/messages", headers=headers)
+    response = requests.get(
+        f"https://qstash.upstash.io/v1/topics/{qstash_topic}/messages",
+        headers=headers,
+    )
     if response.status_code == 200:
         messages = response.json()
         for message in messages:
             session_id = message.get("session_id")
             if session_id:
-                state = load_session_from_redis(session_id, "redis://localhost:6379")
+                state = load_session_from_redis(session_id, redis_url)
                 if state:
                     print(f"Starting session {session_id} with state: {state}")
-                    # Start the session with the loaded state
+                else:
+                    print(f"No stored state found for session {session_id}")
     else:
         print(f"Failed to fetch messages from QStash: {response.status_code}")

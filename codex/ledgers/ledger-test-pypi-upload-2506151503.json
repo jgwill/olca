@@ -1,0 +1,7 @@
+{
+  "agents": ["🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Attempted TestPyPI upload with credentials sourced from $HOME/.env. Build succeeded but twine returned HTTP 400, suggesting invalid credentials or repository configuration. Documented the attempt in TEST_PYPI_REPORT.md.",
+  "routes": ["work branch", "TEST_PYPI_REPORT.md", "Makefile"],
+  "timestamp": "2506151503",
+  "session": "test-release flow"
+}

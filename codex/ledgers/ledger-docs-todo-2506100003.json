@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506100003",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Expanded README command examples with direct help flags and clarified Redis usage for coaia tasks. Roadmap now covers CLI stream flag, typed states, and integration with coaiapy fusewill. TODO list updated for upcoming documentation and wrapper work.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "keep on the work that you're doing to advance the pull request",
+  "scene": "Documentation aligns with planned migration toward LangGraph 0.4 streaming and coaia utilities. Future contributors can follow clearer examples and a detailed roadmap for integrating external helpers."
+}

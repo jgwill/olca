@@ -35,8 +35,13 @@ It appears in CLI output and documentation as a reminder of this evolving archit
     [`examples/typed_state`](examples/typed_state))
 
 ## Installation
+From PyPI:
 ```bash
 pip install olca
+```
+From a clone of this repository:
+```bash
+pip install -e .
 ```
 
 ## Quick Start
@@ -48,6 +53,13 @@ olca --stream values # custom streaming output
 Use `-H` to activate human mode or `--help` to see full options. When running
 from a clone without installing, invoke the script with
 `python olca/olcacli.py`.
+
+### `codecs_package` utilities
+This repository now includes a small helper package with musical and story tools:
+
+```python
+from codecs_package import generate_chord_progression, generate_three_act_story
+```
 
 ## CLI commands
 | Command    | Purpose                                                     |
@@ -108,6 +120,8 @@ Example folders:
 - `examples/langgraph_agent` – prototype fused LangGraph chat that streams
   responses while tracing to Langfuse
 - `examples/websocket_demo` – run a simple server to receive streamed updates
+- `docs/kid_feature_tutorial.md` – gentle steps to add a feature with screenshots and music metaphors
+- `docs/publishing.md` – how to build and upload this package to TestPyPI
 
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models

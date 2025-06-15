@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506150334",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Attempted to upload a build to TestPyPI but credentials were missing. Documented the process with a new publishing guide.",
+  "routing": {
+    "files": ["docs/publishing.md", "README.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "You will try something for me. I know that there is probably the production token and the testing token in the environment, and probably inside the environment variable is going to be the production token. So try to make up, to try to publish a testing package if you're capable of doing it.",
+  "scene": "Guide added for building and uploading while an upload attempt failed due to missing token"
+}

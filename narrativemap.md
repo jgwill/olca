@@ -16,4 +16,5 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - a669f0a: packaged helper utilities under codecs_package for easy installation
 - 19eb124: fix olca CLI import path and add help test
 - 3e03b33: documented publishing steps and logged failed TestPyPI attempt
-\n- 79eaca6: merged screenshot narrative branch and resolved conflicts
+- 79eaca6: merged screenshot narrative branch and resolved conflicts
+- f769c73: merged screenshot narrative branch and bumped version; prepared test release

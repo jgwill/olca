@@ -1,0 +1,13 @@
+{
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine", "⚡ Jerry"],
+  "narrative": "Bumped package version and published 0.3.6 to TestPyPI after integrating screenshot narrative features. Ensured tests pass and distribution builds.",
+  "routing": {
+    "paths": ["pyproject.toml", "setup.py", "_build_n_dist_test.sh"],
+    "branch": "work"
+  },
+  "timestamp": "2506151648",
+  "session": "N/A",
+  "user_input": "keep advancing and insuring integrity of all features that was developped in other branches and advance, test , create/update examples,  publish a test release",
+  "scene": "OLCA evolves with a test release, enabling screenshot-based narrative generation and persistent sessions to be distributed via TestPyPI.",
+  "glyph_sequence": "🌀⚡📦"
+}

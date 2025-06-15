@@ -16,3 +16,5 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - a669f0a: packaged helper utilities under codecs_package for easy installation
 - 19eb124: fix olca CLI import path and add help test
 - 3e03b33: documented publishing steps and logged failed TestPyPI attempt
+- 526be0a: imported LangGraph docs index for streaming reference
+- <pending>: added persistent session memory example with InMemoryStore

@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../orpheus/x/542-jgsess"
+		},
+		{
+			"path": "../../orpheus/x/537-oas"
+		},
+		{
+			"path": "../babyagi"
+		},
+		{
+			"path": "../../usr/local/src/JGWise"
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {},
+		"dbcode.connections": []
+	}
+}

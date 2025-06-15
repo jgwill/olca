@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506101324",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Updated docs with streaming section and clarified CLI examples. Added coaiapy dependency and upgraded langgraph. Expanded roadmap for typed states and wrappers around coaiapy. Marked completed tasks in TODO.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md", "pyproject.toml", "requirements.txt"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\n⸻\n\ngive a full report of the advancement in the PR description",
+  "scene": "Developers now have clearer instructions on streaming features and coaiapy integration, paving the way for LangGraph 0.4 work and new fusewill helpers."
+}

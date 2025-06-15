@@ -2,8 +2,8 @@
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
-# [tool.setuptools]
-# package-dir = { "" = "src" }
+[tool.setuptools.packages.find]
+include = ["olca*", "codecs_package*"]
 
 [project]
 name = "olca"
@@ -28,11 +28,14 @@ dependencies = [
     "langchain-ollama>=0.0.1",
     "langchain-experimental>=0.0.1",
     "click>=8.0.0",
-    "langgraph>=0.1.0",
+    "langgraph>=0.4.8",
     "langfuse>=0.0.1",
     "pytz",
     "google.generativeai",
     "arxiv>=1.2.0",
+    "tlid",
+    "coaiapy",
+    "websockets",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -45,3 +48,4 @@ olca2 = "olca.olcacli:main"
 olca = "olca.olcacli:main"
 fusewill = "olca.fusewill_cli:main"
 oiv = "olca.oiv:main"
+coaia = "olca.coaia_cli:main"

@@ -28,9 +28,12 @@ setup(
         'langchain-community>=0.0.1',
         'langsmith>=0.0.1',
         'langchain-ollama>=0.0.1',
-        'langgraph>=0.1.0',
+        'langgraph>=0.4.8',
         'llm>=0.1.0',
         'arxiv>=1.2.0',
+        'tlid',
+        'coaiapy',
+        'websockets',
     ],
     entry_points={
         'console_scripts': [

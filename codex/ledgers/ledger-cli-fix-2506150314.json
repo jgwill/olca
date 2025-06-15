@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506150314",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Fixed CLI import so `olca --help` runs after installation. Added test covering this entry point, skipping when Pillow is unavailable.",
+  "routing": {
+    "files": ["olca/olcacli.py", "tests/test_olca_cli.py"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "olca --help error ModuleNotFoundError: No module named 'prompts'",
+  "scene": "CLI help accessible post-install"
+}

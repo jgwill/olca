@@ -1,0 +1,11 @@
+{
+  "timestamp": "2506121421",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Introduced llms.txt for LLM-friendly documentation lookup and expanded README with websocket example. Clarified that fusewill integration now relies on coaiapy. Updated memory_index to include the new file and refreshed TODOs.",
+  "routing": {
+    "files": ["llms.txt", "README.md", "memory_index.txt", "TODO.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done."
+}

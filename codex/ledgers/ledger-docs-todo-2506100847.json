@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506100847",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Enhanced documentation with command references and help tips. Expanded roadmap with streaming helpers and dataset notes for coaiapy fusewill. Updated TODOs for oiv help and typed state helpers.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "keep on the work that you're doing to advance the pull request",
+  "scene": "Contributors now see clear help commands and a roadmap for coaiapy integration, guiding future LangGraph upgrades."
+}

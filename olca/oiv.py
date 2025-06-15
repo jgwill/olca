@@ -11,6 +11,7 @@ import os
 import json
 import tlid
 import warnings
+import re
 
 warnings.filterwarnings("ignore", message="The function `loads` is in beta. It is actively being worked on, so the API may change.")
 DEBUG_MODE=False
@@ -139,6 +140,9 @@ def parse_cli_arguments():
     parser.add_argument('-P','-p','--prefix', type=str,
                         help='a file prefix for output',default="arxiv-")
     args = parser.parse_args()
+    # Clean up prefix: replace spaces with "_" then remove special characters
+    args.prefix = re.sub(r'\s+', '_', args.prefix)
+    args.prefix = re.sub(r'[^0-9a-zA-Z_]', '', args.prefix)
     return args
 
 if __name__ == "__main__":

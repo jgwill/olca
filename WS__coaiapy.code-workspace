@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"github.copilot.chat.codeGeneration.instructions": [
+			{
+				"file": ".copilot-instructions.md"
+			},
+			{
+				"text": "Dont apologize."
+			}
+		],
+		"github.copilot.advanced": {
+
+		}
+	}
+}

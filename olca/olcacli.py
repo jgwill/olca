@@ -1,7 +1,7 @@
 #%%
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import dotenv
 from langchain import hub
 import argparse
@@ -13,6 +13,7 @@ from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
 import json
 import redis
 import requests
+from olca.state_helpers import create_state_graph
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -205,7 +206,7 @@ def print_stream(stream):
 
 OLCA_DESCRIPTION = "OlCA (Orpheus Langchain CLI Assistant) (very Experimental and dangerous)"
 OLCA_EPILOG = "For more information: https://github.com/jgwill/orpheuspypractice/wiki/olca"
-OLCA_USAGE="olca [-D] [-H] [-M] [-T] [init] [-y] [--temp-session] [list_active_sessions] [export_sessions]"
+OLCA_USAGE="olca [-D] [-H] [-M] [-T] [--stream MODE] [init] [-y] [--temp-session] [list_active_sessions] [export_sessions]"
 def _parse_args():
     parser = argparse.ArgumentParser(description=OLCA_DESCRIPTION, epilog=OLCA_EPILOG,usage=OLCA_USAGE)
     parser.add_argument("-D", "--disable-system-append", action="store_true", help="Disable prompt appended to system instructions")
@@ -213,6 +214,22 @@ def _parse_args():
     parser.add_argument("-M", "--math", action="store_true", help="Enable math tool")
     parser.add_argument("-T", "--tracing", action="store_true", help="Enable tracing")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
+    parser.add_argument(
+        "--stream",
+        choices=["updates", "values", "messages", "custom"],
+        default="updates",
+        help="Streaming mode for LangGraph output",
+    )
+    parser.add_argument(
+        "--stategraph",
+        action="store_true",
+        help="Use typed StateGraph instead of React agent (experimental)",
+    )
+    parser.add_argument(
+        "--ws",
+        metavar="URL",
+        help="Optional websocket URL to stream responses",
+    )
     parser.add_argument("--temp-session", action="store_true", help="Run OLCA in temporary session mode")
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")

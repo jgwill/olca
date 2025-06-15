@@ -1,0 +1,10 @@
+api_keyname: OPENAI_API_KEY
+model_name: gpt-4o-mini
+recursion_limit: 20
+tracing: true
+tracing_providers:
+  - langfuse
+system_instructions: |
+  You are a helpful CLI assistant.
+user_input: |
+  Say hello and exit.

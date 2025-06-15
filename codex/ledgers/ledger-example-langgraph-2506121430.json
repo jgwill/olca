@@ -1,0 +1,10 @@
+{
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine", "⚡ Jerry"],
+  "narrative": "Introduced an experimental LangGraph chat example and improved the fusewill wrapper. README now references the new folder and warns about coaiamodule import errors. This strengthens coaiapy integration and clarifies streaming usage.",
+  "routing": {
+    "files": ["examples/langgraph_agent/main.py", "examples/langgraph_agent/README.md", "olca/fusewill_cli.py", "README.md"],
+    "branch": "work"
+  },
+  "timestamp": "2506121430",
+  "scene": "Developers can now run a simple fused StateGraph demo while the fusewill wrapper handles missing coaiamodule gracefully."
+}

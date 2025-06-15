@@ -329,3 +329,10 @@ OLCA will evolve into an adaptive storytelling CLI, capable of interpreting scre
 - Validate story coherence across multiple screenshots.
 
 This feature enables OLCA to bridge structured execution memory with generative storytelling, turning system interactions into meaningful narratives.
+
+
+
+-------
+BRANCH Goal: Unify Memory and Narrative
+
+

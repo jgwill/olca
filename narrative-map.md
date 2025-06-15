@@ -6,3 +6,4 @@
 The work branch now contains latest updates from main alongside persistent session memory features. Tests confirm CLI functionality.
 
 - **5de6378** Refactor QStash utilities and add demo example, consolidating helpers and documenting how to trigger sessions via QStash.
+- **b0936bf** Clean README and fix session inheritance.

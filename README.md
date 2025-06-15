@@ -253,43 +253,10 @@ Added a command to list all active sessions in `olca/olcacli.py`.
 
 Added a command to export sessions in `olca/olcacli.py`.
 
-### Shared Scratchpad
-
-Added a command to share a scratchpad between OLCA and another agent using Redis memory.
-
-### Nested Sessions
-
-A session can be the child of a session managed in a Redis memory key.
-
 ### QStash Integration
 
-OLCA can use QStash to trigger the start of a session, with a new command in `olca/olcacli.py` to listen for QStash messages and start sessions.
-
-### `olca.yml` Configuration
-
-`olca.yml` now includes all features, avoiding the need for CLI arguments.
-
-### Session Management Commands
-
-Added `list_sessions` and `get_session` commands in `olca/olcacli.py` to manage and retrieve session data.
-
-### Contextual Continuity
-
-Implemented `prepare_input` function in `olca/olcahelper.py` to prepare inputs considering past sessions' context.
-
-### Significant Events
-
-Updated `SYSTEM_PROMPT_APPEND` in `olca/prompts.py` to include instructions for marking significant events and their importance.
-
-### Contextual Reintegration
-
-`initialize_config_file` function in `olca/olcahelper.py` now sets up a configuration that supports contextual reintegration.
-
-### Recursive Continuity
-
-Added `SessionState`, `RedStone`, `EchoNode`, `MetaFramework`, and `FractalLibrary` classes to manage recursive continuity and dynamic adaptation.
+`olca.utils.handle_qstash_messages` fetches messages from a QStash topic and loads any referenced sessions. See `examples/qstash_demo` for a configuration example.
 
 ## Persistent Sessions and QStash
-- You can now save and load sessions using the new commands.
-- Redis-based storage enables persistent state across runs.
-- QStash message handling automates asynchronous triggers.
+- Persistent sessions can be saved locally or in Redis.
+- QStash message handling enables remote triggers.

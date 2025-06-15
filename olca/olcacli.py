@@ -64,11 +64,13 @@ def get_session_id_from_file():
     return None
 
 def find_parent_session_id(current_directory):
+    """Look for OLCA_SESSION_ID in parent directories."""
     parent_directory = os.path.dirname(current_directory)
-    while parent_directory != current_directory:
-        session_id = get_session_id_from_file()
-        if session_id:
-            return session_id
+    while parent_directory and parent_directory != current_directory:
+        session_file = os.path.join(parent_directory, "OLCA_SESSION_ID")
+        if os.path.exists(session_file):
+            with open(session_file, "r") as file:
+                return file.read().strip()
         current_directory = parent_directory
         parent_directory = os.path.dirname(current_directory)
     return None

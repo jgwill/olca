@@ -262,7 +262,7 @@ Added a command to export sessions in `olca/olcacli.py`.
 - QStash message handling enables remote triggers.
 
 ### Test Release
-Run `make test-release` to run tests, build a distribution, and upload it to TestPyPI. If credentials are stored in `$HOME/.env`, use:
+Run `make test-release` to run `python -m pytest`, build a distribution, and upload it to TestPyPI. If credentials are stored in `$HOME/.env`, use:
 ```bash
 set -a && source $HOME/.env && set +a
 ```

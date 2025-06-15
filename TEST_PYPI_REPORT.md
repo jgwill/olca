@@ -1,6 +1,6 @@
 ## Test PyPI Upload Report
 
-Date: $(date -u)
+Date: 2025-06-15 15:13:43 UTC
 
 Steps:
 1. Installed build and twine.
@@ -17,4 +17,4 @@ ERROR    HTTPError: 400 Bad Request from https://test.pypi.org/legacy/
          Bad Request
 ```
 
-The upload failed with HTTP 400, likely due to invalid or missing credentials.
+The upload failed with HTTP 400, even after sourcing credentials from `.env`.

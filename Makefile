@@ -14,7 +14,7 @@ publish: dist
 	twine upload dist*
 
 test-release: clean
-	pytest -q
+	python -m pytest -q
 	pip install build twine --quiet
 	python -m build
 	twine upload --repository testpypi dist/*

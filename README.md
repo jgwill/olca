@@ -121,6 +121,7 @@ Example folders:
   responses while tracing to Langfuse
 - `examples/websocket_demo` – run a simple server to receive streamed updates
 - `docs/kid_feature_tutorial.md` – gentle steps to add a feature with screenshots and music metaphors
+- `docs/publishing.md` – how to build and upload this package to TestPyPI
 
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models

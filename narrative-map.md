@@ -7,3 +7,5 @@ The work branch now contains latest updates from main alongside persistent sessi
 
 - **5de6378** Refactor QStash utilities and add demo example, consolidating helpers and documenting how to trigger sessions via QStash.
 - **b0936bf** Clean README and fix session inheritance.
+
+- **af613df** Add test-release target and docs

@@ -1,0 +1,11 @@
+{
+  "timestamp": "2506151426",
+  "agents": ["🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Added Makefile target for automated test release and updated README with instructions. This ensures sessions and QStash docs align with packaging workflow.",
+  "routing": {
+    "branch": "work",
+    "paths": ["Makefile", "README.md"]
+  },
+  "user_input": "Revise your work to ensure it will work and make the necessary make test-release that would wrap all needed to publish to the pypi test release",
+  "scene": "Before: releasing to TestPyPI required scripts. After: simple make test-release runs tests, builds, and uploads." 
+}

@@ -1,4 +1,4 @@
-.PHONY: bump_version clean dist publish
+.PHONY: bump_version clean dist publish test-release
 
 bump_version:
 	python bump.py
@@ -11,4 +11,10 @@ dist: clean
 	python -m build
 
 publish: dist
-	twine upload dist/*
+	twine upload dist*
+
+test-release: clean
+	pytest -q
+	pip install build twine --quiet
+	python -m build
+	twine upload --repository testpypi dist/*

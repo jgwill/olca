@@ -260,3 +260,6 @@ Added a command to export sessions in `olca/olcacli.py`.
 ## Persistent Sessions and QStash
 - Persistent sessions can be saved locally or in Redis.
 - QStash message handling enables remote triggers.
+
+### Test Release
+Run `make test-release` to run tests, build a distribution, and upload it to the TestPyPI repository. Ensure `TWINE_USERNAME` and `TWINE_PASSWORD` are set with your TestPyPI credentials.

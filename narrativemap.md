@@ -18,3 +18,5 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - 3e03b33: documented publishing steps and logged failed TestPyPI attempt
 - 79eaca6: merged screenshot narrative branch and resolved conflicts
 - f769c73: merged screenshot narrative branch and bumped version; prepared test release
+- 85573ab: integrated screenshot narrative features and docs, extended CLI
+- WORKING: published test release v0.3.9 using exported credentials

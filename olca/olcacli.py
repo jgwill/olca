@@ -9,7 +9,7 @@ import yaml
 from olca.utils import load_environment, initialize_langfuse
 from olca.tracing import TracingManager
 from olca.olcahelper import setup_required_directories, initialize_config_file, prepare_input
-from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
+from .prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
 from datetime import datetime
 import json
 from PIL import Image

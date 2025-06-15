@@ -14,3 +14,4 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - b8e2c2e: merged main into work, bringing tests and typed-state support
 - f9d5f2a: added kid-friendly tutorial and ledger reference in README
 - a669f0a: packaged helper utilities under codecs_package for easy installation
+- 19eb124: fix olca CLI import path and add help test

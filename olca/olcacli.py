@@ -1,7 +1,7 @@
 #%%
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import dotenv
 from langchain import hub
 import argparse
@@ -15,6 +15,7 @@ import json
 from PIL import Image
 import pytesseract
 import ollama
+from olca.state_helpers import create_state_graph
 
 #jgwill/olca1
 #olca1_prompt = hub.pull("jgwill/olca1") #Future use
@@ -109,7 +110,15 @@ def extract_extra_directories_from_olca_config_system_and_user_input(system_inst
     return extra_directories
 
 
-def print_stream(stream):
+def print_stream(stream, ws_url: str | None = None):
+    ws = None
+    if ws_url:
+        try:
+            from websockets.sync.client import connect as ws_connect
+            ws = ws_connect(ws_url)
+        except Exception as exc:
+            print(f"Failed to connect websocket: {exc}")
+            ws = None
     for s in stream:
         try:
             # Skip Langfuse internal state messages and size limit warnings
@@ -117,25 +126,31 @@ def print_stream(stream):
                 continue
             if isinstance(s, str) and ('Item exceeds size limit' in s or 'pending_switch_proposals' in s):
                 continue
-                
+
             # Handle different response formats
             if isinstance(s, dict) and "messages" in s:
                 message = s["messages"][-1]
             else:
                 message = s
-                
-            if isinstance(message, tuple):
-                print(message)
-            elif hasattr(message, 'content'):
-                print(message.content)
+
+            output = message.content if hasattr(message, 'content') else message
+            if isinstance(output, tuple):
+                print(output)
             else:
-                print(s)
-        except Exception as e:
+                print(output)
+            if ws:
+                try:
+                    ws.send(str(output))
+                except Exception:
+                    pass
+        except Exception:
             print(s)
+    if ws:
+        ws.close()
 
 OLCA_DESCRIPTION = "OlCA (Orpheus Langchain CLI Assistant) (very Experimental and dangerous)"
 OLCA_EPILOG = "For more information: https://github.com/jgwill/orpheuspypractice/wiki/olca"
-OLCA_USAGE="olca [-D] [-H] [-M] [-T] [init] [-y]"
+OLCA_USAGE="olca [-D] [-H] [-M] [-T] [--stream MODE] [init] [-y]"
 def _parse_args():
     parser = argparse.ArgumentParser(description=OLCA_DESCRIPTION, epilog=OLCA_EPILOG,usage=OLCA_USAGE)
     parser.add_argument("-D", "--disable-system-append", action="store_true", help="Disable prompt appended to system instructions")
@@ -143,6 +158,22 @@ def _parse_args():
     parser.add_argument("-M", "--math", action="store_true", help="Enable math tool")
     parser.add_argument("-T", "--tracing", action="store_true", help="Enable tracing")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
+    parser.add_argument(
+        "--stream",
+        choices=["updates", "values", "messages", "custom"],
+        default="updates",
+        help="Streaming mode for LangGraph output",
+    )
+    parser.add_argument(
+        "--stategraph",
+        action="store_true",
+        help="Use typed StateGraph instead of React agent (experimental)",
+    )
+    parser.add_argument(
+        "--ws",
+        metavar="URL",
+        help="Optional websocket URL to stream responses",
+    )
     parser.add_argument("init", nargs='?', help="Initialize olca interactive mode")
     parser.add_argument("-y", "--yes", action="store_true", help="Accept the new file olca.yml")
     parser.add_argument("--screenshot", type=str, help="Path to the screenshot to process")
@@ -183,7 +214,13 @@ def save_narrative(narrative, output_dir="OLCA_Narratives"):
     print(f"Narrative saved to {output_path}")
 
 def main():
+    # Delegate 'coaia' subcommand to coaiapy if present
+    if len(sys.argv) > 1 and sys.argv[1] == "coaia":
+        from coaiapy.coaiacli import main as coaia_main
+        return coaia_main(sys.argv[2:])
     args = _parse_args()
+    if args.stategraph:
+        print("StateGraph mode enabled (experimental)")
     olca_config_file = 'olca.yml'
     
     # Load environment variables first
@@ -250,7 +287,7 @@ def main():
     user_input = config.get('user_input', '')
     default_model_id = "gpt-4o-mini"
     recursion_limit = config.get('recursion_limit', 15)
-    disable_system_append = _parse_args().disable_system_append
+    disable_system_append = args.disable_system_append
     # Use the system_instructions and user_input in your CLI logic
     model_name = config.get('model_name', default_model_id)
     provider, base_model, host = parse_model_uri(model_name)
@@ -285,7 +322,7 @@ def main():
     
     selected_tools = ["terminal"]
     
-    disable_system_append = _parse_args().disable_system_append
+    disable_system_append = args.disable_system_append
     
     human_switch = args.human
     #look in olca_config.yaml for human: true
@@ -314,7 +351,15 @@ def main():
         system_instructions = system_instructions + ". Use the human-in-the-loop tool"
     
     # Define the graph
-    graph = create_react_agent(model, tools=tools)
+    if args.stategraph:
+        sg = create_state_graph()
+        try:
+            graph = sg.compile()
+        except Exception:
+            print("StateGraph not fully implemented; falling back to React agent")
+            graph = create_react_agent(model, tools=tools)
+    else:
+        graph = create_react_agent(model, tools=tools)
     
     if graph.config is None:
         graph.config = {}
@@ -334,7 +379,10 @@ def main():
         graph_config = {"callbacks": callbacks} if callbacks else {}
         if recursion_limit:
             graph_config["recursion_limit"] = recursion_limit
-        print_stream(graph.stream(inputs, config=graph_config))
+        print_stream(
+            graph.stream(inputs, config=graph_config, stream_mode=args.stream),
+            ws_url=args.ws,
+        )
     except GraphRecursionError as e:
         print("Recursion limit reached. Please increase the 'recursion_limit' in the olca_config.yaml file.")
         print("For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/GRAPH_RECURSION_LIMIT")

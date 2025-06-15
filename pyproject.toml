@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "olca"
-version = "0.2.77"
+version = "0.2.88"
 
 description = "A Python package for experimental usage of Langchain and Human-in-the-Loop"
 readme = "README.md"
@@ -30,11 +30,14 @@ dependencies = [
     "langchain-ollama",
     "langchain-experimental",
     "click",
-    "langgraph",
+    "langgraph>=0.4.8",
     "langfuse",
     "pytz",
     "google.generativeai",
     "arxiv",
+    "tlid",
+    "coaiapy",
+    "websockets",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -47,4 +50,5 @@ olca2 = "olca.olcacli:main"
 olca = "olca.olcacli:main"
 fusewill = "olca.fusewill_cli:main"
 oiv = "olca.oiv:main"
+coaia = "olca.coaia_cli:main"
 

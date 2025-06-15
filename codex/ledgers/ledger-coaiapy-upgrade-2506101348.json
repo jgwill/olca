@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506101348",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Replaced local fusewill CLI with a thin wrapper around coaiapy.cofuse and removed fusewill_utils. Updated README, TODO, roadmap and build script to reflect coaiapy integration and new command syntax.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md", "_build_n_dist.sh", "olca/fusewill_cli.py", "olca/fusewill_utils.py", "proto/langgraph_fused_chat_agent_2412241224.py"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.\n\n⸻\n\ngive a full report of the advancement in the PR description",
+  "scene": "oLCa now delegates fusewill functionality to coaiapy, simplifying maintenance and aligning docs for future LangGraph streaming work."
+}

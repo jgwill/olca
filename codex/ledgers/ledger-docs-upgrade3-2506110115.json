@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506110115",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Extended README examples with coaia transcribe, summarize and tagging instructions. Marked related tasks complete in TODO and roadmap. Clarified ongoing typed-state and websocket streaming work.",
+  "routing": {
+    "files": ["README.md", "ROADMAP.md", "TODO.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Continue the PR by completing any missing parts from the roadmap, especially around coaiapy and LangGraph integration. If CLI help or README examples feel incomplete, extend them with clarity. Skip anything already done.",
+  "scene": "Documentation refined to highlight new coaiapy helpers and streaming roadmap while tasks track progress toward typed-state integration."
+}

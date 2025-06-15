@@ -13,8 +13,8 @@ dist: clean
 publish: dist
 	twine upload dist*
 
-test-release: clean
+test-release: bump_version clean
 	python -m pytest -q
 	pip install build twine --quiet
 	python -m build
-	twine upload --repository testpypi dist/*
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/*

@@ -11,3 +11,4 @@ The work branch now contains latest updates from main alongside persistent sessi
 - **9b346d6** CI workflow and docs refined; numerous example updates ensure memory features remain functional after merge.
 - **b1e33a6** Documented TestPyPI upload attempt with HTTP 400 error.
 - **pending** Updated test-release target to call 'python -m pytest' and logged another failed TestPyPI upload.
+- **pending** test-release now bumps the version and uploads using the explicit TestPyPI URL.

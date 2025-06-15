@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='olca',
-    version = "0.3.2",
+    version = "0.3.3",
     author='Jean GUillaume ISabelle',
     author_email='jgi@jgwill.com',
     description='A Python package for experimenting with Langchain agent and interactivity in Terminal modalities.',

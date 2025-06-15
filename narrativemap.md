@@ -1,6 +1,6 @@
 # Narrative Map
 
-This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGraph 0.4.8. Streaming via websockets is now documented and the CLI exposes new helpers such as `olca coaia`. Examples illustrate dataset management, typed-state graphs, and a prototype LangGraph chat agent. Recent work integrates persistent session memory using LangGraph's `InMemoryStore`.
+This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGraph 0.4.8. Streaming via websockets is documented and the CLI exposes new helpers such as `olca coaia`. Examples illustrate dataset management, typed-state graphs, and a prototype LangGraph chat agent. Persistent session memory is now available via `olca.persistent_memory`, and documentation clarifies optional Pillow support for CLI help.
 
 ## Commit Timeline
 - e2dc954: consolidated docs, introduced coaiapy wrappers, and added example folders
@@ -19,3 +19,4 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - 526be0a: imported LangGraph docs index for streaming reference
 - ffee943: added persistent session memory example with InMemoryStore
 - 1519e78: bumped package version to 0.3.1 and verified TestPyPI upload
+- 2bdb918: documented Pillow requirement and bumped version to 0.3.2

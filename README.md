@@ -43,6 +43,11 @@ From a clone of this repository:
 ```bash
 pip install -e .
 ```
+`olca --help` loads example images using Pillow. If this dependency is missing
+you can install it separately with:
+```bash
+pip install Pillow
+```
 
 ## Quick Start
 ```bash

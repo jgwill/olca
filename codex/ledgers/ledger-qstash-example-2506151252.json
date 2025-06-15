@@ -1,0 +1,13 @@
+{
+  "timestamp": "2506151252",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Unified QStash helpers and added demo example. The CLI now loads session state via utils and passes redis URLs. README references new folder for triggering sessions from QStash.",
+  "routing": {
+    "files": ["olca/utils.py", "olca/tracing.py", "olca/olcacli.py", "examples/qstash_demo/README.md", "examples/qstash_demo/olca.yml", "README.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "user_input": "Keep advancing the full integration of that memory feature with what was made in the main branch to ensure fully working and start creating examples usage for QStash integration",
+  "scene": "Developers can now demo QStash-triggered sessions using the new example while the CLI reuses utilities for redis and message handling."
+  ,"glyphs": "🔊🌿💾📨⚙️🧠"
+}

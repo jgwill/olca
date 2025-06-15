@@ -108,6 +108,7 @@ Example folders:
 - `examples/langgraph_agent` – prototype fused LangGraph chat that streams
   responses while tracing to Langfuse
 - `examples/websocket_demo` – run a simple server to receive streamed updates
+- `examples/qstash_demo` – trigger sessions from QStash messages
 
 ## Environment Variables
 - `OPENAI_API_KEY` for OpenAI models

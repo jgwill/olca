@@ -11,8 +11,6 @@ from olca.tracing import TracingManager
 from olca.olcahelper import setup_required_directories, initialize_config_file, prepare_input
 from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
 import json
-import redis
-import requests
 from olca.state_helpers import create_state_graph
 
 #jgwill/olca1
@@ -92,33 +90,11 @@ def export_sessions(session_directory, output_file):
     with open(output_file, 'w') as file:
         json.dump(sessions, file)
 
-def store_session_in_redis(session_id, state, redis_url):
-    redis_client = redis.Redis.from_url(redis_url)
-    redis_client.set(session_id, json.dumps(state))
-
-def load_session_from_redis(session_id, redis_url):
-    redis_client = redis.Redis.from_url(redis_url)
-    state = redis_client.get(session_id)
-    if state:
-        return json.loads(state)
-    return None
-
-def handle_qstash_messages(qstash_topic, qstash_token):
-    headers = {
-        "Authorization": f"Bearer {qstash_token}"
-    }
-    response = requests.get(f"https://qstash.upstash.io/v1/topics/{qstash_topic}/messages", headers=headers)
-    if response.status_code == 200:
-        messages = response.json()
-        for message in messages:
-            session_id = message.get("session_id")
-            if session_id:
-                state = load_session_state(session_id, "~/.olca_sessions/")
-                if state:
-                    print(f"Starting session {session_id} with state: {state}")
-                    # Start the session with the loaded state
-    else:
-        print(f"Failed to fetch messages from QStash: {response.status_code}")
+from olca.utils import (
+    store_session_in_redis,
+    load_session_from_redis,
+    handle_qstash_messages,
+)
 
 #%%
 
@@ -447,7 +423,7 @@ def main():
             save_session_state(session_id, session_state, session_directory)
 
     if qstash_enabled:
-        handle_qstash_messages(qstash_topic, qstash_token)
+        handle_qstash_messages(qstash_topic, qstash_token, redis_upstash_url)
 
 if __name__ == "__main__":
     try:

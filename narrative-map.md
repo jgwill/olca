@@ -9,3 +9,4 @@ The work branch now contains latest updates from main alongside persistent sessi
 - **b0936bf** Clean README and fix session inheritance.
 - **af613df** Add test-release target and docs.
 - **9b346d6** CI workflow and docs refined; numerous example updates ensure memory features remain functional after merge.
+- **b1e33a6** Documented TestPyPI upload attempt with HTTP 400 error.

@@ -33,6 +33,24 @@ dependencies = [
     "pytz",
     "google.generativeai",
     "arxiv>=1.2.0",
+    "boto3",
+    "mutagen",
+    "certifi",
+    "charset-normalizer",
+    "idna",
+    "redis",
+    "requests",
+    "markdown",
+    "langchain",
+    "langchain-openai",
+    "langchain-ollama",
+    "langchain-experimental",
+    "click",
+    "langgraph>=0.4.8",
+    "langfuse",
+    "pytz",
+    "google.generativeai",
+    "arxiv",
     "tlid",
     "coaiapy",
     "websockets",
@@ -49,3 +67,4 @@ olca = "olca.olcacli:main"
 fusewill = "olca.fusewill_cli:main"
 oiv = "olca.oiv:main"
 coaia = "olca.coaia_cli:main"
+

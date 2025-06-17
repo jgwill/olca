@@ -44,6 +44,12 @@ Optional extras install tracing support:
 pip install 'olca[tracing]'
 ```
 
+From a cloned repository you can install the package in editable mode so all
+required modules are available:
+```bash
+pip install -e .
+```
+
 For Android devices using Termux, see [README.termux.md](README.termux.md) for
 additional setup notes.
 

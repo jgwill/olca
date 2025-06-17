@@ -17,7 +17,11 @@ cd olca
 ./termux-install.sh
 ```
 
-The script installs dependencies using a minimal requirements file that avoids heavy gRPC packages. It then installs `olca` in editable mode.
+The script installs dependencies using a minimal requirements file that avoids heavy gRPC packages and then installs `olca` in editable mode. If you skip the script, run:
+```bash
+pip install -r requirements.txt && pip install -e .
+```
+to provide the necessary modules.
 
 ## Usage
 After installation you can run:

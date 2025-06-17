@@ -3,7 +3,10 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import dotenv
-from langchain import hub
+try:
+    from langchain import hub
+except ImportError as e:
+    raise SystemExit("Missing dependency 'langchain'. Install with 'pip install -r requirements.txt' or run ./termux-install.sh") from e
 import argparse
 import yaml
 from olca.utils import load_environment, initialize_langfuse
@@ -56,7 +59,10 @@ dotenv.load_dotenv()
 
 # First we initialize the model we want to use.
 from json import load
-from langchain_openai import ChatOpenAI,OpenAI
+try:
+    from langchain_openai import ChatOpenAI, OpenAI
+except ImportError as e:
+    raise SystemExit("Missing dependency 'langchain-openai'. Install with 'pip install -r requirements.txt' or run ./termux-install.sh") from e
 #from langchain.agents import AgentExecutor, create_react_agent
 
 from langchain_community.agent_toolkits.load_tools import load_tools

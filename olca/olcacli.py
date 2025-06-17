@@ -2,7 +2,12 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-import dotenv
+try:
+    import dotenv
+except ImportError as e:
+    raise SystemExit(
+        "Missing dependency 'python-dotenv'. Install with 'pip install -r requirements.txt' or run ./termux-install.sh"
+    ) from e
 try:
     from langchain import hub
 except ImportError as e:

@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506170347",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Added python-dotenv dependency and guarded imports so olca CLI runs without crashing on Termux. Documentation notes editable install provides dotenv.",
+  "routing": {
+    "files": ["pyproject.toml", "requirements.txt", "olca/olcacli.py", "olca/utils.py", "README.md", "README.termux.md", "termux-install.sh"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "verbatim_user_input": "python olcacli.py init  Traceback (most recent call last): ModuleNotFoundError: No module named 'dotenv'",
+  "scene": "Fresh installations on Termux now include dotenv so environment variables load correctly."
+}

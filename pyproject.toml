@@ -31,6 +31,7 @@ dependencies = [
     "langchain-experimental",
     "click",
     "langgraph>=0.4.8",
+    "python-dotenv",
     "pytz",
     "arxiv",
     "tlid",

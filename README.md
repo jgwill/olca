@@ -50,6 +50,9 @@ required modules are available:
 pip install -e .
 ```
 
+This ensures dependencies like `python-dotenv` are available so the CLI can load
+environment variables.
+
 For Android devices using Termux, see [README.termux.md](README.termux.md) for
 additional setup notes.
 

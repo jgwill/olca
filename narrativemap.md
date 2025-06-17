@@ -14,3 +14,4 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - 0259abcd: optional dependencies for tracing and graceful Langfuse import
 - 7a88c45: extras instructions and ledger for Termux support
 - 0a3cc5b: guarded CLI imports and clarified installation docs
+- a889152: added dotenv dependency and guards for Termux CLI stability

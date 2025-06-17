@@ -9,6 +9,7 @@ pkg install -y python git clang
 python3 -m pip install --upgrade pip
 
 # install dependencies without langfuse or google generative ai
+# includes python-dotenv for environment loading
 python3 -m pip install -r requirements.txt
 
 # install package in editable mode

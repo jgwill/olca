@@ -21,7 +21,8 @@ The script installs dependencies using a minimal requirements file that avoids h
 ```bash
 pip install -r requirements.txt && pip install -e .
 ```
-to provide the necessary modules.
+to provide the necessary modules, including `python-dotenv` for loading your
+environment variables.
 
 ## Usage
 After installation you can run:

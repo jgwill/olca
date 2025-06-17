@@ -11,8 +11,11 @@ def load_environment():
                                           "LANGCHAIN_API_KEY", "OPENAI_API_KEY"]]):
         dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
 
-def initialize_langfuse( debug=False):
-    from langfuse import Langfuse
+def initialize_langfuse(debug=False):
+    try:
+        from langfuse import Langfuse
+    except ImportError:
+        return None
     required_vars = ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"]
     if not all(os.getenv(var) for var in required_vars):
         return None

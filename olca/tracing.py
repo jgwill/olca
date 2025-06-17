@@ -33,13 +33,17 @@ class TracingManager:
             os.environ["LANGCHAIN_TRACING_V2"] = "true"
 
     def _setup_langfuse(self):
-        from langfuse.callback import CallbackHandler as LangfuseCallbackHandler
-        from langfuse import Langfuse
+        try:
+            from langfuse.callback import CallbackHandler as LangfuseCallbackHandler
+            from langfuse import Langfuse
+        except ImportError:
+            return None
+
         self.langfuse = initialize_langfuse()
         if not self.langfuse:
             print("Warning: Missing Langfuse environment variables")
             return None
-            
+
         return LangfuseCallbackHandler()
 
     def get_callbacks(self):

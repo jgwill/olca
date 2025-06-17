@@ -31,14 +31,17 @@ dependencies = [
     "langchain-experimental",
     "click",
     "langgraph>=0.4.8",
-    "langfuse",
+    "python-dotenv",
     "pytz",
-    "google.generativeai",
     "arxiv",
     "tlid",
     "coaiapy",
     "websockets",
 ]
+
+[project.optional-dependencies]
+tracing = ["langfuse"]
+google = ["google.generativeai"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

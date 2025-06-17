@@ -1,0 +1,12 @@
+{
+  "timestamp": "2506170327",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Add dependency guards and clear install instructions for Termux users. README updates advise editable install and termux guide explains manual pip steps. olcacli now warns if langchain packages are missing.",
+  "routing": {
+    "files": ["olca/olcacli.py", "README.md", "README.termux.md"],
+    "branch": "work"
+  },
+  "session": "shell",
+  "verbatim_user_input": "python olcacli.py --help Traceback ModuleNotFoundError: No module named 'langchain_openai'",
+  "scene": "Running the CLI after cloning now prints a helpful message if dependencies weren't installed, guiding Termux setups." 
+}

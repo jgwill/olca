@@ -1,18 +1,34 @@
 import os
 import sys
-import dotenv
+try:
+    import dotenv
+except ImportError:
+    dotenv = None
 import webbrowser
 
 def load_environment():
-    dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
+    if dotenv:
+        dotenv.load_dotenv(dotenv_path=os.path.join(os.getcwd(), ".env"))
     
     # Try loading from home directory if variables are still not set
-    if not all([os.getenv(key) for key in ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST", 
-                                          "LANGCHAIN_API_KEY", "OPENAI_API_KEY"]]):
-        dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
+    if not all([
+        os.getenv(key)
+        for key in [
+            "LANGFUSE_PUBLIC_KEY",
+            "LANGFUSE_SECRET_KEY",
+            "LANGFUSE_HOST",
+            "LANGCHAIN_API_KEY",
+            "OPENAI_API_KEY",
+        ]
+    ]):
+        if dotenv:
+            dotenv.load_dotenv(dotenv_path=os.path.expanduser("~/.env"))
 
-def initialize_langfuse( debug=False):
-    from langfuse import Langfuse
+def initialize_langfuse(debug=False):
+    try:
+        from langfuse import Langfuse
+    except ImportError:
+        return None
     required_vars = ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_HOST"]
     if not all(os.getenv(var) for var in required_vars):
         return None

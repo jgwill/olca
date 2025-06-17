@@ -39,6 +39,23 @@ It appears in CLI output and documentation as a reminder of this evolving archit
 pip install olca
 ```
 
+Optional extras install tracing support:
+```bash
+pip install 'olca[tracing]'
+```
+
+From a cloned repository you can install the package in editable mode so all
+required modules are available:
+```bash
+pip install -e .
+```
+
+This ensures dependencies like `python-dotenv` are available so the CLI can load
+environment variables.
+
+For Android devices using Termux, see [README.termux.md](README.termux.md) for
+additional setup notes.
+
 ## Quick Start
 ```bash
 olca init            # create olca.yml in the current directory

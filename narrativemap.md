@@ -9,3 +9,9 @@ This branch refactors oLCa to rely on the coaiapy package and upgrades to LangGr
 - 7646734: added websocket streaming docs, CI workflow, and llms index
 - 1563243: websocket demo example and checkpointing notes
 - c182195: CI workflow refined and help tests added
+- 1240fa6: added Termux installation guide and stripped grpc dependencies
+- f9a4ee4: ledger documenting Termux support
+- 0259abcd: optional dependencies for tracing and graceful Langfuse import
+- 7a88c45: extras instructions and ledger for Termux support
+- 0a3cc5b: guarded CLI imports and clarified installation docs
+- a889152: added dotenv dependency and guards for Termux CLI stability

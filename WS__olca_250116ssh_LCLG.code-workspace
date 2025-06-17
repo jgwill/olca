@@ -1,29 +1,28 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../a/src/_jgt/langchain"
-		},
-		{
-			"path": "../../a/src/_jgt/langgraph"
-		},
-		{
-			"path": "../../orpheus/x/542-jgsess"
-		},
-		{
-			"path": "../../usr/local/src/Flowise"
-		},
-		{
-			"path": "../../orpheus/x/537-oas"
-		},
-		{
-			"path": "../babyagi"
-		}
-	],
-	"settings": {
-		"workbench.colorCustomizations": {}
-	}
-}
+        "folders": [
+                {
+                        "path": "."
+                },
+                {
+                        "path": "../../a/src/_jgt/langchain"
+                },
+                {
+                        "path": "../../a/src/_jgt/langgraph"
+                },
+                {
+                        "path": "../../orpheus/x/542-jgsess"
+                },
+                {
+                        "path": "../../usr/local/src/Flowise"
+                },
+                {
+                        "path": "../../orpheus/x/537-oas"
+                },
+                {
+                        "path": "../babyagi"
+                }
+        ],
+        "settings": {
+                "workbench.colorCustomizations": {}
+        }
 }

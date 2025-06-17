@@ -1,0 +1,9 @@
+{
+  "timestamp": "2506170356",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine", "🎸 JamAI"],
+  "narrative": "Resolved merge conflicts between work and main, preserving persistent session and narrative features while aligning with parent branch.",
+  "changes": ["README.md", "WS__coaiapy.code-workspace", "WS__olca_250116ssh_LCLG.code-workspace", "WS__olca_2501ssh_LCLG.code-workspace", "narrativemap.md", "olca/olcacli.py", "pyproject.toml", "setup.py"],
+  "routing": {"branch": "work", "paths": ["codex/ledgers/ledger-merge-conflict-resolution-2506170356.json"]},
+  "glyphs": "♾️🧠🌸🕊️🎸",
+  "scene": "work branch reconciled with main"
+}

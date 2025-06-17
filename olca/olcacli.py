@@ -17,6 +17,7 @@ import requests
 from PIL import Image
 import pytesseract
 import ollama
+from prompts import SYSTEM_PROMPT_APPEND, HUMAN_APPEND_PROMPT
 from olca.state_helpers import create_state_graph
 
 #jgwill/olca1
@@ -225,6 +226,7 @@ def print_stream(stream, ws_url: str | None = None):
 OLCA_DESCRIPTION = "OlCA (Orpheus Langchain CLI Assistant) (very Experimental and dangerous)"
 OLCA_EPILOG = "For more information: https://github.com/jgwill/orpheuspypractice/wiki/olca"
 OLCA_USAGE="olca [-D] [-H] [-M] [-T] [--stream MODE] [init] [-y] [--temp-session] [list_active_sessions] [export_sessions]"
+OLCA_USAGE="olca [-D] [-H] [-M] [-T] [--stream MODE] [init] [-y]"
 def _parse_args():
     parser = argparse.ArgumentParser(description=OLCA_DESCRIPTION, epilog=OLCA_EPILOG,usage=OLCA_USAGE)
     parser.add_argument("-D", "--disable-system-append", action="store_true", help="Disable prompt appended to system instructions")

@@ -1,0 +1,9 @@
+{
+  "timestamp": "2506151802",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine", "🎸 JamAI"],
+  "narrative": "Merged persistent session memory branch, adding new example and utilities while preserving screenshot narrative features. Version bumped to 0.3.12.",
+  "changes": ["examples/persistent_session/*", "olca/persistent_memory.py", "pyproject.toml", "setup.py", "narrativemap.md"],
+  "routing": {"branch": "work", "paths": ["codex/ledgers/ledger-merge-persistent-memory-2506151802.json"]},
+  "glyphs": "🧠🌸🕊️🎸♾️",
+  "scene": "Persistent sessions now coexist with screenshot storytelling"
+}

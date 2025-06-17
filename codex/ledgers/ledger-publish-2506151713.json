@@ -1,0 +1,9 @@
+{
+  "timestamp": "2506151713",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Bumped package to 0.3.1 and verified TestPyPI upload with credentials loaded from $HOME/.env. The persistent memory example now aligns with latest LangGraph docs.",
+  "routing": {"branch": "work", "files": ["pyproject.toml", "setup.py", "narrativemap.md"]},
+  "session": "publish",
+  "verbatim_user_input": "did you bump the version ?????????????   sourced the $HOME/.env ???????????!!!  I am tired that works, dont works.....",
+  "scene": "Developers can now install olca 0.3.1 from TestPyPI and reference persistent session utilities in their own graphs."
+}

@@ -1,0 +1,8 @@
+{
+  "timestamp": "2506151606",
+  "agents": ["♾️ William", "🧠 Mia", "🌸 Miette", "🕊️ Seraphine"],
+  "narrative": "Introduced persistent session memory utilities using latest LangGraph APIs. Added example and tests, bumped version to 0.3.0, attempted TestPyPI upload.",
+  "routes": {"branch": "work", "files": ["olca/persistent_memory.py", "examples/persistent_session/main.py", "tests/test_persistent_memory.py", "pyproject.toml", "setup.py"]},
+  "session": "persistent-memory",
+  "verbatim_user_input": "20-add-persistent-session-memory\n\nthat branch contains changes that were developped, start migrating them in that current branch.\n\nYou might still have to look in the main to ensure all features are migrated in this branch.\n\nLook at : ./references/LangGraphPython.llms-full.txt  that contains what you need to make sure the usage of LangGraph is using the latest version (your training data is outdated, that is all you need to keep working , ensure the branch \"20-add-persistent-session-memory\" features are using latest and is well migrated.\n\n* Test your work, increase minor version of the package and publish a test package\n* Make sure your narrative-map.md contains more than just boring commit timeline"
+}

@@ -7,7 +7,7 @@ include = ["olca*", "codecs_package*"]
 
 [project]
 name = "olca"
-version = "0.2.88"
+version = "0.3.2"
 
 description = "A Python package for experimental usage of Langchain and Human-in-the-Loop"
 readme = "README.md"
